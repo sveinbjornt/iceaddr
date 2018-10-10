@@ -6,6 +6,9 @@
     
 """
 
+from __future__ import unicode_literals
+from __future__ import print_function
+
 from .db import shared_db
 from .postcodes import postcodes, postcodes_for_placename
 

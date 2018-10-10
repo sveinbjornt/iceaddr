@@ -6,6 +6,8 @@
 
 """
 
+from __future__ import unicode_literals
+
 postcodes = {
     101: {   'area': 'Höfuðborgarsvæðið',
              'placename_nf': 'Reykjavík',

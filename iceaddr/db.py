@@ -6,6 +6,9 @@
 
 """
 
+from __future__ import unicode_literals
+
+import sys
 import sqlite3
 import pkg_resources
 
@@ -21,7 +24,8 @@ class SharedDB():
             db_path = pkg_resources.resource_filename(__name__, 'resources/stadfangaskra.db')
             self.db_conn = sqlite3.connect(db_path)
             self.db_conn.row_factory = lambda c, r: dict(zip([col[0] for col in c.description], r))
-            #self.db_conn.text_factory = str
+            #if sys.version_info < (3, 0):
+            #    self.db_conn.text_factory = lambda x: unicode(x, 'utf-8', 'ignore')
             
         return self.db_conn
 
