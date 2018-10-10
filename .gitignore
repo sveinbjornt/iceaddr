@@ -4,5 +4,7 @@ stadfangaskra.db
 STADFANG.dsv
 __pycache__/
 *.py[cod]
-*$py.class
+*$py.class/
+/dist/
+/*.egg-info
 

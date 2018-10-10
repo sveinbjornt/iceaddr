@@ -2,7 +2,7 @@
  
 ### Look up Icelandic street addresses and postcodes
 
-Python module to look up and get information about Icelandic street addresses and postcodes. The underlying data is taken from [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra) (the Icelandic Address Registry) maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/)).
+Python module to look up and get information about Icelandic street addresses and postcodes. The underlying data is taken from [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra) (the National Icelandic Address Registry) maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/)).
 
 ## Examples
 
