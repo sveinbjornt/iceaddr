@@ -1,0 +1,8 @@
+postnumer.txt
+gotuskra.txt
+stadfangaskra.db
+STADFANG.dsv
+__pycache__/
+*.py[cod]
+*$py.class
+
