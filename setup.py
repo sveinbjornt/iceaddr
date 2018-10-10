@@ -16,8 +16,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires=[
-        'sqlite3',
-        'pkg_resources'
+        'sqlite3'
     ],
     packages=['iceaddr'],
     classifiers=[
@@ -28,7 +27,7 @@ setuptools.setup(
         "Natural Language :: Icelandic",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Utilities",
         "Topic :: Text Processing :: Linguistic"
