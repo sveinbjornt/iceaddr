@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 """
 
-    Create stadfong address SQLite3 database from from the
+    Create stadfong address database from from the
     DSV file at ftp://ftp.skra.is/skra/STADFANG.dsv.zip
     
     From data compiled by Registers Iceland, see:

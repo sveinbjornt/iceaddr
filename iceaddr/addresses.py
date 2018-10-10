@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 """
     
-    iceaddr: Look up information about Icelandic house addresses
+    iceaddr: Look up information about Icelandic street addresses and postcodes
     Copyright (c) 2018 Sveinbjorn Thordarson
     
 """
@@ -28,12 +28,8 @@ def iceaddr_lookup(street_name, number=None, letter=None, postcode=None, placena
         q += ' AND bokst=? '
         l.append(letter)
     if len(pc):
-        if len(pc) == 1:
-            qp = ' postnr=? '
-            l.append(pc[0])
-        else:
-            qp = ' OR '.join([' postnr=?' for p in pc])
-            l.extend(p for p in pc)
+        qp = ' OR '.join([' postnr=?' for p in pc])
+        l.extend(pc)
         q += ' AND (%s) ' % qp
     
     # Ordering by postcode may in fact be a reasonable proxy

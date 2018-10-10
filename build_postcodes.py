@@ -6,13 +6,12 @@
     create and print dict mapping postcode to placename and
     other related information. Also adds placenames in the 
     nominative case since source data only includes placenames 
-    in the dative (þágufall)
+    in the dative (þágufall).
     
     https://www.postur.is/gogn/Gotuskra/postnumer.txt
     
 """
 
-import sys
 import unicodecsv
 import requests
 from contextlib import closing
@@ -26,9 +25,7 @@ def read_rows(dsv_file, delimiter="|", encoding="utf8"):
     for row in reader:
         yield row
 
-if __name__ == "__main__":
-    postcodes_path = sys.argv[1] if len(sys.argv) > 1 else 'postnumer.txt'    
-    
+if __name__ == "__main__":    
     pc = dict()
     reynir = Reynir()
     pp = pprint.PrettyPrinter(indent=4)
