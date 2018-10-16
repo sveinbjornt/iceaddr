@@ -67,7 +67,20 @@ $ pip install iceaddr
 ```
 Street and place names can be provided in either nominative or dative case (e.g. both 'Öldugata' and 'Öldugötu' will work, as will both 'Selfoss' and 'Selfossi').
 
-Please note that `iceaddr_lookup` returns a list of one *or more* addresses matching the criterion. If there is more than one "Öldugata 4" in Iceland (and there is!) and no postcode or placename is supplied, all matching addresses are returned, ordered by postcode.
+Please note that`iceaddr_lookup` returns a list of zero or more addresses matching the criterion.
+
+```python
+>>> from iceaddr import iceaddr_lookup
+>>> iceaddr_lookup('Dúfnahólar', number=10)
+[]
+```
+
+If there is more than one "Öldugata 4" in Iceland (and there is!) and no postcode or placename is supplied, all matching addresses are returned, ordered by postcode.
+
+```python
+>>> set([a['stadur_nf'] for a in iceaddr_lookup('Öldugata', number=4)])
+{'Reyðarfjörður', 'Hafnarfjörður', 'Dalvík', 'Reykjavík'}
+```
 
 ### Keys
 
