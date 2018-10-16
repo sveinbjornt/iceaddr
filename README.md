@@ -16,17 +16,17 @@ $ pip install iceaddr
 
 ```python
 >>> from iceaddr import iceaddr_lookup
->>> a = iceaddr_lookup('Öldugata', number=4, postcode=101)
+>>> a = iceaddr_lookup('Austurstræti', number=14, postcode=101)
 >>> pprint.PrettyPrinter().pprint(a)
 [{'bokst': '',
   'byggd': 1,
-  'heiti_nf': 'Öldugata',
-  'heiti_tgf': 'Öldugötu',
-  'hnitnum': 10017023,
-  'husnr': 4,
-  'landnr': 100570,
-  'lat_wgs84': 64.1484874806941,
-  'long_wgs84': -21.9452072913341,
+  'heiti_nf': 'Austurstræti',
+  'heiti_tgf': 'Austurstræti',
+  'hnitnum': 10083839,
+  'husnr': 14,
+  'landnr': 100852,
+  'lat_wgs84': 64.147529217656,
+  'long_wgs84': -21.9389394651385,
   'postnr': 101,
   'serheiti': '',
   'stadur_nf': 'Reykjavík',
@@ -35,8 +35,8 @@ $ pip install iceaddr
   'svfnr': 0,
   'tegund': 'Þéttbýli',
   'vidsk': '',
-  'x_isn93': 356699.479545455,
-  'y_isn93': 408411.468181818}]
+  'x_isn93': 356999.259090909,
+  'y_isn93': 408290.561363636}]
 ```
 
 ### Look up address with placename
