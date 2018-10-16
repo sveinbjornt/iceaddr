@@ -736,8 +736,8 @@ postcodes = {
 }
 
 def postcodes_for_placename(pn):
-    pc = list()
+    matches = list()
     for k,v in postcodes.items():
         if v['placename_nf'] == pn or v['placename_tgf'] == pn:
-            pc.append(k)
-    return pc
+            matches.append(k)
+    return matches

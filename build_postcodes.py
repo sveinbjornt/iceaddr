@@ -5,8 +5,8 @@
     Fetch list of postcodes from the Icelandic postal service,
     create and print dict mapping postcode to placename and
     other related information. Also adds placenames in the 
-    nominative case since source data only includes placenames 
-    in the dative (þágufall).
+    nominative case (nefnifall) since the source data only 
+    includes placenames in dative (þágufall).
     
     https://www.postur.is/gogn/Gotuskra/postnumer.txt
     

@@ -2,7 +2,13 @@
  
 ### Look up Icelandic street addresses and postcodes
 
-Python module to look up and get information about Icelandic street addresses and postcodes. The underlying data is taken from [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra) (the National Icelandic Address Registry) maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/)).
+Python module to look up and get information about Icelandic street addresses and postcodes. The underlying data is taken from [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic Address Registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/)), and from the postcode table provided by [Iceland Post](https://www.postur.is/einstaklingar/posthus/postnumer/gagnaskrar/).
+
+## Installation
+
+```
+$ pip install iceaddr
+```
 
 ## Examples
 
@@ -59,7 +65,9 @@ Python module to look up and get information about Icelandic street addresses an
   'x_isn93': 356699.479545455,
   'y_isn93': 408411.468181818}]
 ```
-Street names and place names can be provided in either nominative or dative case (e.g. both 'Öldugata' and 'Öldugötu' will work, as will both 'Selfoss' and 'Selfossi').
+Street and place names can be provided in either nominative or dative case (e.g. both 'Öldugata' and 'Öldugötu' will work, as will both 'Selfoss' and 'Selfossi').
+
+Please note that `iceaddr_lookup` returns a list of one *or more* addresses matching the criterion. If there is more than one "Öldugata 4" in Iceland (and there is!) and no postcode or placename is supplied, all matching addresses are returned, ordered by postcode.
 
 ### Keys
 
@@ -85,22 +93,23 @@ Street names and place names can be provided in either nominative or dative case
 | x_isn93       | Coordinate X (ISN93)                           |
 | y_isn93       | Coordinate Y (ISN93)                           |
 
-
 ### Postcodes
 
 ```python
 >>> from iceaddr import postcodes_for_placename
->>> postcodes_for_placename('Kópavogur')
+>>> postcodes_for_placename('Ísafjörður')
+[400, 401]
+>>> postcodes_for_placename('Kópavogi')
 [200, 201, 202, 203]
 ```
 
 ```python
 >>> from iceaddr import postcodes
->>> postcodes[401]
+>>> postcodes[400]
 {   'area': 'Vesturland og Vestfirðir', 
     'placename_nf': 'Ísafjörður', 
     'placename_tgf': 'Ísafirði', 
-    'type': 'Dreifbýli' }
+    'type': 'Þéttbýli' }
 ```
 
 ## BSD License 
