@@ -735,26 +735,18 @@ postcodes = {
              'type': 'Pósthólf'}
 }
 
-def postcodes_for_placename(pn):
+def postcodes_for_placename(pn, partial=False):
     p = pn.lower()
     matches = list()
     
     for k,v in postcodes.items():
         n = v['placename_nf'].lower()
         t = v['placename_tgf'].lower()
-        if n == p or t == p:
-            matches.append(k)
-    
-    return matches
-
-def postcodes_for_partial_placename(pn):
-    p = pn.lower()
-    matches = list()
-    
-    for k,v in postcodes.items():
-        n = v['placename_nf'].lower()
-        t = v['placename_tgf'].lower()
-        if n.startswith(p) or t.startswith(p):
-            matches.append(k)
+        if partial:
+            if n.startswith(p) or t.startswith(p):
+                matches.append(k)
+        else:
+            if n == p or t == p:
+                matches.append(k)        
             
     return matches

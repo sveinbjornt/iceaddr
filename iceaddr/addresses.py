@@ -11,7 +11,7 @@ from __future__ import print_function
 
 import re
 from .db import shared_db
-from .postcodes import postcodes, postcodes_for_placename, postcodes_for_partial_placename
+from .postcodes import postcodes, postcodes_for_placename
 
 def _add_postcode_info(a):
     """ Look up info about postcode, add keys to address dictionary """
@@ -59,7 +59,7 @@ def iceaddr_lookup(street_name, number=None, letter=None,
     
     return _run_query(q, l)
 
-def iceaddr_suggest(search_str, limit=10):
+def iceaddr_suggest(search_str, limit=100):
     """ Parse search string and fetch matching addresses. 
         Made to handle partial and full text queries in 
         the following formats:
@@ -87,16 +87,17 @@ def iceaddr_suggest(search_str, limit=10):
     addr = items[0]
     
     # Handle street names with more than one word
-    if re.match('\d+$', addr[-1]):
+    # E.g. "Stærri Bær 1"
+    if re.match('\d+$', addr[-1]): # Has house number
         addr = [' '.join(addr[:-1]), int(addr[-1])]
     else:
         addr = [' '.join(addr)]
         
     street_name = addr[0]
-    if len(addr) == 1:
+    if len(addr) == 1: # "Ölduga"
         q += ' (heiti_nf LIKE ? OR heiti_tgf LIKE ?) '
         qargs.extend([street_name + '%' , street_name + '%'])
-    elif len(addr) == 2:
+    elif len(addr) == 2: # "Öldugötu 4"
         q += ' (heiti_nf=? OR heiti_tgf=?) '
         qargs.extend([street_name, street_name])
         street_num = int(addr[1])
@@ -106,12 +107,13 @@ def iceaddr_suggest(search_str, limit=10):
     # Place name component
     if len(items) > 1 and items[1]:
         pns = items[1]
-        if re.match('\d\d\d$', pns[0]): # It's a postcode
+        if re.match('\d\d\d$', pns[0]):
+            # We have a postcode
             q += ' AND postnr=? '
             qargs.append(pns[0])
         else:
             # Try to look up place name
-            pc = postcodes_for_partial_placename(pns[0])
+            pc = postcodes_for_placename(pns[0], partial=True)
             if pc:
                 qp = ' OR '.join([' postnr=? ' for p in pc])
                 q += ' AND (%s) ' % qp

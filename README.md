@@ -17,7 +17,7 @@ $ pip install iceaddr
 ```python
 >>> from iceaddr import iceaddr_lookup
 >>> a = iceaddr_lookup('Austurstræti', number=14, postcode=101)
->>> pprint.PrettyPrinter().pprint(a)
+>>> pprint.pprint(a)
 [{'bokst': '',
   'byggd': 1,
   'heiti_nf': 'Austurstræti',
@@ -44,7 +44,7 @@ $ pip install iceaddr
 ```python
 >>> from iceaddr import iceaddr_lookup
 >>> a = iceaddr_lookup('Öldugötu', number=4, placename='Reykjavík')
->>> pprint.PrettyPrinter().pprint(a)
+>>> pprint.pprint(a)
 [{'bokst': '',
   'byggd': 1,
   'heiti_nf': 'Öldugata',
@@ -68,7 +68,7 @@ $ pip install iceaddr
 
 Street and place names can be provided in either nominative or dative case (e.g. both 'Öldugata' and 'Öldugötu' will work, as will both 'Selfoss' and 'Selfossi').
 
-Please note that`iceaddr_lookup` returns a list of zero or more addresses matching the criterion.
+Please note that`iceaddr_lookup()` returns a list of zero or more addresses matching the criterion.
 
 ```python
 >>> from iceaddr import iceaddr_lookup
@@ -78,6 +78,21 @@ Please note that`iceaddr_lookup` returns a list of zero or more addresses matchi
 >>> [(a['postnr'], a['stadur_nf']) for a in res]
 [(101, 'Reykjavík'), (220, 'Hafnarfjörður'), (621, 'Dalvík')]
 ```
+
+For natural search string queries, there the module provides `iceaddr_suggest()`:
+
+```python
+>>> from iceaddr import iceaddr_suggest
+>>>
+>>> a = iceaddr_suggest('Öldugata 4, Rey')
+>>> [n['stadur_tgf'] for n in a]
+['Reykjavík', 'Reyðarfirði']
+>>> a = iceaddr_suggest('Öldugö', limit=200)
+>>> len(a)
+151
+```
+
+The default suggestion limit is 100.
 
 ### Keys
 
@@ -111,6 +126,9 @@ Please note that`iceaddr_lookup` returns a list of zero or more addresses matchi
 [400, 401]
 >>> postcodes_for_placename('Kópavogi')
 [200, 201, 202, 203]
+>>> postcodes_for_placename('kópav', partial=True)
+[200, 201, 202, 203]
+>>>
 ```
 
 ```python
