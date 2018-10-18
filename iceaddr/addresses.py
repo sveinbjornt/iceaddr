@@ -11,9 +11,10 @@ from __future__ import print_function
 
 import re
 from .db import shared_db
-from .postcodes import postcodes, postcodes_for_placename
+from .postcodes import postcodes, postcodes_for_placename, postcodes_for_partial_placename
 
 def _add_postcode_info(a):
+    """ Look up info about postcode, add keys to address dictionary """
     if a['postnr']:
         info = postcodes[a['postnr']]
         a['stadur_nf'] = info['placename_nf']
@@ -24,14 +25,13 @@ def _add_postcode_info(a):
 
 def _run_query(q, qargs):
     db_conn = shared_db.connection()
-    c = db_conn.cursor()
-    
-    res = c.execute(q, qargs)
+    res = db_conn.cursor().execute(q, qargs)
 
     return [_add_postcode_info(dict(row)) for row in res]
 
 def iceaddr_lookup(street_name, number=None, letter=None, 
-postcode=None, placename=None, limit=100):
+    postcode=None, placename=None, limit=100):
+    """ Look up all addresses matching criterion """
     
     # Look up postcodes for placename if no postcode is provided
     pc = [postcode] if postcode else []
@@ -60,16 +60,19 @@ postcode=None, placename=None, limit=100):
     return _run_query(q, l)
 
 def iceaddr_suggest(search_str, limit=10):
-    # Parse address string and fetch match suggestions
-    #
-    # Öldug
-    # Öldugata
-    # Öldugata 4
-    # Öldugata 4, 101
-    # Öldugata 4, Reykjavík
-    # Öldugata 4, 101 Reykjavík
-    
-    if not search_str.strip():
+    """ Parse search string and fetch matching addresses. 
+        Made to handle partial and full text queries in 
+        the following formats:
+
+        Öldug
+        Öldugata
+        Öldugata 4
+        Öldugata 4, 101
+        Öldugata 4, Reykjavík
+        Öldugata 4, 101 Reykjavík
+    """
+    search_str = search_str.strip()
+    if not search_str or len(search_str) < 3:
         return []
     
     items = [s.strip().split() for s in search_str.split(',')]
@@ -82,6 +85,13 @@ def iceaddr_suggest(search_str, limit=10):
 
     # Street name component
     addr = items[0]
+    
+    # Handle street names with more than one word
+    if re.match('\d+$', addr[-1]):
+        addr = [' '.join(addr[:-1]), int(addr[-1])]
+    else:
+        addr = [' '.join(addr)]
+        
     street_name = addr[0]
     if len(addr) == 1:
         q += ' (heiti_nf LIKE ? OR heiti_tgf LIKE ?) '
@@ -96,18 +106,21 @@ def iceaddr_suggest(search_str, limit=10):
     # Place name component
     if len(items) > 1 and items[1]:
         pns = items[1]
-        if re.match('^\d\d\d$', pns[0]): # It's a postcode
+        if re.match('\d\d\d$', pns[0]): # It's a postcode
             q += ' AND postnr=? '
             qargs.append(pns[0])
         else:
-            pc = postcodes_for_placename(pns[0])
+            # Try to look up place name
+            pc = postcodes_for_partial_placename(pns[0])
             if pc:
                 qp = ' OR '.join([' postnr=? ' for p in pc])
-                qargs.extend(pc)
                 q += ' AND (%s) ' % qp
+                qargs.extend(pc)
     
     q += ' ORDER BY postnr ASC, husnr ASC, bokst ASC LIMIT ?'
     qargs.append(limit)
     
-    return _run_query(q, qargs)
+    # print(q)
+    # print(qargs)
     
+    return _run_query(q, qargs)

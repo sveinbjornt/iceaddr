@@ -124,7 +124,7 @@ Please note that`iceaddr_lookup` returns a list of zero or more addresses matchi
 
 ## Version History
 
-* 1.0.2: Initial release
+* 0.1.2: Initial release
 
 ## BSD License 
 
