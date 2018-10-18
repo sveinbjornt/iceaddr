@@ -79,7 +79,7 @@ Please note that`iceaddr_lookup()` returns a list of zero or more addresses matc
 [(101, 'Reykjavík'), (220, 'Hafnarfjörður'), (621, 'Dalvík')]
 ```
 
-For natural search string queries, there the module provides `iceaddr_suggest()`:
+For natural search string queries, the module provides `iceaddr_suggest()`:
 
 ```python
 >>> from iceaddr import iceaddr_suggest
