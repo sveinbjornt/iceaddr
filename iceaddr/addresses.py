@@ -9,13 +9,29 @@
 from __future__ import unicode_literals
 from __future__ import print_function
 
+import re
 from .db import shared_db
 from .postcodes import postcodes, postcodes_for_placename
 
-def iceaddr_lookup(street_name, number=None, letter=None, postcode=None, placename=None):
-    
+def _add_postcode_info(a):
+    if a['postnr']:
+        info = postcodes[a['postnr']]
+        a['stadur_nf'] = info['placename_nf']
+        a['stadur_tgf'] = info['placename_tgf']
+        a['svaedi'] = info['area']
+        a['tegund'] = info['type']
+    return a
+
+def _run_query(q, qargs):
     db_conn = shared_db.connection()
     c = db_conn.cursor()
+    
+    res = c.execute(q, qargs)
+
+    return [_add_postcode_info(dict(row)) for row in res]
+
+def iceaddr_lookup(street_name, number=None, letter=None, 
+postcode=None, placename=None, limit=100):
     
     # Look up postcodes for placename if no postcode is provided
     pc = [postcode] if postcode else []
@@ -38,19 +54,60 @@ def iceaddr_lookup(street_name, number=None, letter=None, postcode=None, placena
     # Ordering by postcode may in fact be a reasonable proxy
     # for delivering by order of match likelihood since the
     # lowest postcodes are generally more densely populated
-    q += 'ORDER BY postnr'
+    q += ' ORDER BY postnr ASC, husnr ASC, bokst ASC LIMIT ?'
+    l.append(limit)
     
-    res = c.execute(q, l)
+    return _run_query(q, l)
 
-    addresses = [row for row in res]
-    for a in addresses:
-        # Add postcode info
-        if a['postnr']:
-            pcinfo = postcodes[a['postnr']]
-            a['stadur_nf'] = pcinfo['placename_nf']
-            a['stadur_tgf'] = pcinfo['placename_tgf']
-            a['svaedi'] = pcinfo['area']
-            a['tegund'] = pcinfo['type']
+def iceaddr_suggest(search_str, limit=10):
+    # Parse address string and fetch match suggestions
+    #
+    # Öldug
+    # Öldugata
+    # Öldugata 4
+    # Öldugata 4, 101
+    # Öldugata 4, Reykjavík
+    # Öldugata 4, 101 Reykjavík
     
-    return addresses
+    if not search_str.strip():
+        return []
+    
+    items = [s.strip().split() for s in search_str.split(',')]
+    
+    if not [l for l in items if len(l)]:
+        return []
+    
+    q = 'SELECT * FROM stadfong WHERE '
+    qargs = list()
 
+    # Street name component
+    addr = items[0]
+    street_name = addr[0]
+    if len(addr) == 1:
+        q += ' (heiti_nf LIKE ? OR heiti_tgf LIKE ?) '
+        qargs.extend([street_name + '%' , street_name + '%'])
+    elif len(addr) == 2:
+        q += ' (heiti_nf=? OR heiti_tgf=?) '
+        qargs.extend([street_name, street_name])
+        street_num = int(addr[1])
+        q += ' AND husnr=? '
+        qargs.append(street_num)
+    
+    # Place name component
+    if len(items) > 1 and items[1]:
+        pns = items[1]
+        if re.match('^\d\d\d$', pns[0]): # It's a postcode
+            q += ' AND postnr=? '
+            qargs.append(pns[0])
+        else:
+            pc = postcodes_for_placename(pns[0])
+            if pc:
+                qp = ' OR '.join([' postnr=? ' for p in pc])
+                qargs.extend(pc)
+                q += ' AND (%s) ' % qp
+    
+    q += ' ORDER BY postnr ASC, husnr ASC, bokst ASC LIMIT ?'
+    qargs.append(limit)
+    
+    return _run_query(q, qargs)
+    

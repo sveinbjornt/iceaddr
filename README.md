@@ -2,7 +2,7 @@
  
 ### Look up Icelandic street addresses and postcodes
 
-Python module to look up and get information about Icelandic street addresses and postcodes. The underlying data is taken from [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic Address Registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/)), and from the postcode table provided by [Iceland Post](https://www.postur.is/einstaklingar/posthus/postnumer/gagnaskrar/).
+Python module to look up and get information about Icelandic street addresses and postcodes. The underlying data is taken from [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic Address Registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/)), and from the postcode table provided by [Postur.is](https://www.postur.is/einstaklingar/posthus/postnumer/gagnaskrar/).
 
 ## Installation
 
@@ -65,6 +65,7 @@ $ pip install iceaddr
   'x_isn93': 356699.479545455,
   'y_isn93': 408411.468181818}]
 ```
+
 Street and place names can be provided in either nominative or dative case (e.g. both 'Öldugata' and 'Öldugötu' will work, as will both 'Selfoss' and 'Selfossi').
 
 Please note that`iceaddr_lookup` returns a list of zero or more addresses matching the criterion.
@@ -73,13 +74,9 @@ Please note that`iceaddr_lookup` returns a list of zero or more addresses matchi
 >>> from iceaddr import iceaddr_lookup
 >>> iceaddr_lookup('Dúfnahólar', number=10)
 []
-```
-
-If there is more than one "Öldugata 4" in Iceland (and there is!) and no postcode or placename is supplied, all matching addresses are returned, ordered by postcode.
-
-```python
->>> set([a['stadur_nf'] for a in iceaddr_lookup('Öldugata', number=4)])
-{'Reyðarfjörður', 'Hafnarfjörður', 'Dalvík', 'Reykjavík'}
+>>> res = iceaddr_lookup('Öldugata', number=9)
+>>> [(a['postnr'], a['stadur_nf']) for a in res]
+[(101, 'Reykjavík'), (220, 'Hafnarfjörður'), (621, 'Dalvík')]
 ```
 
 ### Keys
@@ -94,7 +91,7 @@ If there is more than one "Öldugata 4" in Iceland (and there is!) and no postco
 | husnr         | House number                                   |
 | landnr        |                                                |
 | lat_wgs84     | Latitude (WGS84 coordinates)                   |
-| long_wgs84    | Longtitude (WGS84 coordinates)                 |
+| long_wgs84    | Longitude (WGS84 coordinates)                  |
 | postnr        | Postcode (e.g. 101)                            |
 | serheiti      | Special name                                   |
 | stadur_nf     | Placename (nominative case), e.g. 'Selfoss'    |
@@ -124,6 +121,10 @@ If there is more than one "Öldugata 4" in Iceland (and there is!) and no postco
     'placename_tgf': 'Ísafirði', 
     'type': 'Þéttbýli' }
 ```
+
+## Version History
+
+* 1.0.2: Initial release
 
 ## BSD License 
 
