@@ -10,9 +10,9 @@
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../")
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../")
 
-from iceaddr import iceaddr_lookup, postcodes_for_placename
+from iceaddr import iceaddr_lookup, iceaddr_suggest, postcodes_for_placename
 
 def test_address_lookup():
     ADDR_TO_POSTCODE = [
@@ -42,9 +42,23 @@ def test_address_lookup():
         assert res[0]['tegund'] == p[5]
     
     assert len(iceaddr_lookup('Grundarstíg')) > 10
+    assert len(iceaddr_lookup('Grundarstíg', limit=2)) == 2
+
+def test_address_suggestions():
+    res = iceaddr_suggest('Öldugötu 4, 101')
+    assert res[0]['heiti_nf'] == 'Öldugata'
+    assert res[0]['husnr'] == 4
+    assert res[0]['stadur_nf'] == 'Reykjavík'
     
+    res = iceaddr_suggest('Öldugötu 4, Rey')
+    assert [n['stadur_tgf'] for n in res] == ['Reykjavík', 'Reyðarfirði']
+    
+    assert len(iceaddr_suggest('Stærri B')) == 1
+    assert len(iceaddr_suggest('Öldu', limit=75)) == 75
+
 def test_postcode_lookup():
     assert len(postcodes_for_placename('Kópavogur')) == 4
     assert len(postcodes_for_placename('Kópavogi')) == 4
+    assert len(postcodes_for_placename('kópav', partial=True)) == 4
     assert postcodes_for_placename('Selfossi') == [800, 801, 802]
-    
+    assert postcodes_for_placename('SELFOS', partial=True) == [800, 801, 802]
