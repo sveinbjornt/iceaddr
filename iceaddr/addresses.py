@@ -27,7 +27,7 @@ def _run_addr_query(q, qargs):
     return [_add_postcode_info(dict(row)) for row in res]
 
 def iceaddr_lookup(street_name, number=None, letter=None, 
-    postcode=None, placename=None, limit=100):
+    postcode=None, placename=None, limit=50):
     """ Look up all addresses matching criterion """
     
     pc = [postcode] if postcode else []
@@ -57,7 +57,7 @@ def iceaddr_lookup(street_name, number=None, letter=None,
     
     return _run_addr_query(q, l)
 
-def iceaddr_suggest(search_str, limit=100):
+def iceaddr_suggest(search_str, limit=50):
     """ Parse search string and fetch matching addresses. 
         Made to handle partial and full text queries in 
         the following formats:
@@ -89,7 +89,7 @@ def iceaddr_suggest(search_str, limit=100):
         m = re.search('[a-zA-Z]$', addr[-1])
         if m:
             addr[-1] = addr[-1][:-1]
-            addr.append(m.group(0))
+            addr.append(m.group(0).lower())
     else:
         addr = [' '.join(addr)]
     
@@ -110,11 +110,12 @@ def iceaddr_suggest(search_str, limit=100):
         qargs.append(addr[1])
         
         # Street number's trailing character
+        # e.g. if it's "Öldugata 4b"
         if len(addr) == 3:
             q += ' AND bokst=? '
             qargs.append(addr[2])
     
-    # Place name component
+    # Placename component (postcode or placename)
     if len(items) > 1 and items[1]:
         pns = items[1]
         postcodes = []

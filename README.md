@@ -92,31 +92,35 @@ For natural search string queries, the module provides `iceaddr_suggest()`:
 151
 ```
 
-The default suggestion limit is 100.
+The default suggestion limit is 50.
 
 ### Keys
 
-| Key           |                                                |
-| ------------- |------------------------------------------------|
-| bokst         | House letter                                   |
-| byggd         |                                                |
-| heiti_nf      | Street name (nominative case), e.g. 'Öldugata' |
-| heiti_tgf     | Street name (dative case), e.g. 'Öldugötu'     |
-| hnitnum       |                                                |
-| husnr         | House number                                   |
-| landnr        |                                                |
-| lat_wgs84     | Latitude (WGS84 coordinates)                   |
-| long_wgs84    | Longitude (WGS84 coordinates)                  |
-| postnr        | Postcode (e.g. 101)                            |
-| serheiti      | Special name                                   |
-| stadur_nf     | Placename (nominative case), e.g. 'Selfoss'    |
-| stadur_tgf    | Placename (dative case), e.g. 'Selfossi'       |
-| svaedi        | Area (e.g. 'Höfuðborgarsvæðið', 'Norðurland')  |
-| svfnr         |                                                |
-| tegund        | Postcode (e.g. 101)                            |
-| vidsk         | Additional information                         |
-| x_isn93       | Coordinate X (ISN93)                           |
-| y_isn93       | Coordinate Y (ISN93)                           |
+| Key           |                                                         |
+| ------------- |---------------------------------------------------------|
+| bokst         | House letter                                            |
+| byggd         |                                                         |
+| heiti_nf      | Street name (nominative case), e.g. 'Öldugata'          |
+| heiti_tgf     | Street name (dative case), e.g. 'Öldugötu'              |
+| hnitnum       |                                                         |
+| husnr         | House number                                            |
+| landnr        |                                                         |
+| lat_wgs84     | Latitude (WGS84 coordinates)                            |
+| long_wgs84    | Longitude (WGS84 coordinates)                           |
+| postnr        | Postcode (e.g. 101)                                     |
+| serheiti      | Special name                                            |
+| stadur_nf     | Placename (nominative case), e.g. 'Selfoss'             |
+| stadur_tgf    | Placename (dative case), e.g. 'Selfossi'                |
+| svaedi        | Area (e.g. 'Höfuðborgarsvæðið', 'Norðurland')           |
+| svfnr         |                                                         |
+| tegund        | Postcode (e.g. 101)                                     |
+| vidsk         | Additional information                                  |
+| x_isn93       | Coordinate X (ISN93)                                    |
+| y_isn93       | Coordinate Y (ISN93)                                    |
+| svaedi        | Area (e.g. 'Norðurland' or 'Höfuðborgarsvæðið'          |
+| stadur_nf     | Place name (nominative case), e.g. 'Selfoss'            |
+| stadur_tgf    | Place name (dative case), e.g. 'Selfossi'               |
+| tegund        | Type (either 'Þéttbýli' (urban) or 'Dreifbýli' (rural)) |
 
 ### Postcodes
 
