@@ -107,7 +107,7 @@ def iceaddr_suggest(search_str, limit=100):
         
         # Street number
         q += ' AND husnr=? '
-        qargs.append(int(addr[1]))
+        qargs.append(addr[1])
         
         # Street number's trailing character
         if len(addr) == 3:
