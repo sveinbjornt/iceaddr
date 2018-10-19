@@ -53,6 +53,10 @@ def test_address_suggestions():
     res = iceaddr_suggest('Öldugötu 4, Rey')
     assert [n['stadur_tgf'] for n in res] == ['Reykjavík', 'Reyðarfirði']
     
+    res = iceaddr_suggest('Öldugötu 4b, 621')
+    assert res[0]['stadur_tgf'] == 'Dalvík'
+    
+    assert len(iceaddr_suggest('Kl')) == 0 # always empty for fewer than 3 chars
     assert len(iceaddr_suggest('Stærri B')) == 1
     assert len(iceaddr_suggest('Öldu', limit=75)) == 75
 

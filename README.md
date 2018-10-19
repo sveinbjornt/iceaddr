@@ -134,10 +134,10 @@ The default suggestion limit is 100.
 ```python
 >>> from iceaddr import postcodes
 >>> postcodes[400]
-{   'area': 'Vesturland og Vestfirðir', 
-    'placename_nf': 'Ísafjörður', 
-    'placename_tgf': 'Ísafirði', 
-    'type': 'Þéttbýli' }
+{   'svaedi': 'Vesturland og Vestfirðir', 
+    'stadur_nf': 'Ísafjörður', 
+    'stadur_tgf': 'Ísafirði', 
+    'tegund': 'Þéttbýli' }
 ```
 
 ## Version History

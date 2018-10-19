@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
-
 """
-    
     Fetch list of postcodes from the Icelandic postal service,
     create and print dict mapping postcode to placename and
     other related information. Also adds placenames in the 
@@ -9,7 +7,6 @@
     includes placenames in dative (þágufall).
     
     https://www.postur.is/gogn/Gotuskra/postnumer.txt
-    
 """
 
 import unicodecsv

@@ -13,17 +13,14 @@ import re
 from .db import shared_db
 from .postcodes import postcodes, postcodes_for_placename
 
-def _add_postcode_info(a):
+def _add_postcode_info(addr):
     """ Look up info about postcode, add keys to address dictionary """
-    if a['postnr']:
-        info = postcodes[a['postnr']]
-        a['stadur_nf'] = info['placename_nf']
-        a['stadur_tgf'] = info['placename_tgf']
-        a['svaedi'] = info['area']
-        a['tegund'] = info['type']
-    return a
+    pn = addr.get('postnr')
+    if pn and postcodes.get(pn): 
+        addr.update(postcodes[pn])
+    return addr
 
-def _run_query(q, qargs):
+def _run_addr_query(q, qargs):
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, qargs)
 
@@ -33,8 +30,9 @@ def iceaddr_lookup(street_name, number=None, letter=None,
     postcode=None, placename=None, limit=100):
     """ Look up all addresses matching criterion """
     
-    # Look up postcodes for placename if no postcode is provided
     pc = [postcode] if postcode else []
+    
+    # Look up postcodes for placename if no postcode is provided
     if placename and not postcode:
         pc = postcodes_for_placename(placename)        
         
@@ -57,7 +55,7 @@ def iceaddr_lookup(street_name, number=None, letter=None,
     q += ' ORDER BY postnr ASC, husnr ASC, bokst ASC LIMIT ?'
     l.append(limit)
     
-    return _run_query(q, l)
+    return _run_addr_query(q, l)
 
 def iceaddr_suggest(search_str, limit=100):
     """ Parse search string and fetch matching addresses. 
@@ -78,46 +76,62 @@ def iceaddr_suggest(search_str, limit=100):
     items = [s.strip().split() for s in search_str.split(',')]
     
     if not [l for l in items if len(l)]:
-        return []
+        return [] # nothing to search for
     
-    q = 'SELECT * FROM stadfong WHERE '
-    qargs = list()
-
     # Street name component
     addr = items[0]
     
-    # Handle street names with more than one word
-    # E.g. "Stærri Bær 1"
-    if re.match('\d+$', addr[-1]): # Has house number
-        addr = [' '.join(addr[:-1]), int(addr[-1])]
+    # Handle street names with more than one word, or trailing character
+    # E.g. "Stærri Bær 1", "Bárugata 17a"
+    if re.match(r'\d+', addr[-1]):
+        addr = [' '.join(addr[:-1]), addr[-1]]
+        
+        m = re.search('[a-zA-Z]$', addr[-1])
+        if m:
+            addr[-1] = addr[-1][:-1]
+            addr.append(m.group(0))
     else:
         addr = [' '.join(addr)]
+    
+    q = 'SELECT * FROM stadfong WHERE '
+    qargs = list()
         
     street_name = addr[0]
     if len(addr) == 1: # "Ölduga"
         q += ' (heiti_nf LIKE ? OR heiti_tgf LIKE ?) '
         qargs.extend([street_name + '%' , street_name + '%'])
-    elif len(addr) == 2: # "Öldugötu 4"
+    elif len(addr) >= 2: # "Öldugötu 4"
+        # Street name
         q += ' (heiti_nf=? OR heiti_tgf=?) '
         qargs.extend([street_name, street_name])
-        street_num = int(addr[1])
+        
+        # Street number
         q += ' AND husnr=? '
-        qargs.append(street_num)
+        qargs.append(int(addr[1]))
+        
+        # Street number's trailing character
+        if len(addr) == 3:
+            q += ' AND bokst=? '
+            qargs.append(addr[2])
     
     # Place name component
     if len(items) > 1 and items[1]:
         pns = items[1]
-        if re.match('\d\d\d$', pns[0]):
-            # We have a postcode
-            q += ' AND postnr=? '
-            qargs.append(pns[0])
+        postcodes = []
+        
+        # Is it a postcode?
+        if re.match(r'\d\d\d$', pns[0]):
+            postcodes.append(pns[0])
         else:
             # Try to look up place name
             pc = postcodes_for_placename(pns[0], partial=True)
             if pc:
-                qp = ' OR '.join([' postnr=? ' for p in pc])
-                q += ' AND (%s) ' % qp
-                qargs.extend(pc)
+                postcodes.extend(pc)
+        
+        if postcodes:
+            qp = ' OR '.join([' postnr=? ' for p in postcodes])
+            q += ' AND (%s) ' % qp
+            qargs.extend(postcodes)
     
     q += ' ORDER BY postnr ASC, husnr ASC, bokst ASC LIMIT ?'
     qargs.append(limit)
@@ -125,4 +139,4 @@ def iceaddr_suggest(search_str, limit=100):
     # print(q)
     # print(qargs)
     
-    return _run_query(q, qargs)
+    return _run_addr_query(q, qargs)
