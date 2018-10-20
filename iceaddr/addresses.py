@@ -23,14 +23,18 @@ def _add_postcode_info(addr):
 def _run_addr_query(q, qargs):
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, qargs)
-
     return [_add_postcode_info(dict(row)) for row in res]
 
+def _capitalize_first_char(s):
+    if s:
+        s = s[:1].upper() + s[1:]
+    return s
+    
 def iceaddr_lookup(street_name, number=None, letter=None, 
     postcode=None, placename=None, limit=50):
     """ Look up all addresses matching criterion """
     
-    street_name = street_name.capitalize()
+    street_name = _capitalize_first_char(street_name)
     
     pc = [postcode] if postcode else []
     
@@ -71,7 +75,8 @@ def iceaddr_suggest(search_str, limit=50):
         Öldugata 4, Reykjavík
         Öldugata 4, 101 Reykjavík
     """
-    search_str = search_str.strip().capitalize()
+    
+    search_str = _capitalize_first_char(search_str.strip())
     if not search_str or len(search_str) < 3:
         return []
     
@@ -97,7 +102,7 @@ def iceaddr_suggest(search_str, limit=50):
     
     q = 'SELECT * FROM stadfong WHERE '
     qargs = list()
-        
+    
     street_name = addr[0]
     if len(addr) == 1: # "Ölduga"
         q += ' (heiti_nf LIKE ? OR heiti_tgf LIKE ?) '
