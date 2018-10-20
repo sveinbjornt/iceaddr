@@ -746,6 +746,6 @@ def postcodes_for_placename(pn, partial=False):
             if n.startswith(p) or t.startswith(p):
                 matches.append(k)
         elif n == p or t == p:
-                matches.append(k)        
+            matches.append(k)        
             
     return matches

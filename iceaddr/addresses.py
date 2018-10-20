@@ -14,7 +14,7 @@ from .db import shared_db
 from .postcodes import postcodes, postcodes_for_placename
 
 def _add_postcode_info(addr):
-    """ Look up info about postcode, add keys to address dictionary """
+    """ Look up postcode info, add keys to address dictionary """
     pn = addr.get('postnr')
     if pn and postcodes.get(pn): 
         addr.update(postcodes[pn])
@@ -29,6 +29,8 @@ def _run_addr_query(q, qargs):
 def iceaddr_lookup(street_name, number=None, letter=None, 
     postcode=None, placename=None, limit=50):
     """ Look up all addresses matching criterion """
+    
+    street_name = street_name.capitalize()
     
     pc = [postcode] if postcode else []
     
@@ -69,7 +71,7 @@ def iceaddr_suggest(search_str, limit=50):
         Öldugata 4, Reykjavík
         Öldugata 4, 101 Reykjavík
     """
-    search_str = search_str.strip()
+    search_str = search_str.strip().capitalize()
     if not search_str or len(search_str) < 3:
         return []
     
@@ -86,7 +88,7 @@ def iceaddr_suggest(search_str, limit=50):
     if re.match(r'\d+', addr[-1]):
         addr = [' '.join(addr[:-1]), addr[-1]]
         
-        m = re.search('[a-zA-Z]$', addr[-1])
+        m = re.search('([a-zA-Z])$', addr[-1])
         if m:
             addr[-1] = addr[-1][:-1]
             addr.append(m.group(0).lower())
@@ -99,7 +101,7 @@ def iceaddr_suggest(search_str, limit=50):
     street_name = addr[0]
     if len(addr) == 1: # "Ölduga"
         q += ' (heiti_nf LIKE ? OR heiti_tgf LIKE ?) '
-        qargs.extend([street_name + '%' , street_name + '%'])
+        qargs.extend([street_name + '%', street_name + '%'])
     elif len(addr) >= 2: # "Öldugötu 4"
         # Street name
         q += ' (heiti_nf=? OR heiti_tgf=?) '
@@ -136,8 +138,5 @@ def iceaddr_suggest(search_str, limit=50):
     
     q += ' ORDER BY postnr ASC, husnr ASC, bokst ASC LIMIT ?'
     qargs.append(limit)
-    
-    # print(q)
-    # print(qargs)
     
     return _run_addr_query(q, qargs)

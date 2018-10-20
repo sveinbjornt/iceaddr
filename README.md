@@ -39,7 +39,7 @@ $ pip install iceaddr
   'y_isn93': 408290.561363636}]
 ```
 
-### Look up address with placename
+### Look up address with place name
 
 ```python
 >>> from iceaddr import iceaddr_lookup
@@ -92,7 +92,7 @@ For natural search string queries, the module provides `iceaddr_suggest()`:
 151
 ```
 
-The default suggestion limit is 50.
+The default limit on results from both functions is 50.
 
 ### Keys
 
@@ -109,8 +109,8 @@ The default suggestion limit is 50.
 | long_wgs84    | Longitude (WGS84 coordinates)                           |
 | postnr        | Postcode (e.g. 101)                                     |
 | serheiti      | Special name                                            |
-| stadur_nf     | Placename (nominative case), e.g. 'Selfoss'             |
-| stadur_tgf    | Placename (dative case), e.g. 'Selfossi'                |
+| stadur_nf     | Place name (nominative case), e.g. 'Selfoss'            |
+| stadur_tgf    | Place name (dative case), e.g. 'Selfossi'               |
 | svaedi        | Area (e.g. 'Höfuðborgarsvæðið', 'Norðurland')           |
 | svfnr         |                                                         |
 | tegund        | Postcode (e.g. 101)                                     |

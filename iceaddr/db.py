@@ -12,7 +12,6 @@ import sqlite3
 import pkg_resources
 
 class SharedDB():
-    db_conn = None
     
     def __init__(self):
         self.db_conn = None

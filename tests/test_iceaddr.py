@@ -17,9 +17,9 @@ from iceaddr import iceaddr_lookup, iceaddr_suggest, postcodes_for_placename
 def test_address_lookup():
     ADDR_TO_POSTCODE = [
         ['Öldugata', 4, 'Reykjavík', 101],
-        ['Öldugötu', 12, 'Hafnarfirði', 220],
+        ['öldugötu', 12, 'hafnarfirði', 220],
         ['Tómasarhaga', 12, 'Reykjavík', 107],
-        ['Smiðjuvegur', 22, None, 200]
+        ['smiðjuvegur', 22, None, 200]
     ]
     
     for a in ADDR_TO_POSTCODE:
@@ -31,7 +31,7 @@ def test_address_lookup():
     
     POSTCODE_TO_PLACENAME = [
         ['Öldugata', 4, 101, 'Reykjavík', 'Höfuðborgarsvæðið', 'Þéttbýli'],
-        ['Dagverðardalur', 11, 400, 'Ísafjörður', 'Vesturland og Vestfirðir', 'Þéttbýli'],
+        ['dagverðardalur', 11, 400, 'Ísafjörður', 'Vesturland og Vestfirðir', 'Þéttbýli'],
         ['Höfðabraut', 3, 801, 'Selfoss', 'Suðurland og Reykjanes', 'Dreifbýli']
     ]
     
@@ -50,18 +50,19 @@ def test_address_suggestions():
     assert res[0]['husnr'] == 4
     assert res[0]['stadur_nf'] == 'Reykjavík'
     
-    res = iceaddr_suggest('Öldugötu 4, Rey')
+    res = iceaddr_suggest('Öldugata 4, Rey')
     assert [n['stadur_tgf'] for n in res] == ['Reykjavík', 'Reyðarfirði']
     
-    res = iceaddr_suggest('Öldugötu 4b, 621')
+    res = iceaddr_suggest('öldugötu 4b, 621')
+    assert res[0]['bokst'] == 'b'
     assert res[0]['stadur_tgf'] == 'Dalvík'
     
-    assert iceaddr_suggest('Öldugötu a4B') == []
+    assert iceaddr_suggest('Öldugata a4B') == []
     assert iceaddr_suggest('Öldugötu 4Baaa') == []
     
     assert len(iceaddr_suggest('Kl')) == 0 # always empty for fewer than 3 chars
     assert len(iceaddr_suggest('Stærri B')) == 1
-    assert len(iceaddr_suggest('Öldu', limit=75)) == 75
+    assert len(iceaddr_suggest('öldu', limit=75)) == 75
 
 def test_postcode_lookup():
     assert len(postcodes_for_placename('Kópavogur')) == 4
