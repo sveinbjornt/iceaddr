@@ -146,6 +146,7 @@ The default limit on results from both functions is 50.
 
 ## Version History
 
+* 0.2: Added `iceaddr_suggest`, result limit, changed key names for postcode dicts
 * 0.1.2: Initial release
 
 ## BSD License 

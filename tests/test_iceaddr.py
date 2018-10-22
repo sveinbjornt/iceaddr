@@ -41,6 +41,7 @@ def test_address_lookup():
         assert res[0]['svaedi'] == p[4]
         assert res[0]['tegund'] == p[5]
     
+    assert len(iceaddr_lookup('Stærri-Árskógi', postcode=621)) > 0
     assert len(iceaddr_lookup('Grundarstíg')) > 10
     assert len(iceaddr_lookup('Grundarstíg', limit=2)) == 2
 
