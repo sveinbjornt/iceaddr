@@ -1,9 +1,7 @@
 # -*- encoding: utf-8 -*-
 """
-    
     iceaddr: Look up information about Icelandic street addresses and postcodes
     Copyright (c) 2018 Sveinbjorn Thordarson
-    
 """
 
 from __future__ import unicode_literals
@@ -50,7 +48,7 @@ def iceaddr_lookup(street_name, number=None, letter=None,
     if letter:
         q += ' AND bokst=? '
         l.append(letter)
-    if len(pc):
+    if pc:
         qp = ' OR '.join([' postnr=?' for p in pc])
         l.extend(pc)
         q += ' AND (%s) ' % qp

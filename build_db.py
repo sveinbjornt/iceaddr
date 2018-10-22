@@ -23,14 +23,14 @@ from urllib.request import urlopen
 STADFONG_REMOTE_URL = "ftp://ftp.skra.is/skra/STADFANG.dsv.zip"
 DSV_FILENAME = "STADFANG.dsv"
 
-cols = ["hnitnum", "svfnr", "byggd", "landnr", "postnr", 
+COLS = ["hnitnum", "svfnr", "byggd", "landnr", "postnr", 
         "heiti_nf", "heiti_tgf", "husnr", "bokst", "serheiti", 
         "vidsk", "lat_wgs84", "long_wgs84", "x_isn93", "y_isn93"]
 
 def create_db(path):
     dbconn = sqlite3.connect(path)
 
-    addresses_table_sql = """
+    create_table_sql = """
     CREATE TABLE stadfong (
     hnitnum INTEGER UNIQUE PRIMARY KEY NOT NULL, 
     svfnr INTEGER,
@@ -49,7 +49,8 @@ def create_db(path):
     y_isn93 REAL
     );
     """
-    dbconn.cursor().execute(addresses_table_sql)
+    
+    dbconn.cursor().execute(create_table_sql)
     
     return dbconn
 
@@ -66,10 +67,10 @@ def insert_address_entry(e):
         e[k] = e[k].strip()
     
     # Icelandic to English decimal points
-    e['LAT_WGS84'] = e['LAT_WGS84'].replace(',','.')
-    e['LONG_WGS84'] = e['LONG_WGS84'].replace(',','.')
-    e['X_ISN93'] = e['X_ISN93'].replace(',','.')
-    e['Y_ISN93'] = e['Y_ISN93'].replace(',','.')
+    e['LAT_WGS84'] = e['LAT_WGS84'].replace(',', '.')
+    e['LONG_WGS84'] = e['LONG_WGS84'].replace(',', '.')
+    e['X_ISN93'] = e['X_ISN93'].replace(',', '.')
+    e['Y_ISN93'] = e['Y_ISN93'].replace(',', '.')
 
     to_int = ['BYGGD', 'HEINUM', 'HNITNUM', 'HUSNR', 'LANDNR', 'POSTNR']
     to_float = ['LAT_WGS84', 'LONG_WGS84', 'X_ISN93', 'Y_ISN93']
@@ -95,7 +96,7 @@ def insert_address_entry(e):
                 e[k] = None
     
     try:
-        l = [e[c.upper()] for c in cols]
+        l = [e[c.upper()] for c in COLS]
         c = dbconn.cursor()
         c.execute('INSERT INTO stadfong VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', l)        
     except Exception as e:
@@ -112,7 +113,7 @@ if __name__ == "__main__":
         print("Fetching file at URL %s" % STADFONG_REMOTE_URL)
         resp = urlopen(STADFONG_REMOTE_URL)
         zipfile = ZipFile(BytesIO(resp.read()))
-        f = zipfile.open("STADFANG.dsv")   
+        f = zipfile.open("STADFANG.dsv")
     else:
         f = open(stadfong_path, "rb")
     
