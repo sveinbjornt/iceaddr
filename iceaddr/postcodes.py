@@ -739,13 +739,12 @@ def postcodes_for_placename(pn, partial=False):
     p = pn.lower()
     matches = list()
     
-    for k,v in postcodes.items():
-        n = v['stadur_nf'].lower()
-        t = v['stadur_tgf'].lower()
-        if partial:
-            if n.startswith(p) or t.startswith(p):
-                matches.append(k)
-        elif n == p or t == p:
+    for k, v in postcodes.items():
+        nf = v['stadur_nf'].lower()
+        tgf = v['stadur_tgf'].lower()
+        if partial and (nf.startswith(p) or tgf.startswith(p)):
+            matches.append(k)
+        elif nf == p or tgf == p:
             matches.append(k)        
             
     return matches

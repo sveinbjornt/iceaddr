@@ -27,7 +27,7 @@ def test_address_lookup():
         assert res[0]['postnr'] == a[3]
     
     res = iceaddr_lookup('Brattagata', number=4, letter='b')
-    assert len(res) and res[0]['postnr'] == 310 and res[0]['stadur_nf'] == 'Borgarnes'
+    assert res and res[0]['postnr'] == 310 and res[0]['stadur_nf'] == 'Borgarnes'
     
     POSTCODE_TO_PLACENAME = [
         ['Öldugata', 4, 101, 'Reykjavík', 'Höfuðborgarsvæðið', 'Þéttbýli'],
@@ -57,6 +57,9 @@ def test_address_suggestions():
     res = iceaddr_suggest('öldugötu 4b, 621')
     assert res[0]['bokst'] == 'b'
     assert res[0]['stadur_tgf'] == 'Dalvík'
+    
+    res = iceaddr_suggest('öldugötu 4B, 621')
+    assert res and res[0]['bokst'] == 'b'
     
     assert iceaddr_suggest('Öldugata a4B') == []
     assert iceaddr_suggest('Öldugötu 4Baaa') == []

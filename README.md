@@ -113,14 +113,10 @@ The default limit on results from both functions is 50.
 | stadur_tgf    | Place name (dative case), e.g. 'Selfossi'               |
 | svaedi        | Area (e.g. 'Höfuðborgarsvæðið', 'Norðurland')           |
 | svfnr         |                                                         |
-| tegund        | Postcode (e.g. 101)                                     |
+| tegund        | Type (either 'Þéttbýli' (urban) or 'Dreifbýli' (rural)) |
 | vidsk         | Additional information                                  |
 | x_isn93       | Coordinate X (ISN93)                                    |
 | y_isn93       | Coordinate Y (ISN93)                                    |
-| svaedi        | Area (e.g. 'Norðurland' or 'Höfuðborgarsvæðið'          |
-| stadur_nf     | Place name (nominative case), e.g. 'Selfoss'            |
-| stadur_tgf    | Place name (dative case), e.g. 'Selfossi'               |
-| tegund        | Type (either 'Þéttbýli' (urban) or 'Dreifbýli' (rural)) |
 
 ### Postcodes
 

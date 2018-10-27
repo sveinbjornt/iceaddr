@@ -24,21 +24,19 @@ def _run_addr_query(q, qargs):
     return [_add_postcode_info(dict(row)) for row in res]
 
 def _capitalize_first_char(s):
-    if s:
-        s = s[:1].upper() + s[1:]
-    return s
+    return s[:1].upper() + s[1:] if s else s
     
 def iceaddr_lookup(street_name, number=None, letter=None, 
     postcode=None, placename=None, limit=50):
     """ Look up all addresses matching criterion """
     
-    street_name = _capitalize_first_char(street_name)
+    street_name = _capitalize_first_char(street_name.strip())
     
     pc = [postcode] if postcode else []
     
     # Look up postcodes for placename if no postcode is provided
     if placename and not postcode:
-        pc = postcodes_for_placename(placename)        
+        pc = postcodes_for_placename(placename.strip())
         
     q = 'SELECT * FROM stadfong WHERE (heiti_nf=? OR heiti_tgf=?)'
     l = [street_name, street_name]
@@ -129,8 +127,8 @@ def iceaddr_suggest(search_str, limit=50):
         if re.match(r'\d\d\d$', pns[0]):
             postcodes.append(pns[0])
         else:
-            # Try to look up place name
-            pc = postcodes_for_placename(pns[0], partial=True)
+            # Try to look up placename
+            pc = postcodes_for_placename(pns[0].strip(), partial=True)
             if pc:
                 postcodes.extend(pc)
         
