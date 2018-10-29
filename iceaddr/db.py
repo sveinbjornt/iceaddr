@@ -9,7 +9,9 @@
 from __future__ import unicode_literals
 
 import sqlite3
-import pkg_resources
+from pkg_resources import resource_filename
+
+DB_REL_PATH = 'resources/stadfangaskra.db'
 
 class SharedDB():
     
@@ -19,7 +21,7 @@ class SharedDB():
     def connection(self):
         # Open connection lazily
         if not self.db_conn:
-            db_path = pkg_resources.resource_filename(__name__, 'resources/stadfangaskra.db')
+            db_path = resource_filename(__name__, DB_REL_PATH)
             self.db_conn = sqlite3.connect(db_path)
             self.db_conn.row_factory = lambda c, r: dict(zip([col[0] for col in c.description], r))
             

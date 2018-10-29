@@ -22,6 +22,7 @@ from urllib.request import urlopen
 
 STADFONG_REMOTE_URL = "ftp://ftp.skra.is/skra/STADFANG.dsv.zip"
 DSV_FILENAME = "STADFANG.dsv"
+DEFAULT_DBNAME = 'stadfangaskra.db'
 
 COLS = ["hnitnum", "svfnr", "byggd", "landnr", "postnr", 
         "heiti_nf", "heiti_tgf", "husnr", "bokst", "serheiti", 
@@ -106,14 +107,14 @@ def insert_address_entry(e):
 if __name__ == "__main__":
     # Optional args to specify input and output files
     stadfong_path = sys.argv[1] if len(sys.argv) > 1 else DSV_FILENAME
-    db_path = sys.argv[2] if len(sys.argv) > 2 else 'stadfangaskra.db'
+    db_path = sys.argv[2] if len(sys.argv) > 2 else DEFAULT_DBNAME
     
     if stadfong_path == DSV_FILENAME and not Path(stadfong_path).is_file():
         # Fetch remote file
         print("Fetching file at URL %s" % STADFONG_REMOTE_URL)
         resp = urlopen(STADFONG_REMOTE_URL)
         zipfile = ZipFile(BytesIO(resp.read()))
-        f = zipfile.open("STADFANG.dsv")
+        f = zipfile.open(DSV_FILENAME)
     else:
         f = open(stadfong_path, "rb")
     
