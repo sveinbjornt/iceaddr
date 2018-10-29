@@ -133,7 +133,7 @@ The default limit on results from both functions is 50.
 
 ```python
 >>> from iceaddr import postcodes
->>> postcodes[400]
+>>> postcodes.get(400)
 {   'svaedi': 'Vesturland og Vestfirðir', 
     'stadur_nf': 'Ísafjörður', 
     'stadur_tgf': 'Ísafirði', 
@@ -142,8 +142,8 @@ The default limit on results from both functions is 50.
 
 ## Version History
 
-* 0.2: Added `iceaddr_suggest`, result limit, changed key names for postcode dicts
-* 0.1.2: Initial release
+* 0.2: Added `iceaddr_suggest`, result limit, changed key names for postcode dicts (22/10/2018)
+* 0.1.2: Initial release (10/10/2018)
 
 ## BSD License 
 

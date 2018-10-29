@@ -1,3 +1,4 @@
 
 TODO LIST
 
+* iceaddr_suggest relies on comma separator to separate street address and place name. Could be made smarter.

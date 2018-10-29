@@ -70,7 +70,8 @@ def test_address_suggestions():
 
 def test_postcode_lookup():
     assert len(postcodes_for_placename('Kópavogur')) == 4
-    assert len(postcodes_for_placename('Kópavogi')) == 4
+    assert len(postcodes_for_placename('kópavogi')) == 4
     assert len(postcodes_for_placename('kópav', partial=True)) == 4
     assert postcodes_for_placename('Selfossi') == [800, 801, 802]
+    assert postcodes_for_placename('selfoss') == [800, 801, 802]
     assert postcodes_for_placename('SELFOS', partial=True) == [800, 801, 802]
