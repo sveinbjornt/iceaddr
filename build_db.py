@@ -3,22 +3,26 @@
     Create stadfong address database from from the
     DSV file at ftp://ftp.skra.is/skra/STADFANG.dsv.zip
     
-    From data compiled by Registers Iceland, see:
+    From data compiled by Registers Iceland (CC-BY):
         https://opingogn.is/dataset/stadfangaskra
-    
-    License: http://opendefinition.org/licenses/cc-by/
-
+        https://opendefinition.org/licenses/cc-by/
 """
 
 from __future__ import print_function
+from __future__ import unicode_literals
+
+from builtins import input
+
 import sys
 import os
 import sqlite3
 import unicodecsv
+import humanize
 from pathlib import Path
 from io import BytesIO
 from zipfile import ZipFile
 from urllib.request import urlopen
+
 
 STADFONG_REMOTE_URL = "ftp://ftp.skra.is/skra/STADFANG.dsv.zip"
 DSV_FILENAME = "STADFANG.dsv"
@@ -27,6 +31,7 @@ DEFAULT_DBNAME = 'stadfangaskra.db'
 COLS = ["hnitnum", "svfnr", "byggd", "landnr", "postnr", 
         "heiti_nf", "heiti_tgf", "husnr", "bokst", "serheiti", 
         "vidsk", "lat_wgs84", "long_wgs84", "x_isn93", "y_isn93"]
+
 
 def create_db(path):
     dbconn = sqlite3.connect(path)
@@ -75,7 +80,7 @@ def insert_address_entry(e):
 
     to_int = ['BYGGD', 'HEINUM', 'HNITNUM', 'HUSNR', 'LANDNR', 'POSTNR']
     to_float = ['LAT_WGS84', 'LONG_WGS84', 'X_ISN93', 'Y_ISN93']
-        
+
     for k in to_int:
         if e[k] == '':
             e[k] = None
@@ -85,7 +90,7 @@ def insert_address_entry(e):
             except:
                 print("Failed to convert '" + k + "' to int, setting to null")
                 e[k] = None
-            
+    
     for k in to_float:
         if e[k] == '':
             e[k] = None
@@ -97,9 +102,9 @@ def insert_address_entry(e):
                 e[k] = None
     
     try:
-        l = [e[c.upper()] for c in COLS]
+        qargs = [e[c.upper()] for c in COLS]
         c = dbconn.cursor()
-        c.execute('INSERT INTO stadfong VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', l)        
+        c.execute('INSERT INTO stadfong VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', qargs)
     except Exception as e:
         print(e)
 
@@ -110,8 +115,7 @@ if __name__ == "__main__":
     db_path = sys.argv[2] if len(sys.argv) > 2 else DEFAULT_DBNAME
     
     if stadfong_path == DSV_FILENAME and not Path(stadfong_path).is_file():
-        # Fetch remote file
-        print("Fetching file at URL %s" % STADFONG_REMOTE_URL)
+        print("Fetching remote file %s" % STADFONG_REMOTE_URL)
         resp = urlopen(STADFONG_REMOTE_URL)
         zipfile = ZipFile(BytesIO(resp.read()))
         f = zipfile.open(DSV_FILENAME)
@@ -120,7 +124,11 @@ if __name__ == "__main__":
     
     # Delete previous db file
     if Path(db_path).is_file():
-        os.remove(db_path)
+        if input("%s exists, overwrite? (y/n): " % db_path).lower().startswith('y'):
+            os.remove(db_path)
+        else:
+            print("Aborting")
+            sys.exit()
     
     dbconn = create_db(db_path)
     
@@ -134,6 +142,8 @@ if __name__ == "__main__":
             sys.stdout.flush()
     
     dbconn.commit()
-    print("\nCreated stadfong database with %d entries" % cnt)
     
+    bytesize = os.stat(db_path).st_size
+    human_size = humanize.naturalsize(bytesize)
     
+    print("\nCreated stadfong database with %d entries (%s)" % (cnt, human_size))

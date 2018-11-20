@@ -9,6 +9,8 @@
     https://www.postur.is/gogn/Gotuskra/postnumer.txt
 """
 
+from __future__ import unicode_literals
+
 import unicodecsv
 import requests
 from contextlib import closing
@@ -36,6 +38,7 @@ if __name__ == "__main__":
             try:
                 placename_nominative = s.tree.S.IP.VP_SEQ.PP.NP.lemmas[0].replace('-', '')
             except Exception as e:
+                print(e)
                 print('Failed to generate nominative form of placename: ' + r['Staður'])
                 placename_nominative = r['Staður']
             
