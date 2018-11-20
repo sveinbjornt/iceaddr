@@ -2,7 +2,9 @@
 [![Build Status](https://travis-ci.org/sveinbjornt/iceaddr.svg?branch=master)](https://travis-ci.org/sveinbjornt/iceaddr)
 ### Look up Icelandic street addresses and postcodes
 
-Python module to look up and get information about Icelandic street addresses and postcodes. The underlying data is taken from [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic Address Registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/)), and from the postcode table provided by [Postur.is](https://www.postur.is/einstaklingar/posthus/postnumer/gagnaskrar/).
+Python (2 and 3) module to look up and get information about Icelandic street addresses and postcodes. The underlying data is taken from [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic Address Registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/)), and from the postcode table provided by [Postur.is](https://www.postur.is/einstaklingar/posthus/postnumer/gagnaskrar/).
+
+
 
 ## Installation
 
