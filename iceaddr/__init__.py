@@ -8,3 +8,4 @@ __author__ = "Sveinbjorn Thordarson"
 
 from .addresses import *
 from .postcodes import *
+from .placenames import *
