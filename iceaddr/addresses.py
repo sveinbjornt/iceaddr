@@ -48,9 +48,11 @@ def iceaddr_lookup(
     if number:
         q += " AND husnr=? "
         l.append(number)
-    if letter:
         q += " AND bokst=? "
-        l.append(letter)
+        if letter:
+            l.append(letter)
+        else:
+            l.append('')
     if pc:
         qp = " OR ".join([" postnr=?" for p in pc])
         l.extend(pc)
