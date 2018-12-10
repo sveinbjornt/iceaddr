@@ -1,6 +1,8 @@
 postnumer.txt
 gotuskra.txt
-#stadfangaskra.db
+/stadfangaskra.db
+ornefni.shp
+venv
 STADFANG.dsv
 __pycache__/
 *.py[cod]
