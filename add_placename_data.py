@@ -9,7 +9,7 @@ from pprint import pprint
 
 
 SHAPE_FILE = "ornefni.shp"
-LAYERS = ["IS50V_ornefni_flakar_17062018"]
+LAYERS = ["IS50V_ornefni_linur_17062018", "IS50V_ornefni_flakar_17062018", "IS50V_ornefni_punktar_17062018"]
 DEFAULT_DBNAME = "stadfangaskra.db"
 
 
@@ -88,13 +88,14 @@ def create_table(dbpath):
     );
     """
 
-    dbconn.cursor().execute(create_table_sql)
-
+    try:
+        dbconn.cursor().execute(create_table_sql)
+    except:
+        
+        pass
     return dbconn
 
-
 dbc = create_table(DEFAULT_DBNAME)
-
 cursor = dbc.cursor()
 
 
@@ -106,21 +107,32 @@ for layer in LAYERS:
             c = i["geometry"]["coordinates"]
             nc = len(c)
 
-            firstcoords = c[0]
+            # Special handling of lines (e.g. rivers)
+            if layer.startswith('IS50V_ornefni_linur'):
+                firstcoords = c[0]
 
-            if type(firstcoords[0]) is list:
-                firstcoords = firstcoords[0]
+                if type(firstcoords[0]) is list:
+                    firstcoords = firstcoords[0]
 
-            cp = center_point(firstcoords)
+                if type(firstcoords) is list:
+                    firstcoords = firstcoords[0]
+                cp = firstcoords
+            # Special handling of flakes - use center point
+            elif type(c) is list:
+
+                firstcoords = c[0]
+
+                if type(firstcoords[0]) is list:
+                    firstcoords = firstcoords[0]
+
+                cp = center_point(firstcoords)
+            # Just a point
+            else:
+                cp = c
+
             gps = isnet93_to_wgs84(cp[0], cp[1])
 
-            print(n)
-            print(cp)
-
             cursor.execute("INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)", (n, fl, float(gps['lat']), float(gps['lng']) ) )
-            # if nc > 1 and n == 'Hólsvatn':
-            #     print(n)
-            #     print(nc)
-            #     print(c)
+
 
         dbc.commit()
