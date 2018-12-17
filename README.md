@@ -142,8 +142,21 @@ The default limit on results from both functions is 50.
     'tegund': 'Þéttbýli' }
 ```
 
+### Placenames ("örnefni")
+
+```python
+>>> from iceaddr import placename_lookup
+>>> placename_lookup('Meðalfellsvatn')
+[{'flokkur': 'Vatnaörnefni Mið',
+  'id': 2339,
+  'lat_wgs84': 64.3112049,
+  'long_wgs84': -21.5997926,
+  'nafn': 'Meðalfellsvatn'}]
+```
+
 ## Version History
 
+* 0.3.1: Added more placenames from LMÍ data, support for multithreaded use
 * 0.3: Added `placename_lookup` to look up coordinates for Icelandic placenames + minor fixes (10/12/2018)
 * 0.2: Added `iceaddr_suggest`, result limit, changed key names for postcode dicts (22/10/2018)
 * 0.1.2: Initial release (10/10/2018)
