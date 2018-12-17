@@ -24,7 +24,7 @@ class SharedDB:
         # Open connection lazily
         if not self.db_conn:
             db_path = resource_filename(__name__, DB_REL_PATH)
-            self.db_conn = sqlite3.connect(db_path)
+            self.db_conn = sqlite3.connect(db_path, check_same_thread=False)
             self.db_conn.row_factory = lambda c, r: dict(
                 zip([col[0] for col in c.description], r)
             )
