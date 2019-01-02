@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="iceaddr",
-    version="0.3.1",
+    version="0.3.2",
     author="Sveinbjorn Thordarson",
     author_email="sveinbjorn@sveinbjorn.org",
     license='BSD',
@@ -24,8 +24,6 @@ setuptools.setup(
         "Intended Audience :: Developers",
         "Natural Language :: Icelandic",
         "Programming Language :: Python",
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',

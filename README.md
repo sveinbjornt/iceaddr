@@ -156,6 +156,7 @@ The default limit on results from both functions is 50.
 
 ## Version History
 
+* 0.3.2: Added municipalities and various BÍN placenames to ornefni database (02/01/2019)
 * 0.3.1: Added more placenames from LMÍ data, support for multithreaded use
 * 0.3: Added `placename_lookup` to look up coordinates for Icelandic placenames + minor fixes (10/12/2018)
 * 0.2: Added `iceaddr_suggest`, result limit, changed key names for postcode dicts (22/10/2018)
