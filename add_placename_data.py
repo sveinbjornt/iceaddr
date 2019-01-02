@@ -8,8 +8,15 @@ import sqlite3
 from pprint import pprint
 
 
-SHAPE_FILE = "ornefni.shp"
-LAYERS = ["IS50V_ornefni_linur_17062018", "IS50V_ornefni_flakar_17062018", "IS50V_ornefni_punktar_17062018"]
+SHAPE_FILES = ["ornefni.shp", "mork.shp"]
+LAYERS = {
+    "ornefni.shp": [
+        "IS50V_ornefni_linur_17062018",
+        "IS50V_ornefni_flakar_17062018",
+        "IS50V_ornefni_punktar_17062018",
+    ],
+    "mork.shp": [],
+}
 DEFAULT_DBNAME = "stadfangaskra.db"
 
 
@@ -75,6 +82,7 @@ def center_point(coords):
 
     return (x, y)
 
+
 def create_table(dbpath):
     dbconn = sqlite3.connect(dbpath)
 
@@ -91,13 +99,43 @@ def create_table(dbpath):
     try:
         dbconn.cursor().execute(create_table_sql)
     except:
-        
         pass
+
     return dbconn
 
+
 dbc = create_table(DEFAULT_DBNAME)
+if not dbc:
+    print("Failed to connect to DB")
+    exit()
+
 cursor = dbc.cursor()
 
+
+
+f = open('placename_additions.txt', 'rU')
+for line in f.readlines():
+    if not line.strip() or line.strip().startswith('#'):
+        continue
+    comp = line.split(':')
+    first = comp[0]
+    last = comp[-1].strip()
+    try:
+        (lat, lon, fl) = last.split(',')
+        lat = float(lat) if lat else None
+        lon = float(lon) if lon else None
+    except:
+        print(line)
+        raise
+
+    cursor.execute(
+                "INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)",
+                (first, fl, lat, lon),
+            )
+
+dbc.commit()
+
+exit()
 
 for layer in LAYERS:
     with fiona.open(SHAPE_FILE, encoding="utf-8", layer=layer) as src:
@@ -108,7 +146,7 @@ for layer in LAYERS:
             nc = len(c)
 
             # Special handling of lines (e.g. rivers)
-            if layer.startswith('IS50V_ornefni_linur'):
+            if layer.startswith("IS50V_ornefni_linur"):
                 firstcoords = c[0]
 
                 if type(firstcoords[0]) is list:
@@ -132,7 +170,9 @@ for layer in LAYERS:
 
             gps = isnet93_to_wgs84(cp[0], cp[1])
 
-            cursor.execute("INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)", (n, fl, float(gps['lat']), float(gps['lng']) ) )
-
+            cursor.execute(
+                "INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)",
+                (n, fl, float(gps["lat"]), float(gps["lng"])),
+            )
 
         dbc.commit()

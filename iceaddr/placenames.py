@@ -10,8 +10,10 @@ from __future__ import print_function
 import re
 from .db import shared_db
 
-def placename_lookup(placename):
+def placename_lookup(placename, partial=False):
     q = "SELECT * FROM ornefni WHERE nafn=?"
+    if partial:
+    	q = "SELECT * FROM ornefni WHERE nafn LIKE '?%'"
 
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, [placename])

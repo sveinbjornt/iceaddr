@@ -9,4 +9,4 @@ __pycache__/
 *$py.class/
 /dist/
 /*.egg-info
-
+*.shp
