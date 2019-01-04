@@ -162,4 +162,4 @@ if __name__ == "__main__":
     bytesize = os.stat(db_path).st_size
     human_size = humanize.naturalsize(bytesize)
 
-    print("\nCreated stadfong database with %d entries (%s)" % (cnt, human_size))
+    print("\nCreated database with %d entries (%s)" % (cnt, human_size))

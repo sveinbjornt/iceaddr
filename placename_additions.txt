@@ -95,43 +95,47 @@ Héðinsfjarðargöng:66.100303,-18.812030,Jarðgöng
 Norðfjarðargöng:65.117823,-13.956781,Jarðgöng
 Strákagöng:66.183265,-18.918909,Jarðgöng
 Ólafsfjarðargöng:66.079124,-18.571582,Jarðgöng
-Arnarnesgöng:,,Jarðgöng
-Arnarnessgöng:,,Jarðgöng
-Bolungarvíkurgöng:,,Jarðgöng
-Dýrafjarðargöng:,,Jarðgöng
+Arnarnesgöng:66.091667,-23.015,Jarðgöng
+Arnarnessgöng:66.091667,-23.015,Jarðgöng
+Bolungarvíkurgöng:66.132509,-23.175643,Jarðgöng
+Dýrafjarðargöng:65.810408,-23.248449,Jarðgöng
 Fjarðarheiðargöng:,,Jarðgöng
-Fáskrúðsfjarðargöng:,,Jarðgöng
+Fáskrúðsfjarðargöng:64.987778,-14.191389,Jarðgöng
 Holtsgöng:,,Jarðgöng
-Múlagöng:,,Jarðgöng
-Oddsskarðsgöng:,,Jarðgöng
+Múlagöng:66.079124,-18.571582,Jarðgöng
+Oddsskarðsgöng:65.0705,-13.8909,Jarðgöng
+Oddskarðsgöng:65.0705,-13.8909,Jarðgöng
 Sundagöng:,,Jarðgöng
-Vaðlaheiðargöng:,,Jarðgöng
+Vaðlaheiðargöng:65.711836,-17.983228,Jarðgöng
 Vestfjarðagöng:,,Jarðgöng
-Óshlíðargöng:,,Jarðgöng
+Óshlíðargöng:66.132509,-23.175643,Jarðgöng
 
 # Hverfi
 Breiðholt:64.103694,-21.832792,Þéttbýli
-Grafarvogur:64.142553, -21.790784,Þéttbýli
+Grafarvogur:64.142553,-21.790784,Þéttbýli
 Árbær:64.118909,-21.798495,Þéttbýli
+Ytri-Njarðvík:63.973394,-22.504459,Þéttbýli
+Innri-Njarðvík:63.979225,-22.547423,Þéttbýli
 
 # Flugvellir
 Akureyrarflugvöllur:65.654626,-18.075671,Flugvöllur
-Bakkaflugvöllur:63.558531, -20.146442,Flugvöllur
-Egilsstaðaflugvöllur:65.276465, -14.409716,Flugvöllur
-Grímseyjarflugvöllur:66.547823, -18.020919,Flugvöllur
-Keflavíkurflugvöllur:63.978603, -22.634993,Flugvöllur
-Reykjavíkurflugvöllur:64.131880, -21.946564,Flugvöllur
-Vestmannaeyjaflugvöllur:63.425167, -20.269067,Flugvöllur
-Vopnafjarðarflugvöllur:65.720712, -14.850252,Flugvöllur
-Ísafjarðarflugvöllur:66.055591, -23.142066,Flugvöllur
-Hornafjarðarflugvöllur:,,Flugvöllur
-Hólmavíkurflugvöllur:,,Flugvöllur
+Bakkaflugvöllur:63.558531,-20.146442,Flugvöllur
+Egilsstaðaflugvöllur:65.276465,-14.409716,Flugvöllur
+Grímseyjarflugvöllur:66.547823,-18.020919,Flugvöllur
+Keflavíkurflugvöllur:63.978603,-22.634993,Flugvöllur
+Reykjavíkurflugvöllur:64.131880,-21.946564,Flugvöllur
+Vestmannaeyjaflugvöllur:63.425167,-20.269067,Flugvöllur
+Vopnafjarðarflugvöllur:65.720712,-14.850252,Flugvöllur
+Ísafjarðarflugvöllur:66.055591,-23.142066,Flugvöllur
+Hornafjarðarflugvöllur:64.302241,-15.228042,Flugvöllur
+Hólmavíkurflugvöllur:65.701711,-21.696580,Flugvöllur
 Njarðvíkurflugvöllur:,,Flugvöllur
-Reykjahlíðarflugvöllur:,,Flugvöllur
-Selfossflugvöllur:,,Flugvöllur
-Siglufjarðarflugvöllur:,,Flugvöllur
-Stykkishólmsflugvöllur:,,Flugvöllur
-Þórshafnarflugvöllur:,,Flugvöllur
+Reykjahlíðarflugvöllur:65.653994,-16.919424,Flugvöllur
+Selfossflugvöllur:63.92916667,-21.03777778,Flugvöllur
+Siglufjarðarflugvöllur:66.134814,-18.915271,Flugvöllur
+Stykkishólmsflugvöllur:65.060027,-22.755150,Flugvöllur
+Þórshafnarflugvöllur:66.219110,-15.334279,Flugvöllur
+Mývatnsflugvöllur:65.653994,-16.919424,Flugvöllur
 
 # Sýslur
 Austur-Barðastrandarsýsla:,,Sýsla
