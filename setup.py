@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="iceaddr",
-    version="0.3.2",
+    version="0.3.3",
     author="Sveinbjorn Thordarson",
     author_email="sveinbjorn@sveinbjorn.org",
     license='BSD',

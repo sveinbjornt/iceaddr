@@ -116,6 +116,17 @@ Grafarvogur:64.142553,-21.790784,Þéttbýli
 Árbær:64.118909,-21.798495,Þéttbýli
 Ytri-Njarðvík:63.973394,-22.504459,Þéttbýli
 Innri-Njarðvík:63.979225,-22.547423,Þéttbýli
+Norðlingaholt:64.101479,-21.772692,Þéttbýli
+Grafarholt:64.125572,-21.762349,Þéttbýli
+Laugardalur:64.143707,-21.869915,Þéttbýli
+Vesturbær:64.143891,-21.961518,Þéttbýli
+
+# Virkjanir
+Kárahnjúkavirkjun:64.947276,-15.792441,Virkjun
+Búrfellsstöð:64.104325,-19.837262,Virkjun
+
+# Kirkjur
+Kotstrandarkirkja:63.971263,-21.139632,Kirkja
 
 # Flugvellir
 Akureyrarflugvöllur:65.654626,-18.075671,Flugvöllur

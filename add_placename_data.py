@@ -112,26 +112,44 @@ if not dbc:
 cursor = dbc.cursor()
 
 
-
-f = open('placename_additions.txt', 'rU')
+f = open("placename_additions.txt", "rU")
 for line in f.readlines():
-    if not line.strip() or line.strip().startswith('#'):
+    if not line.strip() or line.strip().startswith("#"):
         continue
-    comp = line.split(':')
+    comp = line.split(":")
     first = comp[0]
     last = comp[-1].strip()
     try:
-        (lat, lon, fl) = last.split(',')
+        (lat, lon, fl) = last.split(",")
         lat = float(lat) if lat else None
         lon = float(lon) if lon else None
     except:
         print(line)
         raise
 
-    cursor.execute(
-                "INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)",
-                (first, fl, lat, lon),
-            )
+    # If so, update it
+    # Else, insert it
+
+    # Check if already exists in name and category and is single
+    res = cursor.execute(
+        "SELECT * FROM ornefni WHERE nafn=? AND flokkur=?", [first, fl]
+    )
+    # print(res)
+    matches = [row for row in res]
+    if len(matches) > 1:
+        print("More than one match for " + first)
+    elif len(matches) == 1:
+        print("Updating " + first)
+        theid = matches[0][0]
+        q = "UPDATE ornefni SET nafn=?, flokkur=?, lat_wgs84=?, long_wgs84=? WHERE id=?"
+        qargs = [first, fl, lat, lon, theid]
+        cursor.execute(q, qargs)
+    else:
+        print("Inserting " + first)
+        # cursor.execute(
+        #     "INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)",
+        #     (first, fl, lat, lon),
+        # )
 
 dbc.commit()
 

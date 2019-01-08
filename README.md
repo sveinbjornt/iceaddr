@@ -154,8 +154,11 @@ The default limit on results from both functions is 50.
   'nafn': 'Meðalfellsvatn'}]
 ```
 
+If more than one placename match is found, the results are ordered by size, with precedence given to municipalities and densely populated areas.
+
 ## Version History
 
+* 0.3.3: Minor placename additions, smarter ordering of placename lookup results (08/01/2019)
 * 0.3.2: Added municipalities and various BÍN placenames to ornefni database (02/01/2019)
 * 0.3.1: Added more placenames from LMÍ data, support for multithreaded use
 * 0.3: Added `placename_lookup` to look up coordinates for Icelandic placenames + minor fixes (10/12/2018)
