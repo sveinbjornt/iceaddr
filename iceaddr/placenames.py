@@ -11,9 +11,12 @@ import re
 from .db import shared_db
 
 HARDCODED_PRIORITY = {
-    "Hellisheiði": (64.0221268, -21.3413149),
-    "Snæfellsnes": (64.8731746, -23.0309911),
-    "Mýrdalur": (63.4462885, -19.0832988),
+    "Hellisheiði": (64.0221268, -21.3413149), # Nálægt Rvk fær forgang
+    "Snæfellsnes": (64.8731746, -23.0309911), # Nesið norðan við Reykjanes!
+    "Mýrdalur": (63.4462885, -19.0832988), # Nálægt Vík
+    "Mosfellsheiði": (64.1675067, -21.3733656), # Nálægt Mosó
+    "Bláfjöll": (64.0121886, -21.5617119), # Nálægt Rvk
+    "Bakki": (66.0701681, -17.3481556), # Hjá Húsavík
 }
 
 # This determines the sort order of results
