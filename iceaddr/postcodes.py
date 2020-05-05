@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
 """
 
-    iceaddr: Look up information about Icelandic street addresses and postcodes
-    Copyright (c) 2018 Sveinbjorn Thordarson
+    iceaddr: Look up information about Icelandic streets, addresses, 
+             placenames, landmarks, locations and postcodes.
+
+    Copyright (c) 2018-2020 Sveinbjorn Thordarson.
 
     This file contains code and data related to Icelandic postcodes.
 
@@ -1182,9 +1184,15 @@ POSTCODES = {
 }
 
 
-def postcodes_for_placename(pn, partial=False):
-    """ Returns postcodes given a full or partial placename. """ 
-    p = pn.lower()
+def postcode_lookup(postcode):
+    """ Return postcode info dictionary given a postcode.
+        Accepts either numeric or string argument. """
+    return POSTCODES.get(int(postcode))
+
+
+def postcodes_for_placename(placename, partial=False):
+    """ Returns postcodes matching a full or partial placename. """
+    p = placename.lower()
     matches = list()
 
     for k, v in POSTCODES.items():
