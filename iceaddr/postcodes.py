@@ -4,82 +4,103 @@
     iceaddr: Look up information about Icelandic street addresses and postcodes
     Copyright (c) 2018 Sveinbjorn Thordarson
 
+    This file contains code and data related to Icelandic postcodes.
+
 """
 
 from __future__ import unicode_literals
 
-postcodes = {
+POSTCODES = {
     101: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Miðborg",
+    },
+    102: {
+        "svaedi": "Höfuðborgarsvæðið",
+        "stadur_nf": "Reykjavík",
+        "stadur_tgf": "Reykjavík",
+        "tegund": "Þéttbýli",
+        "lysing": "",
     },
     103: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Háaleitis- og Bústaðahverfi",
     },
     104: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Laugardalur",
     },
     105: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Hlíðar",
     },
     107: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Vesturbær",
     },
     108: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Háaleitis- og Bústaðahverfi",
     },
     109: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Breiðholt",
     },
     110: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Árbær",
     },
     111: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Breiðholt",
     },
     112: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Grafarvogur",
     },
     113: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Grafarholt og Úlfarsárdalur",
     },
     116: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
+        "lysing": "Kjalarnes",
     },
     121: {
         "svaedi": "Höfuðborgarsvæðið",
@@ -189,6 +210,12 @@ postcodes = {
         "stadur_tgf": "Kópavogi",
         "tegund": "Þéttbýli",
     },
+    206: {
+        "svaedi": "Höfuðborgarsvæðið",
+        "stadur_nf": "Kópavogur",
+        "stadur_tgf": "Kópavogi",
+        "tegund": "Þéttbýli",
+    },
     210: {
         "svaedi": "Höfuðborgarsvæðið",
         "stadur_nf": "Garðabær",
@@ -245,9 +272,10 @@ postcodes = {
     },
     235: {
         "svaedi": "Suðurland og Reykjanes",
-        "stadur_nf": "Keflavíkurflugvöllur",
-        "stadur_tgf": "Keflavíkurflugvöllur",
+        "stadur_nf": "Reykjanesbær",
+        "stadur_tgf": "Reykjanesbæ",
         "tegund": "Þéttbýli",
+        "lysing": "Keflavíkurflugvöllur",
     },
     240: {
         "svaedi": "Suðurland og Reykjanes",
@@ -296,6 +324,7 @@ postcodes = {
         "stadur_nf": "Reykjanesbær",
         "stadur_tgf": "Reykjanesbæ",
         "tegund": "Þéttbýli",
+        "lysing": "Ásbrú",
     },
     270: {
         "svaedi": "Höfuðborgarsvæðið",
@@ -314,6 +343,7 @@ postcodes = {
         "stadur_nf": "Mosfellsbær",
         "stadur_tgf": "Mosfellsbæ",
         "tegund": "Dreifbýli",
+        "lysing": "Kjós",
     },
     300: {
         "svaedi": "Vesturland og Vestfirðir",
@@ -362,6 +392,12 @@ postcodes = {
         "stadur_nf": "Stykkishólmur",
         "stadur_tgf": "Stykkishólmi",
         "tegund": "Dreifbýli",
+    },
+    342: {
+        "svaedi": "Vesturland og Vestfirðir",
+        "stadur_nf": "Borgarnes",
+        "stadur_tgf": "Borgarnesi",
+        "tegund": "Þéttbýli",
     },
     345: {
         "svaedi": "Vesturland og Vestfirðir",
@@ -687,6 +723,30 @@ postcodes = {
         "stadur_tgf": "Akureyri",
         "tegund": "Þéttbýli",
     },
+    604: {
+        "svaedi": "Norðurland",
+        "stadur_nf": "Akureyri",
+        "stadur_tgf": "Akureyri",
+        "tegund": "Þéttbýli",
+    },
+    605: {
+        "svaedi": "Norðurland",
+        "stadur_nf": "Akureyri",
+        "stadur_tgf": "Akureyri",
+        "tegund": "Þéttbýli",
+    },
+    606: {
+        "svaedi": "Norðurland",
+        "stadur_nf": "Akureyri",
+        "stadur_tgf": "Akureyri",
+        "tegund": "Þéttbýli",
+    },
+    607: {
+        "svaedi": "Norðurland",
+        "stadur_nf": "Akureyri",
+        "stadur_tgf": "Akureyri",
+        "tegund": "Þéttbýli",
+    },
     610: {
         "svaedi": "Norðurland",
         "stadur_nf": "Grenivík",
@@ -749,8 +809,8 @@ postcodes = {
     },
     645: {
         "svaedi": "Norðurland",
-        "stadur_nf": "Fosshólli",
-        "stadur_tgf": "Fosshólli",
+        "stadur_nf": "Fosshóll",
+        "stadur_tgf": "Fosshóli",
         "tegund": "Dreifbýli",
     },
     650: {
@@ -857,14 +917,14 @@ postcodes = {
     },
     720: {
         "svaedi": "Austurland",
-        "stadur_nf": "Borgarfjörður",
-        "stadur_tgf": "Borgarfirði (eystri)",
+        "stadur_nf": "Borgarfjörður eystri",
+        "stadur_tgf": "Borgarfirði eystri",
         "tegund": "Dreifbýli",
     },
     721: {
         "svaedi": "Austurland",
-        "stadur_nf": "Borgarfjörður",
-        "stadur_tgf": "Borgarfirði (eystri)",
+        "stadur_nf": "Borgarfjörður eystri",
+        "stadur_tgf": "Borgarfirði eystri",
         "tegund": "Dreifbýli",
     },
     730: {
@@ -987,6 +1047,30 @@ postcodes = {
         "stadur_tgf": "Selfossi",
         "tegund": "Pósthólf",
     },
+    803: {
+        "svaedi": "Suðurland og Reykjanes",
+        "stadur_nf": "Selfoss",
+        "stadur_tgf": "Selfossi",
+        "tegund": "Þéttbýli",
+    },
+    804: {
+        "svaedi": "Suðurland og Reykjanes",
+        "stadur_nf": "Selfoss",
+        "stadur_tgf": "Selfossi",
+        "tegund": "Þéttbýli",
+    },
+    805: {
+        "svaedi": "Suðurland og Reykjanes",
+        "stadur_nf": "Selfoss",
+        "stadur_tgf": "Selfossi",
+        "tegund": "Þéttbýli",
+    },
+    806: {
+        "svaedi": "Suðurland og Reykjanes",
+        "stadur_nf": "Selfoss",
+        "stadur_tgf": "Selfossi",
+        "tegund": "Þéttbýli",
+    },
     810: {
         "svaedi": "Suðurland og Reykjanes",
         "stadur_nf": "Hveragerði",
@@ -1099,10 +1183,11 @@ postcodes = {
 
 
 def postcodes_for_placename(pn, partial=False):
+    """ Returns postcodes given a full or partial placename. """ 
     p = pn.lower()
     matches = list()
 
-    for k, v in postcodes.items():
+    for k, v in POSTCODES.items():
         nf = v["stadur_nf"].lower()
         tgf = v["stadur_tgf"].lower()
         if partial and (nf.startswith(p) or tgf.startswith(p)):
