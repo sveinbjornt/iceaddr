@@ -7,6 +7,9 @@
     includes placenames in dative (þágufall).
     
     https://www.postur.is/gogn/Gotuskra/postnumer.txt
+
+    Don't run this. Postcode data now maintained manually.
+
 """
 
 from __future__ import unicode_literals
