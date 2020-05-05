@@ -1,10 +1,12 @@
 # iceaddr
 [![Build Status](https://travis-ci.org/sveinbjornt/iceaddr.svg?branch=master)](https://travis-ci.org/sveinbjornt/iceaddr)
-### Look up Icelandic street addresses and postcodes
+### Look up Icelandic street addresses, postcodes and placenames
 
-Python (2 and 3) module to look up and get information about Icelandic street addresses and postcodes. The underlying data is taken from [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic Address Registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/)), [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is), and from the postcode table provided by [Postur.is](https://www.postur.is/einstaklingar/posthus/postnumer/gagnaskrar/).
+Python (2 and 3) module to look up and get information about Icelandic streets, addresses, placenames, landmarks, locations and postcodes. The underlying data is taken from the following sources:
 
-
+* [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic Address Registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/))
+* [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is)
+* The postcode table provided by [Postur.is](https://www.postur.is/einstaklingar/posthus/postnumer/gagnaskrar/).
 
 ## Installation
 
@@ -19,7 +21,7 @@ $ pip install iceaddr
 ```python
 >>> from iceaddr import iceaddr_lookup
 >>> a = iceaddr_lookup('Austurstræti', number=14, postcode=101)
->>> pprint.pprint(a)
+>>> pprint(a)
 [{'bokst': '',
   'byggd': 1,
   'heiti_nf': 'Austurstræti',
@@ -41,12 +43,12 @@ $ pip install iceaddr
   'y_isn93': 408290.561363636}]
 ```
 
-### Look up address with place name
+### Look up address with placename
 
 ```python
 >>> from iceaddr import iceaddr_lookup
 >>> a = iceaddr_lookup('Öldugötu', number=4, placename='Reykjavík')
->>> pprint.pprint(a)
+>>> pprint(a)
 [{'bokst': '',
   'byggd': 1,
   'heiti_nf': 'Öldugata',
@@ -68,7 +70,8 @@ $ pip install iceaddr
   'y_isn93': 408411.468181818}]
 ```
 
-Street and place names can be provided in either nominative or dative case (e.g. both 'Öldugata' and 'Öldugötu' will work, as will both 'Selfoss' and 'Selfossi').
+Street and place names can be provided in either nominative or dative case (e.g. both
+'Öldugata' and 'Öldugötu' will work, as will both 'Selfoss' and 'Selfossi').
 
 Please note that`iceaddr_lookup()` returns a list of zero or more addresses matching the criterion.
 
@@ -96,7 +99,7 @@ For natural search string queries, the module provides `iceaddr_suggest()`:
 
 The default limit on results from both functions is 50.
 
-### Keys
+### Address Keys
 
 | Key           |                                                         |
 | ------------- |---------------------------------------------------------|
@@ -111,8 +114,8 @@ The default limit on results from both functions is 50.
 | long_wgs84    | Longitude (WGS84 coordinates)                           |
 | postnr        | Postcode (e.g. 101)                                     |
 | serheiti      | Special name                                            |
-| stadur_nf     | Place name (nominative case), e.g. 'Selfoss'            |
-| stadur_tgf    | Place name (dative case), e.g. 'Selfossi'               |
+| stadur_nf     | Placename (nominative case), e.g. 'Selfoss'             |
+| stadur_tgf    | Placename (dative case), e.g. 'Selfossi'                |
 | svaedi        | Area (e.g. 'Höfuðborgarsvæðið', 'Norðurland')           |
 | svfnr         |                                                         |
 | tegund        | Type (either 'Þéttbýli' (urban) or 'Dreifbýli' (rural)) |
@@ -121,6 +124,20 @@ The default limit on results from both functions is 50.
 | y_isn93       | Coordinate Y (ISN93)                                    |
 
 ### Postcodes
+
+#### Info about a given postcode
+
+```python
+>>> from iceaddr import postcode_lookup
+>>> postcode_lookup(400)
+{   'svaedi_nf': 'Vesturland og Vestfirðir',
+    'svaedi_tgf': 'Vesturlandi og Vestfjörðum',
+    'stadur_nf': 'Ísafjörður', 
+    'stadur_tgf': 'Ísafirði', 
+    'tegund': 'Þéttbýli' }
+```
+
+#### Get postcodes for a placename
 
 ```python
 >>> from iceaddr import postcodes_for_placename
@@ -133,13 +150,15 @@ The default limit on results from both functions is 50.
 >>>
 ```
 
+#### Get postcodes for a region
+
 ```python
->>> from iceaddr import postcodes
->>> postcodes.get(400)
-{   'svaedi': 'Vesturland og Vestfirðir', 
-    'stadur_nf': 'Ísafjörður', 
-    'stadur_tgf': 'Ísafirði', 
-    'tegund': 'Þéttbýli' }
+>>> from iceaddr import postcodes_for_region
+>>> postcodes_for_region('Norðurland')
+[530, 531, 540, 541, 545, ...]
+>>> postcodes_for_region('Höfuðborgarsvæðið')
+[101, 102, 103, 104, 105, 107, ...]
+>>>
 ```
 
 ### Placenames ("örnefni")
@@ -152,9 +171,21 @@ The default limit on results from both functions is 50.
   'lat_wgs84': 64.3112049,
   'long_wgs84': -21.5997926,
   'nafn': 'Meðalfellsvatn'}]
+>>> placename_lookup("Egilsstaðir")
+[{'flokkur': 'Þéttbýli',
+  'id': 63208,
+  'lat_wgs84': 65.2637152,
+  'long_wgs84': -14.3931143,
+  'nafn': 'Egilsstaðir'},
+ {'flokkur': 'Landörnefni Lítið',
+  'id': 108285,
+  'lat_wgs84': 65.3516154,
+  'long_wgs84': -20.610947,
+  'nafn': 'Egilsstaðir'}]
 ```
 
-If more than one placename match is found, the results are ordered by size, with precedence given to municipalities and densely populated areas.
+If more than one placename match is found, the results are ordered by size, with precedence
+given to municipalities and densely populated areas.
 
 ## Version History
 
@@ -167,7 +198,7 @@ If more than one placename match is found, the results are ordered by size, with
 
 ## BSD License 
 
-Copyright (C) 2018 Sveinbjorn Thordarson
+Copyright (C) 2018-2020 Sveinbjorn Thordarson (sveinbjorn@sveinbjorn.org)
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

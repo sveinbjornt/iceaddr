@@ -15,14 +15,14 @@ from __future__ import print_function
 
 import re
 from .db import shared_db
-from .postcodes import postcodes, postcodes_for_placename
+from .postcodes import POSTCODES, postcodes_for_placename
 
 
 def _add_postcode_info(addr):
     """ Look up postcode info, add keys to address dictionary. """
     pn = addr.get("postnr")
-    if pn and postcodes.get(pn):
-        addr.update(postcodes[pn])
+    if pn and POSTCODES.get(pn):
+        addr.update(POSTCODES[pn])
     return addr
 
 

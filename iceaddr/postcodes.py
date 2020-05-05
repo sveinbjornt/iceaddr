@@ -203,14 +203,14 @@ POSTCODES = {
     },
     190: {
         "svaedi_nf": "Suðurland og Reykjanes",
-        "svaedi_nf": "Suðurlandi og Reykjanesi",
+        "svaedi_tgf": "Suðurlandi og Reykjanesi",
         "stadur_nf": "Vogar",
         "stadur_tgf": "Vogum",
         "tegund": "Þéttbýli",
     },
     191: {
         "svaedi_nf": "Suðurland og Reykjanes",
-        "svaedi_nf": "Suðurlandi og Reykjanesi",
+        "svaedi_tgf": "Suðurlandi og Reykjanesi",
         "stadur_nf": "Vogar",
         "stadur_tgf": "Vogum",
         "tegund": "Dreifbýli",
@@ -1381,14 +1381,30 @@ def postcode_lookup(postcode):
     return POSTCODES.get(int(postcode))
 
 
+def postcodes_for_region(region_name, partial=False):
+    """ Return postcodes matching a full or partial region name,
+        e.g. "Norðurland", "Höfuðborgarsvæðið". """
+    return _filter_postcodes("svaedi", region_name, partial=partial)
+
+
 def postcodes_for_placename(placename, partial=False):
-    """ Returns postcodes matching a full or partial placename. """
-    p = placename.lower()
+    """ Returns postcodes matching a full or partial placename,
+        e.g. "Reykjavík", "Dalvík". """
+    return _filter_postcodes("stadur", placename, partial=partial)
+
+
+def _filter_postcodes(key, searchstr, partial=False):
+    """ Utility function to find postcodes matching a criterion. """
+    assert key in ["stadur", "svaedi"]
+    p = searchstr.lower()
     matches = list()
 
+    k1 = key + "_nf"
+    k2 = key + "_tgf"
+
     for k, v in POSTCODES.items():
-        nf = v["stadur_nf"].lower()
-        tgf = v["stadur_tgf"].lower()
+        nf = v[k1].lower()
+        tgf = v[k2].lower()
         if partial and (nf.startswith(p) or tgf.startswith(p)):
             matches.append(k)
         elif nf == p or tgf == p:
