@@ -1,7 +1,13 @@
 # -*- encoding: utf-8 -*-
 """
-    iceaddr: Look up information about Icelandic street addresses and postcodes
-    Copyright (c) 2018 Sveinbjorn Thordarson
+
+    iceaddr: Look up information about Icelandic streets, addresses,
+             placenames, landmarks, locations and postcodes.
+
+    Copyright (c) 2018-2020 Sveinbjorn Thordarson.
+
+    This file contains code related to Icelandic address lookup.
+
 """
 
 from __future__ import unicode_literals
@@ -13,7 +19,7 @@ from .postcodes import postcodes, postcodes_for_placename
 
 
 def _add_postcode_info(addr):
-    """ Look up postcode info, add keys to address dictionary """
+    """ Look up postcode info, add keys to address dictionary. """
     pn = addr.get("postnr")
     if pn and postcodes.get(pn):
         addr.update(postcodes[pn])
@@ -21,12 +27,14 @@ def _add_postcode_info(addr):
 
 
 def _run_addr_query(q, qargs):
+    """ Run address query, w. additional postcode data added post hoc. """
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, qargs)
     return [_add_postcode_info(dict(row)) for row in res]
 
 
 def _capitalize_first_char(s):
+    """ Returns string with first character capitalized. """
     return s[:1].upper() + s[1:] if s else s
 
 
@@ -52,7 +60,7 @@ def iceaddr_lookup(
         if letter:
             l.append(letter)
         else:
-            l.append('')
+            l.append("")
     if pc:
         qp = " OR ".join([" postnr=?" for p in pc])
         l.extend(pc)
