@@ -1,7 +1,11 @@
 # -*- encoding: utf-8 -*-
 """
-    iceaddr: Look up information about Icelandic street addresses and postcodes
-    Copyright (c) 2018 Sveinbjorn Thordarson
+    iceaddr: Look up information about Icelandic streets, addresses, 
+             placenames and postcodes
+
+    Copyright (c) 2018-2020 Sveinbjorn Thordarson
+
+    
 """
 
 from __future__ import unicode_literals
@@ -15,8 +19,9 @@ HARDCODED_PRIORITY = {
     "Snæfellsnes": (64.8731746, -23.0309911), # Nesið norðan við Reykjanes!
     "Mýrdalur": (63.4462885, -19.0832988), # Nálægt Vík
     "Mosfellsheiði": (64.1675067, -21.3733656), # Nálægt Mosó
-    "Bláfjöll": (64.0121886, -21.5617119), # Nálægt Rvk
-    "Bakki": (66.0701681, -17.3481556), # Hjá Húsavík
+    "Bláfjöll": (64.0121886, -21.5617119), # Nálægt Rvk á Reykjanesskaga
+    "Bakki": (66.0701681, -17.3481556), # Hjá Húsavík, sbr. verið
+    "Bessastaðir": (64.1059036227962,-21.9957549156328), # Forsetabústaður
 }
 
 # This determines the sort order of results

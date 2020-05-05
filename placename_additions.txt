@@ -238,6 +238,9 @@ Vallahreppur:65.15,-14.55,Hreppur
 Vestur-Landeyjahreppur:63.700,-20.383,Hreppur
 Vindhælishreppur:,,Hreppur
 Ytri-Torfustaðahreppur:65.3333,-21,Hreppur
-Árskógshreppur:,,Hreppur
-Öngulsstaðahreppur:,,Hreppur
+Árskógshreppur:65.9241702,-18.3576557,Hreppur
+Öngulsstaðahreppur:65.597788,-18.035765,Hreppur
 Þorkelshólshreppur:,,Hreppur
+
+# Sérstakt
+Bessastaðir:64.1059036227962,-21.9957549156328,Landörnefni Lítið
