@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 """
 
     iceaddr: Look up information about Icelandic streets, addresses, 
@@ -9,8 +8,6 @@
     This file contains code and data related to Icelandic postcodes.
 
 """
-
-from __future__ import unicode_literals
 
 POSTCODES = {
     101: {

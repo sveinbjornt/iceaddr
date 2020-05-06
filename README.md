@@ -1,14 +1,19 @@
 # iceaddr
+
 [![Build Status](https://travis-ci.org/sveinbjornt/iceaddr.svg?branch=master)](https://travis-ci.org/sveinbjornt/iceaddr)
+
 ### Look up Icelandic street addresses, postcodes and placenames
 
-Python (2 and 3) module to look up and get information about Icelandic streets, addresses, placenames, landmarks, locations and postcodes. The underlying data is taken from the following sources:
+Python 3.* module to look up and get information about Icelandic streets, addresses, placenames,
+landmarks, locations and postcodes. The underlying data is taken from the following sources:
 
 * [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic Address Registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/))
 * [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is)
-* The postcode table provided by [Postur.is](https://www.postur.is/einstaklingar/posthus/postnumer/gagnaskrar/).
+* The postcode table provided by [Postur.is](https://www.postur.is/gogn/Gotuskra/postnumer.txt).
 
 ## Installation
+
+`iceaddr` is available on [PyPI](https://pypi.org/project/iceaddr/)
 
 ```
 $ pip install iceaddr
@@ -16,7 +21,7 @@ $ pip install iceaddr
 
 ## Examples
 
-### Look up address with postcode:
+### Look up address with postcode
 
 ```python
 >>> from iceaddr import iceaddr_lookup
@@ -70,7 +75,7 @@ $ pip install iceaddr
   'y_isn93': 408411.468181818}]
 ```
 
-Street and place names can be provided in either nominative or dative case (e.g. both
+Street and place names can be provided in either nominative (nf.) or dative (þgf.) case (e.g. both
 'Öldugata' and 'Öldugötu' will work, as will both 'Selfoss' and 'Selfossi').
 
 Please note that`iceaddr_lookup()` returns a list of zero or more addresses matching the criterion.
@@ -88,7 +93,6 @@ For natural search string queries, the module provides `iceaddr_suggest()`:
 
 ```python
 >>> from iceaddr import iceaddr_suggest
->>>
 >>> a = iceaddr_suggest('Öldugata 4, Rey')
 >>> [n['stadur_tgf'] for n in a]
 ['Reykjavík', 'Reyðarfirði']
@@ -171,6 +175,12 @@ The default limit on results from both functions is 50.
   'lat_wgs84': 64.3112049,
   'long_wgs84': -21.5997926,
   'nafn': 'Meðalfellsvatn'}]
+```
+
+If more than one placename match is found, the results are ordered by size, with precedence
+given to municipalities and densely populated areas.
+
+```python
 >>> placename_lookup("Egilsstaðir")
 [{'flokkur': 'Þéttbýli',
   'id': 63208,
@@ -183,9 +193,6 @@ The default limit on results from both functions is 50.
   'long_wgs84': -20.610947,
   'nafn': 'Egilsstaðir'}]
 ```
-
-If more than one placename match is found, the results are ordered by size, with precedence
-given to municipalities and densely populated areas.
 
 ## Version History
 

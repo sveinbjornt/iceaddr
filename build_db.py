@@ -1,15 +1,13 @@
-# -*- encoding: utf-8 -*-
 """
+
     Create stadfong address database from from the
     DSV file at ftp://ftp.skra.is/skra/STADFANG.dsv.zip
     
     From data compiled by Registers Iceland (CC-BY):
         https://opingogn.is/dataset/stadfangaskra
         https://opendefinition.org/licenses/cc-by/
-"""
 
-from __future__ import print_function
-from __future__ import unicode_literals
+"""
 
 from builtins import input
 

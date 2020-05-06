@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 import setuptools
 
 with open("README.md", "r") as fh:
@@ -10,13 +8,13 @@ setuptools.setup(
     version="0.3.3",
     author="Sveinbjorn Thordarson",
     author_email="sveinbjorn@sveinbjorn.org",
-    license='BSD',
+    license="BSD",
     url="https://github.com/sveinbjornt/iceaddr",
-    description="Look up information about Icelandic street addresses and postcodes",
+    description="Look up information about Icelandic street addresses, postcodes and placenames",
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires=[],
-    packages=['iceaddr'],
+    packages=["iceaddr"],
     classifiers=[
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
@@ -24,15 +22,16 @@ setuptools.setup(
         "Intended Audience :: Developers",
         "Natural Language :: Icelandic",
         "Programming Language :: Python",
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Utilities",
-        "Topic :: Text Processing :: Linguistic"
+        "Topic :: Text Processing :: Linguistic",
     ],
     include_package_data=True,
-    zip_safe=False
+    zip_safe=False,
 )

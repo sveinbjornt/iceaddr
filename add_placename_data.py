@@ -1,5 +1,8 @@
-# -*- encoding: utf-8 -*-
-""" Add placename data to stadfong database """
+"""
+
+    Add placename data to stadfong database
+
+"""
 
 
 import fiona

@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 """
 
     iceaddr: Look up information about Icelandic streets, addresses,
@@ -9,9 +8,6 @@
     This file contains code related to placename lookup.
 
 """
-
-from __future__ import unicode_literals
-from __future__ import print_function
 
 import re
 from .db import shared_db

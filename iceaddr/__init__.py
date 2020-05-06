@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 """
 
     iceaddr: Look up information about Icelandic streets, addresses,

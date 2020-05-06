@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 """
 
     iceaddr: Look up information about Icelandic streets, addresses,
@@ -9,8 +8,6 @@
     This file contains code related to the iceaddr sqlite3 database.
 
 """
-
-from __future__ import unicode_literals
 
 import sqlite3
 from pkg_resources import resource_filename
