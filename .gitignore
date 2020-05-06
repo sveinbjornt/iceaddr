@@ -1,6 +1,6 @@
 postnumer.txt
 gotuskra.txt
-iceaddr.db
+/iceaddr.db
 ornefni.shp
 venv/
 STADFANG.dsv
@@ -11,4 +11,4 @@ __pycache__/
 /*.egg-info
 *.shp
 p3*/
-stadfangaskra.db
+/stadfangaskra.db
