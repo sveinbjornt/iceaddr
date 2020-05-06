@@ -53,7 +53,7 @@ def iceaddr_lookup(
     if number:
         q += " AND husnr=? "
         l.append(number)
-        q += " AND bokst=? "
+        q += " AND bokst LIKE ? COLLATE NOCASE"
         if letter:
             l.append(letter)
         else:
@@ -128,7 +128,7 @@ def iceaddr_suggest(search_str, limit=50):
         # Street number's trailing character
         # e.g. if it's "Öldugata 4b"
         if len(addr) == 3:
-            q += " AND bokst=? "
+            q += " AND bokst LIKE ? COLLATE NOCASE"
             qargs.append(addr[2])
 
     # Placename component (postcode or placename)
