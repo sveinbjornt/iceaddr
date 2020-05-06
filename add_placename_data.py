@@ -16,17 +16,20 @@ SHAPE_FILES = ["ornefni.shp", "mork.shp"]
 
 LAYERS = {
     "ornefni.shp": [
-        "IS50V_ornefni_linur_17062018",
-        "IS50V_ornefni_flakar_17062018",
-        "IS50V_ornefni_punktar_17062018",
+        "IS50V_ornefni_linur_24122019",
+        "IS50V_ornefni_flakar_24122019",
+        "IS50V_ornefni_punktar_24122019",
     ],
     "mork.shp": [],
 }
 
-DEFAULT_DBNAME = "stadfangaskra.db"
+DEFAULT_DBNAME = "iceaddr.db"
 
 
 def isnet93_to_wgs84(xx, yy):
+    """ Convert isnet93 coordinates to WGS84. 
+        From https://github.com/pallih/Scraperwiki-scrapers/blob/master/isnet93_wgs84.py 
+    """
     x = xx
     y = yy
     a = 6378137.0
@@ -76,6 +79,7 @@ def isnet93_to_wgs84(xx, yy):
 
 
 def center_point(coords):
+    """ Find the center point of a given set of coordinates. """
     x = 0
     y = 0
 
@@ -90,6 +94,7 @@ def center_point(coords):
 
 
 def create_table(dbpath):
+    """ Create ornefni database table. """
     dbconn = sqlite3.connect(dbpath)
 
     create_table_sql = """
@@ -110,6 +115,7 @@ def create_table(dbpath):
     return dbconn
 
 
+# Start by creating ornefni table
 dbc = create_table(DEFAULT_DBNAME)
 if not dbc:
     print("Failed to connect to DB")
@@ -118,7 +124,8 @@ if not dbc:
 cursor = dbc.cursor()
 
 
-f = open("placename_additions.txt", "rU")
+# Read manual placename additions from text file, insert into DB
+f = open("placename_additions.txt", "r")
 for line in f.readlines():
     if not line.strip() or line.strip().startswith("#"):
         continue
@@ -152,20 +159,21 @@ for line in f.readlines():
         cursor.execute(q, qargs)
     else:
         print("Inserting " + first)
-        # cursor.execute(
-        #     "INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)",
-        #     (first, fl, lat, lon),
-        # )
+        cursor.execute(
+            "INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)",
+            (first, fl, lat, lon),
+        )
 
 dbc.commit()
 
-exit()
 
-for layer in LAYERS:
-    with fiona.open(SHAPE_FILE, encoding="utf-8", layer=layer) as src:
+# Read IS50V geo layers from file, add placenames ("örnefni") to DB
+for layer in LAYERS["ornefni.shp"]:
+    with fiona.open("ornefni.shp", encoding="utf-8", layer=layer) as src:
         for i in src:
-            fl = i["properties"]["Ornefnafl"]
-            n = i["properties"]["NAFNFITJU"]
+            # pprint(i)
+            fl = i["properties"]["ornefnaflo"]
+            n = i["properties"]["nafnfitju"]
             c = i["geometry"]["coordinates"]
             nc = len(c)
 
@@ -179,6 +187,7 @@ for layer in LAYERS:
                 if type(firstcoords) is list:
                     firstcoords = firstcoords[0]
                 cp = firstcoords
+
             # Special handling of flakes - use center point
             elif type(c) is list:
 
@@ -188,12 +197,15 @@ for layer in LAYERS:
                     firstcoords = firstcoords[0]
 
                 cp = center_point(firstcoords)
+
             # Just a point
             else:
                 cp = c
 
+            # Convert to WGS84 coordinates
             gps = isnet93_to_wgs84(cp[0], cp[1])
 
+            # Insert
             cursor.execute(
                 "INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)",
                 (n, fl, float(gps["lat"]), float(gps["lng"])),
