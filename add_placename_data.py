@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 
     Add placename data to iceaddr database.
@@ -12,6 +13,7 @@ from pprint import pprint
 
 
 SHAPE_FILES = ["ornefni.shp", "mork.shp"]
+
 LAYERS = {
     "ornefni.shp": [
         "IS50V_ornefni_linur_17062018",
@@ -20,6 +22,7 @@ LAYERS = {
     ],
     "mork.shp": [],
 }
+
 DEFAULT_DBNAME = "stadfangaskra.db"
 
 
@@ -91,11 +94,11 @@ def create_table(dbpath):
 
     create_table_sql = """
     CREATE TABLE ornefni (
-    id INTEGER UNIQUE PRIMARY KEY NOT NULL, 
-    nafn TEXT,
-    flokkur TEXT,
-    lat_wgs84 REAL,
-    long_wgs84 REAL
+        id INTEGER UNIQUE PRIMARY KEY NOT NULL, 
+        nafn TEXT,
+        flokkur TEXT,
+        lat_wgs84 REAL,
+        long_wgs84 REAL
     );
     """
 

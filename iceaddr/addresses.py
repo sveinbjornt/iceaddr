@@ -30,7 +30,9 @@ def _run_addr_query(q, qargs):
 
 
 def _capitalize_first_char(s):
-    """ Returns string with first character capitalized. """
+    """ Returns string with first character capitalized. Why this isn't in
+        the Python stdlib is beyond me. The capitalize() function annoyingly
+        lowercases the rest of the string. """
     return s[:1].upper() + s[1:] if s else s
 
 
@@ -38,7 +40,6 @@ def iceaddr_lookup(
     street_name, number=None, letter=None, postcode=None, placename=None, limit=50
 ):
     """ Look up all addresses matching criterion """
-
     street_name = _capitalize_first_char(street_name.strip())
 
     pc = [postcode] if postcode else []

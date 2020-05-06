@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 
     Create stadfong address database from from the
@@ -23,7 +24,9 @@ from urllib.request import urlopen
 
 
 STADFONG_REMOTE_URL = "ftp://ftp.skra.is/skra/STADFANG.dsv.zip"
+
 DSV_FILENAME = "STADFANG.dsv"
+
 DEFAULT_DBNAME = "iceaddr.db"
 
 COLS = [
@@ -50,21 +53,21 @@ def create_db(path):
 
     create_table_sql = """
     CREATE TABLE stadfong (
-    hnitnum INTEGER UNIQUE PRIMARY KEY NOT NULL, 
-    svfnr INTEGER,
-    byggd INTEGER,
-    landnr INTEGER,
-    postnr INTEGER,
-    heiti_nf TEXT,
-    heiti_tgf TEXT,
-    husnr INTEGER,
-    bokst TEXT,
-    serheiti TEXT,
-    vidsk TEXT,
-    lat_wgs84 REAL,
-    long_wgs84 REAL,
-    x_isn93 REAL,
-    y_isn93 REAL
+        hnitnum INTEGER UNIQUE PRIMARY KEY NOT NULL, 
+        svfnr INTEGER,
+        byggd INTEGER,
+        landnr INTEGER,
+        postnr INTEGER,
+        heiti_nf TEXT,
+        heiti_tgf TEXT,
+        husnr INTEGER,
+        bokst TEXT,
+        serheiti TEXT,
+        vidsk TEXT,
+        lat_wgs84 REAL,
+        long_wgs84 REAL,
+        x_isn93 REAL,
+        y_isn93 REAL
     );
     """
 

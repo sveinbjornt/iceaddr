@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 
     Fetch list of postcodes from the Icelandic postal service,
@@ -17,6 +18,7 @@ import requests
 from contextlib import closing
 import pprint
 from reynir import Reynir
+
 
 POSTCODES_REMOTE_URL = "https://www.postur.is/gogn/Gotuskra/postnumer.txt"
 
