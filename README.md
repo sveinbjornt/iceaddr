@@ -1,10 +1,10 @@
 # iceaddr
 
-[![Build Status](https://travis-ci.com/sveinbjornt/iceaddr.svg?branch=master)](https://travis-ci.org/sveinbjornt/iceaddr)
+[![Build Status](https://travis-ci.com/sveinbjornt/iceaddr.svg?branch=master)](https://travis-ci.com/sveinbjornt/iceaddr)
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
-`iceaddr` is a Python 3.x package to look up and get information about Icelandic streets, addresses, placenames,
+`iceaddr` is a Python 3.x package to look up information about Icelandic streets, addresses, placenames,
 landmarks, locations and postcodes. The underlying data is assembled from the following sources:
 
 * [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/))
@@ -40,7 +40,8 @@ $ pip install iceaddr
   'serheiti': '',
   'stadur_nf': 'Reykjavík',
   'stadur_tgf': 'Reykjavík',
-  'svaedi': 'Höfuðborgarsvæðið',
+  'svaedi_nf': 'Höfuðborgarsvæðið',
+  'svaedi_tgf': 'Höfuðborgarsvæðinu',
   'svfnr': 0,
   'tegund': 'Þéttbýli',
   'vidsk': '',
@@ -67,7 +68,8 @@ $ pip install iceaddr
   'serheiti': '',
   'stadur_nf': 'Reykjavík',
   'stadur_tgf': 'Reykjavík',
-  'svaedi': 'Höfuðborgarsvæðið',
+  'svaedi_nf': 'Höfuðborgarsvæðið',
+  'svaedi_tgf': 'Höfuðborgarsvæðinu',
   'svfnr': 0,
   'tegund': 'Þéttbýli',
   'vidsk': '',
@@ -107,10 +109,10 @@ The default limit on results from both functions is 50.
 
 | Key           |                                                         |
 | ------------- |---------------------------------------------------------|
-| bokst         | House letter                                            |
+| bokst         | House letter, e.g. "A", "b"                             |
 | byggd         |                                                         |
-| heiti_nf      | Street name (nominative case, nf.), e.g. 'Öldugata's     |
-| heiti_tgf     | Street name (dative case, þgf), e.g. 'Öldugötu'         |
+| heiti_nf      | Street name (nominative case, nf.), e.g. 'Öldugata'     |
+| heiti_tgf     | Street name (dative case, þgf.), e.g. 'Öldugötu'        |
 | hnitnum       |                                                         |
 | husnr         | House number                                            |
 | landnr        |                                                         |
@@ -120,7 +122,8 @@ The default limit on results from both functions is 50.
 | serheiti      | Special name                                            |
 | stadur_nf     | Placename (nominative case), e.g. 'Selfoss'             |
 | stadur_tgf    | Placename (dative case), e.g. 'Selfossi'                |
-| svaedi        | Area (e.g. 'Höfuðborgarsvæðið', 'Norðurland')           |
+| svaedi_nf     | Region (nominative case), e.g. 'Höfuðborgarsvæðið'      |
+| svaedi_tgf    | Region (dative case), e.g. "Höfuðborgarsvæðinu"         |
 | svfnr         |                                                         |
 | tegund        | Type (either 'Þéttbýli' (urban) or 'Dreifbýli' (rural)) |
 | vidsk         | Additional information                                  |
@@ -180,7 +183,7 @@ The default limit on results from both functions is 50.
 >>> postcodes_for_region('Norðurland')
 [530, 531, 540, 541, 545, ...]
 >>> postcodes_for_region('Höfuðborgarsvæðið')
-[101, 102, 103, 104, 105, 107, ...]
+[101, 102, 103, 104, 105, ...]
 >>>
 ```
 
@@ -215,11 +218,12 @@ given to municipalities and densely populated areas.
 
 ## Version History
 
+* 0.4.0: Updated address, placename and postcode data. Better handling of house letters in address lookup. (06/05/2020)
 * 0.3.3: Minor placename additions, smarter ordering of placename lookup results (08/01/2019)
-* 0.3.2: Added municipalities and various BÍN placenames to ornefni database (02/01/2019)
+* 0.3.2: Added municipalities and various [BÍN](https://bin.arnastofnun.is/) placenames to ornefni database (02/01/2019)
 * 0.3.1: Added more placenames from LMÍ data, support for multithreaded use
-* 0.3: Added `placename_lookup` to look up coordinates for Icelandic placenames + minor fixes (10/12/2018)
-* 0.2: Added `iceaddr_suggest`, result limit, changed key names for postcode dicts (22/10/2018)
+* 0.3.0: Added `placename_lookup` to look up coordinates for Icelandic placenames + minor fixes (10/12/2018)
+* 0.2.0: Added `iceaddr_suggest`, result limit, changed key names for postcode dicts (22/10/2018)
 * 0.1.2: Initial release (10/10/2018)
 
 ## BSD License 

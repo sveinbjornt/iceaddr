@@ -1,4 +1,7 @@
 
-TODO LIST
+TODO for iceaddr
 
+* Better automation of geo data processing in db build scripts
 * iceaddr_suggest relies on comma separator to separate street address and place name. Could be made smarter.
+* Function to find region of a given pair of coordinates, e.g. which_region(lat,lon) == "Norðurland"
+* Incorporate Icelandic foreign city name data from Greynir?
