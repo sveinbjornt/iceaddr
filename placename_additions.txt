@@ -120,6 +120,7 @@ Norðlingaholt:64.101479,-21.772692,Þéttbýli
 Grafarholt:64.125572,-21.762349,Þéttbýli
 Laugardalur:64.143707,-21.869915,Þéttbýli
 Vesturbær:64.143891,-21.961518,Þéttbýli
+Úlfarsárdalur:64.125572,-21.762349,Þéttbýli
 
 # Virkjanir
 Kárahnjúkavirkjun:64.947276,-15.792441,Virkjun
@@ -151,7 +152,7 @@ Mývatnsflugvöllur:65.653994,-16.919424,Flugvöllur
 # Sýslur
 Austur-Barðastrandarsýsla:65.666667,-22.5,Sýsla
 Austur-Húnavatnssýsla:65.5,-20.25,Sýsla
-Austur-Skaftafellssýsla:64.250;-16.000,Sýsla
+Austur-Skaftafellssýsla:64.250,-16.000,Sýsla
 Barðastrandarsýsla:65.5,-23.3,Sýsla
 Borgarfjarðarsýsla:64.46667,-21.66667,Sýsla
 Dalasýsla:65.1,-21.6,Sýsla
@@ -165,7 +166,7 @@ Norður-Múlasýsla:65.5,-15,Sýsla
 Norður-Ísafjarðarsýsla:65.916667,-22.5,Sýsla
 Norður-Þingeyjarsýsla:66.333333,-16.166667,Sýsla
 Rangárvallasýsla:63.916663,-20.0,Sýsla
-Skaftafellssýsla:64.250;-16.000,Sýsla
+Skaftafellssýsla:64.250,-16.000,Sýsla
 Skagafjarðarsýsla:65.500,-19.250,Sýsla
 Snæfellsnessýsla:64.833333,-23,Sýsla
 Strandasýsla:65.749997,-22.0,Sýsla
@@ -207,7 +208,7 @@ Gaulverjahreppur:63.85,-20.8333,Hreppur
 Geithellnahreppur:64.667,-14.783,Hreppur
 Gerðahreppur:64.0833,-22.65,Hreppur
 Glæsibæjarhreppur:65.65,-18.25,Hreppur
-Hlíðarhreppur:,Hreppur
+Hlíðarhreppur:,,Hreppur
 Hofshreppur:65.866667,-19.2,Hreppur
 Hraungerðishreppur:63.95,-20.8833,Hreppur
 Hraunhreppur:64.7333,-22,Hreppur
@@ -220,7 +221,7 @@ Höfðahreppur:65.8333,-20.3333,Hreppur
 Kirkjubæjarhreppur:,,Hreppur
 Kirkjubólshreppur:,,Hreppur
 Kirkjuhvammshreppur:,,Hreppur
-Kolbeinsstaðahreppu64.85,-22.2,Hreppur
+Kolbeinsstaðahreppur:64.85,-22.2,Hreppur
 Landmannahreppur:64.000,-20.15,Hreppur
 Laugardalshreppur:64.333,-20.750,Hreppur
 Leiðvallarhreppur:,,Hreppur
@@ -242,5 +243,13 @@ Ytri-Torfustaðahreppur:65.3333,-21,Hreppur
 Öngulsstaðahreppur:65.597788,-18.035765,Hreppur
 Þorkelshólshreppur:,,Hreppur
 
+# Vellir
+Kópavogsvöllur:64.104404,-21.897614,Landaörnefni Lítið
+Grafarholtsvöllur:64.120582,-21.771018,Landaörnefni Lítið
+
 # Sérstakt
 Bessastaðir:64.1059036227962,-21.9957549156328,Landörnefni Lítið
+Kjarvalsstaðir:64.138224,-21.913707,Landörnefni Lítið
+Háskólatorg:64.139784,-21.950340,Landörnefni Lítið
+Litla-Ávík:66.0213,-21.425,Landörnefni Lítið
+Strandir:65.8600695,-21.3016378,Landaörnefni Stórt
