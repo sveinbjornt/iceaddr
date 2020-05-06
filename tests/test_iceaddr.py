@@ -11,7 +11,14 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../")
 
-from iceaddr import iceaddr_lookup, iceaddr_suggest, postcodes_for_placename
+from iceaddr import (
+    iceaddr_lookup,
+    iceaddr_suggest,
+    postcode_lookup,
+    postcodes_for_placename,
+    postcodes_for_region,
+    POSTCODES,
+)
 
 
 def test_address_lookup():
@@ -45,7 +52,7 @@ def test_address_lookup():
     for p in POSTCODE_TO_PLACENAME:
         res = iceaddr_lookup(p[0], number=p[1], postcode=p[2])
         assert res[0]["stadur_nf"] == p[3]
-        assert res[0]["svaedi"] == p[4]
+        assert res[0]["svaedi_nf"] == p[4]
         assert res[0]["tegund"] == p[5]
 
     assert len(iceaddr_lookup("Stærri-Árskógi", postcode=621)) > 0
@@ -77,10 +84,32 @@ def test_address_suggestions():
     assert len(iceaddr_suggest("öldu", limit=75)) == 75
 
 
+def test_postcode_data_integrity():
+    for k, v in POSTCODES.items():
+        assert type(k) == int
+        _verify_postcode_dict(v)
+
+
+def _verify_postcode_dict(pcd):
+    assert "svaedi_nf" in pcd
+    assert "svaedi_tgf" in pcd
+    assert "stadur_nf" in pcd
+    assert "stadur_tgf" in pcd
+    assert "tegund" in pcd
+
+
 def test_postcode_lookup():
-    assert len(postcodes_for_placename("Kópavogur")) == 4
-    assert len(postcodes_for_placename("kópavogi")) == 4
-    assert len(postcodes_for_placename("kópav", partial=True)) == 4
-    assert postcodes_for_placename("Selfossi") == [800, 801, 802]
-    assert postcodes_for_placename("selfoss") == [800, 801, 802]
-    assert postcodes_for_placename("SELFOS", partial=True) == [800, 801, 802]
+    postcode_lookup("102")["stadur_nf"] == "Reykjavík"
+
+    kop_pc_num = 5
+    assert len(postcodes_for_placename("Kópavogur")) == kop_pc_num
+    assert len(postcodes_for_placename("kópavogi")) == kop_pc_num
+    assert len(postcodes_for_placename("kópav", partial=True)) == kop_pc_num
+
+    selfoss_pc = [800, 801, 802, 803, 804, 805, 806]
+    assert postcodes_for_placename("Selfossi") == selfoss_pc
+    assert postcodes_for_placename("selfoss") == selfoss_pc
+    assert postcodes_for_placename("SELFOS", partial=True) == selfoss_pc
+
+    assert postcodes_for_region("Norðurland")
+    assert postcodes_for_region("Höfuðborgarsvæðið")

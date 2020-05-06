@@ -7,9 +7,9 @@
 Python 3.* module to look up and get information about Icelandic streets, addresses, placenames,
 landmarks, locations and postcodes. The underlying data is taken from the following sources:
 
-* [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic Address Registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/))
+* [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/))
 * [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is)
-* The postcode table provided by [Postur.is](https://www.postur.is/gogn/Gotuskra/postnumer.txt).
+* The postcode table provided by [Postur.is](https://www.postur.is/gogn/Gotuskra/postnumer.txt), with supplementary data from [Icelandic Wikipedia](https://is.wikipedia.org/wiki/Listi_yfir_%C3%ADslensk_p%C3%B3stn%C3%BAmer).
 
 ## Installation
 

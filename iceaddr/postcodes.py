@@ -1247,6 +1247,7 @@ POSTCODES = {
     810: {
         "svaedi_nf": "Suðurland og Reykjanes",
         "svaedi_tgf": "Suðurlandi og Reykjanesi",
+        "stadur_nf": "Hveragerði",
         "stadur_tgf": "Hveragerði",
         "tegund": "Þéttbýli",
     },
