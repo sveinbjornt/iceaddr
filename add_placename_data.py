@@ -1,6 +1,6 @@
 """
 
-    Add placename data to stadfong database
+    Add placename data to iceaddr database.
 
 """
 

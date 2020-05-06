@@ -4,8 +4,8 @@
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
-Python 3.* module to look up and get information about Icelandic streets, addresses, placenames,
-landmarks, locations and postcodes. The underlying data is taken from the following sources:
+`iceaddr` is a Python 3.x package to look up and get information about Icelandic streets, addresses, placenames,
+landmarks, locations and postcodes. The underlying data is assembled from the following sources:
 
 * [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/))
 * [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is)

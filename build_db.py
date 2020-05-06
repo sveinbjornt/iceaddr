@@ -24,7 +24,7 @@ from urllib.request import urlopen
 
 STADFONG_REMOTE_URL = "ftp://ftp.skra.is/skra/STADFANG.dsv.zip"
 DSV_FILENAME = "STADFANG.dsv"
-DEFAULT_DBNAME = "stadfangaskra.db"
+DEFAULT_DBNAME = "iceaddr.db"
 
 COLS = [
     "hnitnum",

@@ -13,7 +13,7 @@ import sqlite3
 from pkg_resources import resource_filename
 
 
-DB_REL_PATH = "resources/stadfangaskra.db"
+DB_REL_PATH = "resources/iceaddr.db"
 
 
 class SharedDB:
