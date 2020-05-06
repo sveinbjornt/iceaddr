@@ -101,7 +101,7 @@ def _verify_postcode_dict(pcd):
 def test_postcode_lookup():
     _verify_postcode_dict(postcode_lookup(101))
     _verify_postcode_dict(postcode_lookup(900))
-    postcode_lookup("102")["stadur_nf"] == "Reykjavík"
+    assert postcode_lookup("102")["stadur_nf"] == "Reykjavík"
 
     kop_pc_num = 5
     assert len(postcodes_for_placename("Kópavogur")) == kop_pc_num

@@ -1,4 +1,5 @@
 
-TODO LIST
+TODO for iceaddr
 
+* Better automation of geo data processing in db build scripts
 * iceaddr_suggest relies on comma separator to separate street address and place name. Could be made smarter.
