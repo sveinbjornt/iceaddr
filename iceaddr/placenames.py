@@ -10,7 +10,9 @@
 """
 
 import re
+
 from .db import shared_db
+from .dist import distance
 
 HARDCODED_PRIORITY = {
     "Hellisheiði": (64.0221268, -21.3413149),  # Nálægt Rvk fær forgang
@@ -75,3 +77,14 @@ def placename_lookup(placename, partial=False):
     matches.sort(key=_precedence)
 
     return matches
+
+
+def closest_placename(lat, lon, limit=1):
+    """ Find the placename closest to the given coordinates. """
+    q = "SELECT * FROM ornefni"
+    db_conn = shared_db.connection()
+    res = db_conn.cursor().execute(q, [])
+    closest = sorted(
+        res, key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"]))
+    )
+    return closest[:limit]

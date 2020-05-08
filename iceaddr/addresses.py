@@ -10,8 +10,10 @@
 """
 
 import re
+
 from .db import shared_db
 from .postcodes import POSTCODES, postcodes_for_placename
+from .dist import distance
 
 
 def _add_postcode_info(addr):
@@ -154,3 +156,14 @@ def iceaddr_suggest(search_str, limit=50):
     qargs.append(limit)
 
     return _run_addr_query(q, qargs)
+
+
+def closest_addr(lat, lon, limit=1):
+    """ Find the address closest to the given coordinates. """
+    q = "SELECT * FROM stadfong"
+    db_conn = shared_db.connection()
+    res = db_conn.cursor().execute(q, [])
+    closest = sorted(
+        res, key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"]))
+    )
+    return [_add_postcode_info(x) for x in closest[:limit]]
