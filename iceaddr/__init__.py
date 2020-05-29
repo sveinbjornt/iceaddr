@@ -8,6 +8,7 @@
 """
 
 __author__ = "Sveinbjorn Thordarson"
+__version__ = "0.4.0"  # Also update setup.py
 
 from .addresses import *
 from .postcodes import *
