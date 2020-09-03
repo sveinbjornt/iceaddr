@@ -55,11 +55,9 @@ def iceaddr_lookup(
     if number:
         q += " AND husnr=? "
         l.append(number)
-        q += " AND bokst LIKE ? COLLATE NOCASE"
         if letter:
+            q += " AND bokst LIKE ? COLLATE NOCASE"
             l.append(letter)
-        else:
-            l.append("")
     if pc:
         qp = " OR ".join([" postnr=?" for p in pc])
         l.extend(pc)
@@ -75,8 +73,8 @@ def iceaddr_lookup(
 
 
 def iceaddr_suggest(search_str, limit=50):
-    """ Parse search string and fetch matching addresses. 
-        Made to handle partial and full text queries in 
+    """ Parse search string and fetch matching addresses.
+        Made to handle partial and full text queries in
         the following formats:
 
         Öldug
@@ -103,8 +101,7 @@ def iceaddr_suggest(search_str, limit=50):
     # E.g. "Stærri Bær 1", "Bárugata 17a"
     if re.match(r"\d+", addr[-1]):
         addr = [" ".join(addr[:-1]), addr[-1]]
-
-        m = re.search("([a-zA-Z])$", addr[-1])
+        m = re.search(r"([a-zA-Z])$", addr[-1])
         if m:
             addr[-1] = addr[-1][:-1]
             addr.append(m.group(0).lower())
@@ -124,7 +121,11 @@ def iceaddr_suggest(search_str, limit=50):
         qargs.extend([street_name, street_name])
 
         # Street number
-        q += " AND husnr=? "
+        if '-' in addr[1]:
+            # "Viðskeyti við staðfang", this is where dashed number ranges are
+            q += " AND vidsk=?"
+        else:
+            q += " AND husnr=?"
         qargs.append(addr[1])
 
         # Street number's trailing character
