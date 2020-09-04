@@ -53,7 +53,7 @@ def create_db(path):
 
     create_table_sql = """
     CREATE TABLE stadfong (
-        hnitnum INTEGER UNIQUE PRIMARY KEY NOT NULL, 
+        hnitnum INTEGER UNIQUE PRIMARY KEY NOT NULL,
         svfnr INTEGER,
         byggd INTEGER,
         landnr INTEGER,
@@ -104,7 +104,7 @@ def insert_address_entry(e):
         else:
             try:
                 e[k] = int(e[k])
-            except:
+            except Exception:
                 print("Failed to convert '" + k + "' to int, setting to null")
                 e[k] = None
 
@@ -114,7 +114,7 @@ def insert_address_entry(e):
         else:
             try:
                 e[k] = float(e[k])
-            except:
+            except Exception:
                 print("Failed to convert '" + k + "' to float, setting to null")
                 e[k] = None
 

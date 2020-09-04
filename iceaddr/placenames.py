@@ -9,8 +9,6 @@
 
 """
 
-import re
-
 from .db import shared_db
 from .dist import distance
 

@@ -9,7 +9,6 @@
 import fiona
 import math
 import sqlite3
-from pprint import pprint
 
 
 SHAPE_FILES = ["ornefni.shp", "mork.shp"]
@@ -27,8 +26,8 @@ DEFAULT_DBNAME = "iceaddr.db"
 
 
 def isnet93_to_wgs84(xx, yy):
-    """ Convert isnet93 coordinates to WGS84. 
-        From https://github.com/pallih/Scraperwiki-scrapers/blob/master/isnet93_wgs84.py 
+    """ Convert isnet93 coordinates to WGS84.
+        From https://github.com/pallih/Scraperwiki-scrapers/blob/master/isnet93_wgs84.py
     """
     x = xx
     y = yy
@@ -99,7 +98,7 @@ def create_table(dbpath):
 
     create_table_sql = """
     CREATE TABLE ornefni (
-        id INTEGER UNIQUE PRIMARY KEY NOT NULL, 
+        id INTEGER UNIQUE PRIMARY KEY NOT NULL,
         nafn TEXT,
         flokkur TEXT,
         lat_wgs84 REAL,
@@ -109,7 +108,7 @@ def create_table(dbpath):
 
     try:
         dbconn.cursor().execute(create_table_sql)
-    except:
+    except Exception:
         pass
 
     return dbconn
@@ -136,7 +135,7 @@ for line in f.readlines():
         (lat, lon, fl) = last.split(",")
         lat = float(lat) if lat else None
         lon = float(lon) if lon else None
-    except:
+    except Exception:
         print(line)
         raise
 

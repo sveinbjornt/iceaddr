@@ -75,8 +75,8 @@ def iceaddr_lookup(
 
 
 def iceaddr_suggest(search_str, limit=50):
-    """ Parse search string and fetch matching addresses. 
-        Made to handle partial and full text queries in 
+    """ Parse search string and fetch matching addresses.
+        Made to handle partial and full text queries in
         the following formats:
 
         Öldug
