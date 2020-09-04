@@ -177,6 +177,13 @@ POSTCODES = {
         "stadur_tgf": "Reykjavík",
         "tegund": "Pósthólf",
     },
+    161: {
+        "svaedi_nf": "Höfuðborgarsvæðið",
+        "svaedi_tgf": "Höfuðborgarsvæðinu",
+        "stadur_nf": "Reykjavík",
+        "stadur_tgf": "Reykjavík",
+        "tegund": "Dreifbýli",
+    },
     162: {
         "svaedi_nf": "Höfuðborgarsvæðið",
         "svaedi_tgf": "Höfuðborgarsvæðinu",

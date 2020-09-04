@@ -3,8 +3,6 @@
     iceaddr: Look up information about Icelandic streets, addresses,
              placenames, landmarks, locations and postcodes.
 
-    Copyright (c) 2018-2020 Sveinbjorn Thordarson.
-
     This file contains code related to distance calculation.
 
 """
