@@ -3,7 +3,7 @@
     test_iceaddr.py
 
     Tests for iceaddr package
-    
+
 """
 
 import sys
@@ -18,8 +18,8 @@ from iceaddr import (
     postcodes_for_placename,
     postcodes_for_region,
     POSTCODES,
-    closest_addr,
-    closest_placename,
+    nearest_addr,
+    nearest_placename,
 )
 
 
@@ -130,13 +130,13 @@ OLDUGATA_4_COORDS = (64.148446, -21.944933)
 
 def test_closest_addr():
     """ Test address proxmity function. """
-    addr = closest_addr(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
+    addr = nearest_addr(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
     assert len(addr) == 1
     assert addr[0]["heiti_nf"] == "Fiskislóð"
     assert addr[0]["postnr"] == 101
     assert addr[0]["svaedi_nf"] == "Höfuðborgarsvæðið"
 
-    addr = closest_addr(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=3)
+    addr = nearest_addr(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=3)
     assert len(addr) == 3
     assert addr[0]["heiti_nf"] == "Öldugata"
     assert addr[0]["postnr"] == 101
@@ -145,10 +145,10 @@ def test_closest_addr():
 
 def test_closest_placename():
     """ Test placename proximity function. """
-    pn = closest_placename(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
+    pn = nearest_placename(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
     assert len(pn) == 1
     assert pn[0]["nafn"] == "Grandi"
 
-    pn = closest_placename(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5)
+    pn = nearest_placename(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5)
     assert len(pn) == 5
     assert "Landakotshæð" in [x["nafn"] for x in pn]

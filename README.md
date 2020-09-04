@@ -82,7 +82,7 @@ $ pip install iceaddr
 Street and place names can be provided in either nominative (nf.) or dative (þgf.) case (e.g. both
 'Öldugata' and 'Öldugötu' will work, as will both 'Selfoss' and 'Selfossi').
 
-Please note that`iceaddr_lookup()` returns a list of zero or more addresses matching the criterion.
+Please note that `iceaddr_lookup()` returns a list of zero or more addresses matching the criterion.
 
 ```python
 >>> from iceaddr import iceaddr_lookup
@@ -106,6 +106,18 @@ For natural search string queries, the module provides `iceaddr_suggest()`:
 ```
 
 The default limit on results from both functions is 50.
+
+### Find closest address
+
+Given a set of WGS84 coordinates, the `nearest_addr()` function returns a list of the nearest addresses 
+in the database:
+
+```python
+>>> from iceaddr import nearest_addr
+>>> addr = nearest_addr(64.148446, -21.944933)[0]
+>>> print("{0} {1}".format(addr["heiti_nf"], addr["husnr"]))
+Öldugata 2
+```
 
 ### Address Keys
 
@@ -218,8 +230,22 @@ given to municipalities and densely populated areas.
   'nafn': 'Egilsstaðir'}]
 ```
 
+### Find closest placenames
+
+Given a set of WGS84 coordinates, the `nearest_placename()` function returns a list of the nearest 
+placenames in the database:
+
+```python
+>>> from iceaddr import nearest_placename
+>>> pn = nearest_addr(64.148446, -21.944933)[0]
+>>> print(pn["nafn"])
+Landakotsvöllur
+```
+
+
 ## Version History
 
+* 0.5.0: Support for address number ranges, fix in house number lookup, new closest_placename() and closest_addr() functions, updated data. 
 * 0.4.0: Updated address, placename and postcode data. Better handling of house letters in address lookup. (06/05/2020)
 * 0.3.3: Minor placename additions, smarter ordering of placename lookup results (08/01/2019)
 * 0.3.2: Added municipalities and various [BÍN](https://bin.arnastofnun.is/) placenames to ornefni database (02/01/2019)

@@ -31,7 +31,7 @@ def _run_addr_query(q, qargs):
     return [_add_postcode_info(dict(row)) for row in res]
 
 
-def _capitalize_first_char(s):
+def _cap_first(s):
     """ Returns string with first character capitalized. Why this isn't in
         the Python stdlib is beyond me. The capitalize() function annoyingly
         lowercases the rest of the string. """
@@ -42,7 +42,7 @@ def iceaddr_lookup(
     street_name, number=None, letter=None, postcode=None, placename=None, limit=50
 ):
     """ Look up all addresses matching criterion """
-    street_name = _capitalize_first_char(street_name.strip())
+    street_name = _cap_first(street_name.strip())
 
     pc = [postcode] if postcode else []
 
@@ -87,7 +87,7 @@ def iceaddr_suggest(search_str, limit=50):
         Öldugata 4, 101 Reykjavík
     """
 
-    search_str = _capitalize_first_char(search_str.strip())
+    search_str = _cap_first(search_str.strip())
     if not search_str or len(search_str) < 3:
         return []
 
@@ -158,7 +158,7 @@ def iceaddr_suggest(search_str, limit=50):
     return _run_addr_query(q, qargs)
 
 
-def closest_addr(lat, lon, limit=1):
+def nearest_addr(lat, lon, limit=1):
     """ Find the address closest to the given coordinates. """
     q = "SELECT * FROM stadfong"
     db_conn = shared_db.connection()
