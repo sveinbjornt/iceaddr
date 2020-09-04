@@ -64,6 +64,12 @@ def test_address_lookup():
     assert len(iceaddr_lookup("Grundarstíg", limit=2)) == 2
 
 
+def test_address_lookup_does_not_need_letter():
+    assert iceaddr_lookup("Laugavegur", number=151)
+    assert iceaddr_lookup("Laugavegur", number=151, letter='r')
+    assert not iceaddr_lookup("Laugavegur", number=151, letter='e')
+
+
 def test_address_suggestions():
     """ Test address suggestions for natural language search strings. """
     res = iceaddr_suggest("Öldugötu 4, 101")
@@ -86,6 +92,10 @@ def test_address_suggestions():
 
     assert len(iceaddr_suggest("Kl")) == 0  # always empty for fewer than 3 chars
     assert len(iceaddr_suggest("öldu", limit=75)) == 75
+
+
+def test_address_suggest_with_dashed_numbers():
+    assert iceaddr_suggest("Laugavegur 151-155")
 
 
 def test_postcode_data_integrity():

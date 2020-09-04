@@ -3,7 +3,7 @@
 
     Create stadfong address database from from the
     DSV file at ftp://ftp.skra.is/skra/STADFANG.dsv.zip
-    
+
     From data compiled by Registers Iceland (CC-BY):
         https://opingogn.is/dataset/stadfangaskra
         https://opendefinition.org/licenses/cc-by/
@@ -15,10 +15,10 @@ from builtins import input
 import sys
 import os
 import sqlite3
-import unicodecsv
+import csv
 import humanize
 from pathlib import Path
-from io import BytesIO
+from io import BytesIO, TextIOWrapper
 from zipfile import ZipFile
 from urllib.request import urlopen
 
@@ -76,8 +76,8 @@ def create_db(path):
     return dbconn
 
 
-def read_rows(dsv_file, delimiter="|", encoding="utf8"):
-    reader = unicodecsv.DictReader(dsv_file, delimiter=delimiter, encoding=encoding)
+def read_rows(dsv_file, delimiter="|"):
+    reader = csv.DictReader(dsv_file, delimiter=delimiter)
     for row in reader:
         yield row
 
@@ -135,9 +135,9 @@ if __name__ == "__main__":
         print("Fetching remote file %s" % STADFONG_REMOTE_URL)
         resp = urlopen(STADFONG_REMOTE_URL)
         zipfile = ZipFile(BytesIO(resp.read()))
-        f = zipfile.open(DSV_FILENAME)
+        f = TextIOWrapper(zipfile.open(DSV_FILENAME), 'utf-8')
     else:
-        f = open(stadfong_path, "rb")
+        f = open(stadfong_path, "r")
 
     # Delete previous db file
     if Path(db_path).is_file():
