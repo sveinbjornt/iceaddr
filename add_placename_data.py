@@ -5,22 +5,20 @@
 
 """
 
-
 import fiona
 import math
 import sqlite3
+from pprint import pprint
 
+# This file should be placed in repo root before running this program
+GPKG_FILE = "ornefni.gpkg"
 
-SHAPE_FILES = ["ornefni.shp", "mork.shp"]
-
-LAYERS = {
-    "ornefni.shp": [
-        "IS50V_ornefni_linur_24122019",
-        "IS50V_ornefni_flakar_24122019",
-        "IS50V_ornefni_punktar_24122019",
-    ],
-    "mork.shp": [],
-}
+# Annoyingly, the names of the layers change between file versions
+LAYERS = [
+    "ornefni_flakar",
+    "ornefni_linur",
+    "ornefni_punktar",
+]
 
 DEFAULT_DBNAME = "iceaddr.db"
 
@@ -166,18 +164,27 @@ for line in f.readlines():
 dbc.commit()
 
 
-# Read IS50V geo layers from file, add placenames ("örnefni") to DB
-for layer in LAYERS["ornefni.shp"]:
-    with fiona.open("ornefni.shp", encoding="utf-8", layer=layer) as src:
+# Read IS50V geo layers from file, add all placenames ("örnefni") to DB
+for layer in fiona.listlayers(GPKG_FILE):
+    with fiona.open(GPKG_FILE, encoding="utf-8", layer=layer) as src:
         for i in src:
-            # pprint(i)
-            fl = i["properties"]["ornefnaflo"]
+            # Probably an adminitrative zone ("Stjórnsýslusvæði")
+            if "ornefnaflokkur_text" not in i["properties"]:
+                continue
+
+            pprint(i)
+            fl = i["properties"]["ornefnaflokkur_text"]
             n = i["properties"]["nafnfitju"]
             c = i["geometry"]["coordinates"]
             nc = len(c)
 
+            wanted_layer = [layer.startswith(p) for p in LAYERS]
+            if True not in wanted_layer:
+                print("Skipping layer " + layer)
+                continue
+
             # Special handling of lines (e.g. rivers)
-            if layer.startswith("IS50V_ornefni_linur"):
+            if layer.startswith("ornefni_linur"):
                 firstcoords = c[0]
 
                 if type(firstcoords[0]) is list:
@@ -189,9 +196,15 @@ for layer in LAYERS["ornefni.shp"]:
 
             # Special handling of flakes - use center point
             elif type(c) is list:
+                from pprint import pprint
+
+                #pprint(c)
+                if not c:
+                    continue
 
                 firstcoords = c[0]
-
+                if type(firstcoords[0]) is float:
+                    continue
                 if type(firstcoords[0]) is list:
                     firstcoords = firstcoords[0]
 
@@ -201,8 +214,7 @@ for layer in LAYERS["ornefni.shp"]:
             else:
                 cp = c
 
-            # Convert to WGS84 coordinates
-            gps = isnet93_to_wgs84(cp[0], cp[1])
+            gps = (cp[0], cp[1])
 
             # Insert
             cursor.execute(

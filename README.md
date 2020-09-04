@@ -6,7 +6,7 @@
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
-`iceaddr` is a Python 3.x package to look up information about Icelandic streets, addresses, placenames,
+`iceaddr` is a Python 3 package to look up information about Icelandic streets, addresses, placenames,
 landmarks, locations and postcodes. The underlying data is assembled from the following sources:
 
 * [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/))
@@ -237,7 +237,7 @@ placenames in the database:
 
 ```python
 >>> from iceaddr import nearest_placename
->>> pn = nearest_addr(64.148446, -21.944933)[0]
+>>> pn = nearest_placename(64.148446, -21.944933, limit=1)[0]
 >>> print(pn["nafn"])
 Landakotsvöllur
 ```
@@ -245,7 +245,7 @@ Landakotsvöllur
 
 ## Version History
 
-* 0.5.0: Support for address number ranges, fix in house number lookup, new closest_placename() and closest_addr() functions, updated data. 
+* 0.5.0: Support for address number ranges, fix in house number lookup, new closest_placename() and closest_addr() functions, updated data. (05/09/2020)
 * 0.4.0: Updated address, placename and postcode data. Better handling of house letters in address lookup. (06/05/2020)
 * 0.3.3: Minor placename additions, smarter ordering of placename lookup results (08/01/2019)
 * 0.3.2: Added municipalities and various [BÍN](https://bin.arnastofnun.is/) placenames to ornefni database (02/01/2019)

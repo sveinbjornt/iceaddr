@@ -18,6 +18,7 @@ setuptools.setup(
         'dev': [
             'pytest',
             'humanize',
+            'fiona',
         ]
     },
     packages=["iceaddr"],
