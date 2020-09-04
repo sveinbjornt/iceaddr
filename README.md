@@ -1,5 +1,7 @@
 # iceaddr
 
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![Python 3.0](https://img.shields.io/badge/python-3.0-blue.svg)](https://www.python.org/downloads/release/python-360/)
 [![Build Status](https://travis-ci.com/sveinbjornt/iceaddr.svg?branch=master)](https://travis-ci.com/sveinbjornt/iceaddr)
 
 ### Look up Icelandic street addresses, postcodes and placenames
@@ -13,7 +15,7 @@ landmarks, locations and postcodes. The underlying data is assembled from the fo
 
 ## Installation
 
-`iceaddr` is available on [PyPI](https://pypi.org/project/iceaddr/).
+`iceaddr` is available via [PyPI](https://pypi.org/project/iceaddr/).
 
 ```
 $ pip install iceaddr
