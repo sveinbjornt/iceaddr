@@ -77,7 +77,7 @@ def placename_lookup(placename, partial=False):
     return matches
 
 
-def nearest_placename(lat, lon, limit=1):
+def nearest_placenames(lat, lon, limit=1):
     """ Find the placename closest to the given coordinates. """
     q = "SELECT * FROM ornefni"
     db_conn = shared_db.connection()
