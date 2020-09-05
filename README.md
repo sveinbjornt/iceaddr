@@ -242,10 +242,9 @@ placenames in the database:
 Landakotsvöllur
 ```
 
-
 ## Version History
 
-* 0.5.0: Support for address number ranges, fix in house number lookup, new closest_placename() and closest_addr() functions, updated data. (05/09/2020)
+* 0.5.0: Support for address number ranges, fix in house number lookup, new `closest_placename` and `closest_addr` functions, updated data. (05/09/2020)
 * 0.4.0: Updated address, placename and postcode data. Better handling of house letters in address lookup. (06/05/2020)
 * 0.3.3: Minor placename additions, smarter ordering of placename lookup results (08/01/2019)
 * 0.3.2: Added municipalities and various [BÍN](https://bin.arnastofnun.is/) placenames to ornefni database (02/01/2019)

@@ -42,6 +42,8 @@ def iceaddr_lookup(
     street_name, number=None, letter=None, postcode=None, placename=None, limit=50
 ):
     """ Look up all addresses matching criterion """
+
+    # Be forgivin, strip and capitalize street name. Al street names in DB are cpitalized.
     street_name = _cap_first(street_name.strip())
 
     pc = [postcode] if postcode else []
@@ -51,25 +53,25 @@ def iceaddr_lookup(
         pc = postcodes_for_placename(placename.strip())
 
     q = "SELECT * FROM stadfong WHERE (heiti_nf=? OR heiti_tgf=?)"
-    l = [street_name, street_name]
+    sqlargs = [street_name, street_name]
     if number:
         q += " AND husnr=? "
-        l.append(number)
+        sqlargs.append(number)
         if letter:
             q += " AND bokst LIKE ? COLLATE NOCASE"
-            l.append(letter)
+            sqlargs.append(letter)
     if pc:
         qp = " OR ".join([" postnr=?" for p in pc])
-        l.extend(pc)
+        sqlargs.extend(pc)
         q += " AND (%s) " % qp
 
     # Ordering by postcode may in fact be a reasonable proxy
     # for delivering by order of match likelihood since the
     # lowest postcodes are generally more densely populated
     q += " ORDER BY postnr ASC, husnr ASC, bokst ASC LIMIT ?"
-    l.append(limit)
+    sqlargs.append(limit)
 
-    return _run_addr_query(q, l)
+    return _run_addr_query(q, sqlargs)
 
 
 def iceaddr_suggest(search_str, limit=50):
@@ -91,8 +93,8 @@ def iceaddr_suggest(search_str, limit=50):
 
     items = [s.strip().split() for s in search_str.split(",")]
 
-    if not [l for l in items if len(l)]:
-        return []  # nothing to search for
+    if not [a for a in items if len(a)]:
+        return []  # Nothing to search for
 
     # Street name component
     addr = items[0]
@@ -121,7 +123,7 @@ def iceaddr_suggest(search_str, limit=50):
         qargs.extend([street_name, street_name])
 
         # Street number
-        if '-' in addr[1]:
+        if "-" in addr[1]:
             # "Viðskeyti við staðfang", this is where dashed number ranges are
             q += " AND vidsk=?"
         else:
