@@ -7,3 +7,5 @@ TODO for iceaddr
 * Incorporate Icelandic foreign city name data from Greynir?
 * Add function to parse Icelandic address strings in a robust, forgiving way (see Greynir geo.py impl.)
 * Add automation where package can report the last time its data was updated
+* Added preposition functions from Greynir (e.g. "í Reykjavík", "á Dalvík", etc.)
+* nearest_* functions should also return distance of location
