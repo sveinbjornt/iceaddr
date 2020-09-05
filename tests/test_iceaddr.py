@@ -64,10 +64,24 @@ def test_address_lookup():
     assert len(iceaddr_lookup("Grundarstíg", limit=2)) == 2
 
 
+def test_address_lookup_matches_number_range_and_no_number():
+    results = iceaddr_lookup("Vesturgata", number=6, placename="Reykjavík")
+    assert results
+    assert results[0]["vidsk"] == "6-8"
+    assert results[0]["husnr"] is None
+
+
+def test_address_lookup_can_find_places_of_interest():
+    results = iceaddr_lookup("Harpa", postcode=101)
+    assert results
+    assert results[0]["heiti_nf"] == "Austurbakki"
+    assert results[0]["husnr"]
+
+
 def test_address_lookup_does_not_need_letter():
     assert iceaddr_lookup("Laugavegur", number=151)
-    assert iceaddr_lookup("Laugavegur", number=151, letter='r')
-    assert not iceaddr_lookup("Laugavegur", number=151, letter='e')
+    assert iceaddr_lookup("Laugavegur", number=151, letter="r")
+    assert not iceaddr_lookup("Laugavegur", number=151, letter="e")
 
 
 def test_address_suggestions():

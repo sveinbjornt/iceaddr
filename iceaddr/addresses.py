@@ -51,15 +51,21 @@ def iceaddr_lookup(
     # Look up postcodes for placename if no postcode is provided
     if placename and not postcode:
         pc = postcodes_for_placename(placename.strip())
+    q = "SELECT * FROM stadfong WHERE"
+    name_fields = ["heiti_nf=?", "heiti_tgf=?"]
+    if not number:
+        # Add lookup for churches and places of interest like Harpa
+        name_fields.append("serheiti=?")
+    q += "({})".format(" OR ".join(name_fields))
+    sqlargs = [street_name] * len(name_fields)
 
-    q = "SELECT * FROM stadfong WHERE (heiti_nf=? OR heiti_tgf=?)"
-    sqlargs = [street_name, street_name]
     if number:
-        q += " AND husnr=? "
-        sqlargs.append(number)
+        q += " AND (husnr=? OR substr(vidsk, 0, instr(vidsk, '-')) = ?)"
+        sqlargs.extend((number, str(number)))
         if letter:
             q += " AND bokst LIKE ? COLLATE NOCASE"
             sqlargs.append(letter)
+
     if pc:
         qp = " OR ".join([" postnr=?" for p in pc])
         sqlargs.extend(pc)
@@ -68,7 +74,7 @@ def iceaddr_lookup(
     # Ordering by postcode may in fact be a reasonable proxy
     # for delivering by order of match likelihood since the
     # lowest postcodes are generally more densely populated
-    q += " ORDER BY postnr ASC, husnr ASC, bokst ASC LIMIT ?"
+    q += " ORDER BY vidsk != '', postnr ASC, husnr ASC, bokst ASC LIMIT ?"
     sqlargs.append(limit)
 
     return _run_addr_query(q, sqlargs)
