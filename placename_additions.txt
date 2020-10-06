@@ -247,6 +247,9 @@ Ytri-Torfustaðahreppur:65.3333,-21,Hreppur
 Kópavogsvöllur:64.104404,-21.897614,Landaörnefni Lítið
 Grafarholtsvöllur:64.120582,-21.771018,Landaörnefni Lítið
 
+# Nes
+Hallsteinsnes:,,Landaörnefni Lítið
+
 # Sérstakt
 Bessastaðir:64.1059036227962,-21.9957549156328,Landörnefni Lítið
 Kjarvalsstaðir:64.138224,-21.913707,Landörnefni Lítið

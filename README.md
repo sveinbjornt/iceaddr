@@ -153,9 +153,9 @@ in the database:
 >>> postcode_lookup(400)
 {   "svaedi_nf": "Vesturland og Vestfirðir",
     "svaedi_tgf": "Vesturlandi og Vestfjörðum",
-    "stadur_nf": "Ísafjörður", 
-    "stadur_tgf": "Ísafirði", 
-    "tegund": "Þéttbýli" }
+    "stadur_nf": "Ísafjörður",
+    "stadur_tgf": "Ísafirði",
+    "tegund": "Þéttbýli"}
 # Accepts string or int
 >>> postcode_lookup("107")
 {   "svaedi_nf": "Höfuðborgarsvæðið",
@@ -163,7 +163,7 @@ in the database:
     "stadur_nf": "Reykjavík",
     "stadur_tgf": "Reykjavík",
     "tegund": "Þéttbýli",
-    "lysing": "Vesturbær" }
+    "lysing": "Vesturbær"}
 ```
 
 ```python
@@ -174,7 +174,7 @@ in the database:
     "stadur_nf": "Reykjavík",
     "stadur_tgf": "Reykjavík",
     "tegund": "Þéttbýli",
-    "lysing": "Miðborg" }
+    "lysing": "Miðborg"}
 ```
 
 #### Get postcodes for a placename
@@ -187,7 +187,6 @@ in the database:
 [200, 201, 202, 203]
 >>> postcodes_for_placename('kópav', partial=True)
 [200, 201, 202, 203]
->>>
 ```
 
 #### Get postcodes for a region
@@ -198,7 +197,6 @@ in the database:
 [530, 531, 540, 541, 545, ...]
 >>> postcodes_for_region('Höfuðborgarsvæðið')
 [101, 102, 103, 104, 105, ...]
->>>
 ```
 
 ### Placenames ("örnefni")
@@ -244,7 +242,7 @@ Landakotsvöllur
 
 ## Version History
 
-* 0.5.0: Support for address number ranges, fix in house number lookup, new `nearest_addr` and `nearest_placenames` functions, updated data. (05/09/2020)
+* 0.5.0: Support for address number ranges, fix in house number lookup, new `nearest_addr` and `nearest_placenames` functions, updated data. (06/10/2020)
 * 0.4.0: Updated address, placename and postcode data. Better handling of house letters in address lookup. (06/05/2020)
 * 0.3.3: Minor placename additions, smarter ordering of placename lookup results (08/01/2019)
 * 0.3.2: Added municipalities and various [BÍN](https://bin.arnastofnun.is/) placenames to ornefni database (02/01/2019)
