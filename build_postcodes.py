@@ -9,51 +9,74 @@
 
     https://www.postur.is/gogn/Gotuskra/postnumer.txt
 
-    Don't run this. Postcode data now maintained manually.
-
 """
 
-import unicodecsv
 import requests
 from contextlib import closing
 import pprint
-from reynir import Reynir
+import logging
+import csv
+from reynir import NounPhrase
 
+from io import StringIO
+from iceaddr.postcodes import POSTCODES
 
 POSTCODES_REMOTE_URL = "https://www.postur.is/gogn/Gotuskra/postnumer.txt"
 
 
-def read_rows(dsv_file, delimiter="|", encoding="utf8"):
-    reader = unicodecsv.DictReader(dsv_file, delimiter=delimiter, encoding=encoding)
+def read_rows(dsv_file, delimiter="|"):
+    reader = csv.DictReader(dsv_file, delimiter=delimiter)
     for row in reader:
         yield row
 
 
+def _clean_name(name):
+    return name.split(" - ")[0].strip()
+
+
 if __name__ == "__main__":
-    pc = dict()
-    reynir = Reynir()
+    pc = dict(POSTCODES)
+    pc_keys = pc.keys()
     pp = pprint.PrettyPrinter(indent=4)
 
-    with closing(requests.get(POSTCODES_REMOTE_URL, stream=True)) as r:
-        for r in read_rows(r.iter_lines(), delimiter=";", encoding="ISO-8859-1"):
+    req = requests.get(POSTCODES_REMOTE_URL, allow_redirects=True)
+    f = StringIO(req.text)
 
-            # CSV file from postur.is only contains postcode placenames in
-            # the dative form (þgf.). Try to lemmatise to nominative (nf.) using Reynir.
-            s = reynir.parse_single("Hann bjó í " + r["Staður"] + ".")
-            try:
-                placename_nominative = s.tree.S.IP.VP_SEQ.PP.NP.lemmas[0].replace(
-                    "-", ""
-                )
-            except Exception as e:
-                print(e)
-                print("Failed to generate nominative form of placename: " + r["Staður"])
-                placename_nominative = r["Staður"]
+    changed = False
+    reader = csv.DictReader(f, delimiter=";")
+    for r in reader:
+        # CSV file from postur.is only contains postcode placenames in
+        # the dative form (þgf.). Try to lemmatise to nominative (nf.) using Reynir.
+        postcode = int(r["Póstnúmer"])
+        if postcode not in pc_keys:
+            logging.warning(
+                "Postcode '{0}' did not already exist in data.".format(postcode)
+            )
+            changed = True
 
-            pc[int(r["Póstnúmer"])] = {
-                "placename_nf": placename_nominative,
-                "placename_tgf": r["Staður"],
-                "area": r["Svæði"],
-                "type": r["Tegund"],
-            }
+        tp = r["Tegund"]
+        p_dat = _clean_name(r["Staður"])
+        p_nom = NounPhrase(p_dat).nominative
+        if not p_nom:
+            logging.warning("Unable to decline placename '{0}'".format(p_dat))
+            p_nom = p_dat
 
-    pp.pprint(pc)
+        if pc[postcode]["stadur_nf"] != p_nom:
+            pc[postcode]["stadur_nf"] = p_nom
+            print("{0} --> {1}".format(pc[postcode]["stadur_nf"], p_nom))
+            changed = True
+
+        if pc[postcode]["stadur_tgf"] != p_dat:
+            pc[postcode]["stadur_tgf"] = p_dat
+            print("{0} --> {1}".format(pc[postcode]["stadur_tgf"], p_dat))
+            changed = True
+
+        if pc[postcode]["tegund"] != tp:
+            pc[postcode]["tegund"] = tp
+            print("{0} --> {1}".format(pc[postcode]["tegund"], tp))
+            changed = True
+
+    if not changed:
+        print("No change since last update")
+    else:
+        pp.pprint(pc)
