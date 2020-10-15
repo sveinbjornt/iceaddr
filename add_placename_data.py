@@ -13,7 +13,6 @@ from pprint import pprint
 # This file should be placed in repo root before running this program
 GPKG_FILE = "ornefni.gpkg"
 
-# Annoyingly, the names of the layers change between file versions
 LAYERS = [
     "ornefni_flakar",
     "ornefni_linur",
@@ -107,10 +106,28 @@ def create_table(dbpath):
     try:
         dbconn.cursor().execute(create_table_sql)
     except Exception:
+        print("Unable to create ornefni table")
+        exit()
+
+    return dbconn
+
+
+def delete_table(dbpath):
+    dbconn = sqlite3.connect(dbpath)
+
+    del_table_sql = """DROP TABLE ornefni"""
+
+    try:
+        dbconn.cursor().execute(del_table_sql)
+        print("Deleted pre-existing table 'ornefni'")
+    except Exception:
         pass
 
     return dbconn
 
+
+# Delete any existing table
+delete_table(DEFAULT_DBNAME)
 
 # Start by creating ornefni table
 dbc = create_table(DEFAULT_DBNAME)
@@ -122,6 +139,7 @@ cursor = dbc.cursor()
 
 
 # Read manual placename additions from text file, insert into DB
+print("Inserting placename additions")
 f = open("placename_additions.txt", "r")
 for line in f.readlines():
     if not line.strip() or line.strip().startswith("#"):
@@ -168,20 +186,23 @@ dbc.commit()
 for layer in fiona.listlayers(GPKG_FILE):
     with fiona.open(GPKG_FILE, encoding="utf-8", layer=layer) as src:
         for i in src:
-            # Probably an adminitrative zone ("Stjórnsýslusvæði")
-            if "ornefnaflokkur_text" not in i["properties"]:
-                continue
-
-            pprint(i)
-            fl = i["properties"]["ornefnaflokkur_text"]
-            n = i["properties"]["nafnfitju"]
-            c = i["geometry"]["coordinates"]
-            nc = len(c)
 
             wanted_layer = [layer.startswith(p) for p in LAYERS]
             if True not in wanted_layer:
-                print("Skipping layer " + layer)
+                # print("Skipping layer " + layer)
                 continue
+
+            # pprint(i)
+            try:
+                fl = i["properties"]["ornefnaflokkur_text"]
+                n = i["properties"]["nafnfitju"]
+                c = i["geometry"]["coordinates"]
+                nc = len(c)
+            except Exception as e:
+                print("ERROR adding item: {0}".format(e))
+                print(n)
+            else:
+                print(n)
 
             # Special handling of lines (e.g. rivers)
             if layer.startswith("ornefni_linur"):
@@ -196,19 +217,22 @@ for layer in fiona.listlayers(GPKG_FILE):
 
             # Special handling of flakes - use center point
             elif type(c) is list:
-                from pprint import pprint
 
-                #pprint(c)
+                # pprint(c)
                 if not c:
+                    #print("Faulty flake: {0}".format(n))
+                    #pprint(i)
+                    #raise
                     continue
 
                 firstcoords = c[0]
-                if type(firstcoords[0]) is float:
-                    continue
-                if type(firstcoords[0]) is list:
+                t = type(firstcoords[0])
+                if t is float:
+                    cp = firstcoords
+                elif t is list:
                     firstcoords = firstcoords[0]
 
-                cp = center_point(firstcoords)
+                    cp = center_point(firstcoords)
 
             # Just a point
             else:
@@ -219,7 +243,7 @@ for layer in fiona.listlayers(GPKG_FILE):
             # Insert
             cursor.execute(
                 "INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)",
-                (n, fl, float(gps["lat"]), float(gps["lng"])),
+                (n, fl, gps[0], gps[1]),
             )
 
         dbc.commit()
