@@ -135,7 +135,7 @@ if __name__ == "__main__":
         print("Fetching remote file %s" % STADFONG_REMOTE_URL)
         resp = urlopen(STADFONG_REMOTE_URL)
         zipfile = ZipFile(BytesIO(resp.read()))
-        f = TextIOWrapper(zipfile.open(DSV_FILENAME), 'utf-8')
+        f = TextIOWrapper(zipfile.open(DSV_FILENAME), "utf-8")
     else:
         f = open(stadfong_path, "r")
 

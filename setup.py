@@ -10,17 +10,11 @@ setuptools.setup(
     author_email="sveinbjorn@sveinbjorn.org",
     license="BSD",
     url="https://github.com/sveinbjornt/iceaddr",
-    description="Look up information about Icelandic street addresses, postcodes and placenames",
+    description="Look up information about Icelandic street addresses, postcodes, landmarks, locations and placenames",
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires=[],
-    extras_require={
-        'dev': [
-            'pytest',
-            'humanize',
-            'fiona',
-        ]
-    },
+    extras_require={"dev": ["pytest", "humanize", "fiona",]},
     packages=["iceaddr"],
     classifiers=[
         "License :: OSI Approved :: BSD License",

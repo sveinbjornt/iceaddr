@@ -220,9 +220,9 @@ for layer in fiona.listlayers(GPKG_FILE):
 
                 # pprint(c)
                 if not c:
-                    #print("Faulty flake: {0}".format(n))
-                    #pprint(i)
-                    #raise
+                    # print("Faulty flake: {0}".format(n))
+                    # pprint(i)
+                    # raise
                     continue
 
                 firstcoords = c[0]
