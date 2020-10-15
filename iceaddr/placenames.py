@@ -12,6 +12,9 @@
 from .db import shared_db
 from .dist import distance
 
+
+# These particular placenames share a name with other, perhaps larger, placenames,
+# but should never the less be given priority when ordering results.
 HARDCODED_PRIORITY = {
     "Hellisheiði": (64.0221268, -21.3413149),  # Nálægt Rvk fær forgang
     "Snæfellsnes": (64.8731746, -23.0309911),  # Nesið norðan við Reykjanes!
@@ -20,6 +23,9 @@ HARDCODED_PRIORITY = {
     "Bláfjöll": (64.0121886, -21.5617119),  # Nálægt Rvk á Reykjanesskaga
     "Bakki": (66.0701681, -17.3481556),  # Hjá Húsavík, sbr. verið
     "Bessastaðir": (64.1059036227962, -21.9957549156328),  # Forsetabústaður
+    "Gullfoss": (64.3273264, -20.1193949),  # Túrista-áfanginn fær forgang
+    "Grótta": (64.1642163, -22.0218824),  # Á Seltjarnarnesi fær forgang
+    "Arnarhóll": (64.147844, -21.9331656),  # Arnarhóll í miðborg Rvk
 }
 
 # This determines the sort order of results
