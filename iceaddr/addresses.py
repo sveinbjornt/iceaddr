@@ -43,7 +43,7 @@ def iceaddr_lookup(
 ):
     """ Look up all addresses matching criterion """
 
-    # Be forgivin, strip and capitalize street name. Al street names in DB are cpitalized.
+    # Be forgiving, strip and capitalize street name. Al street names in DB are capitalized.
     street_name = _cap_first(street_name.strip())
 
     pc = [postcode] if postcode else []
