@@ -26,6 +26,7 @@ HARDCODED_PRIORITY = {
     "Gullfoss": (64.3273264, -20.1193949),  # Túrista-áfanginn fær forgang
     "Grótta": (64.1642163, -22.0218824),  # Á Seltjarnarnesi fær forgang
     "Arnarhóll": (64.147844, -21.9331656),  # Arnarhóll í miðborg Rvk
+    "Reykjanes": (63.8185821975681,-22.692991355433815),  # Nesið nálægt Rvk.
 }
 
 # This determines the sort order of results

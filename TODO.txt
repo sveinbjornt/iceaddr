@@ -9,3 +9,4 @@ TODO for iceaddr
 * Add automation where package can report the last time its data was updated
 * Add preposition functions from Greynir (e.g. "í Reykjavík", "á Dalvík", etc.)
 * nearest_* functions should also return distance of location
+* Add MANNVIRKI gpkg data from LMÍ?

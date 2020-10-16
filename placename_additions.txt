@@ -51,7 +51,6 @@ Sveitarfélagið Skagafjörður:65.7532226,-19.6966921,Sveitarfélag
 Húnaþing vestra:65.3970083,-20.9507547,Sveitarfélag
 Skagabyggð:65.9069521,-20.2876437,Sveitarfélag
 Húnavatnshreppur:65.5158412,-20.3795878,Sveitarfélag
-Akrahreppur:65.4569523,-18.9701437,Sveitarfélag
 Norðurþing:66.0470081,-17.3547547,Sveitarfélag
 Eyjafjarðarsveit:65.4680603,-18.4119453,Sveitarfélag
 Hörgársveit:65.4572303,-18.8015328,Sveitarfélag
@@ -107,7 +106,7 @@ Oddsskarðsgöng:65.0705,-13.8909,Jarðgöng
 Oddskarðsgöng:65.0705,-13.8909,Jarðgöng
 Sundagöng:,,Jarðgöng
 Vaðlaheiðargöng:65.711836,-17.983228,Jarðgöng
-Vestfjarðagöng:,,Jarðgöng
+Vestfjarðagöng:66.0525,-23.278889,Jarðgöng
 Óshlíðargöng:66.132509,-23.175643,Jarðgöng
 
 # Hverfi
@@ -141,7 +140,7 @@ Vopnafjarðarflugvöllur:65.720712,-14.850252,Flugvöllur
 Ísafjarðarflugvöllur:66.055591,-23.142066,Flugvöllur
 Hornafjarðarflugvöllur:64.302241,-15.228042,Flugvöllur
 Hólmavíkurflugvöllur:65.701711,-21.696580,Flugvöllur
-Njarðvíkurflugvöllur:,,Flugvöllur
+Njarðvíkurflugvöllur:63.948611,-22.544722,Flugvöllur
 Reykjahlíðarflugvöllur:65.653994,-16.919424,Flugvöllur
 Selfossflugvöllur:63.92916667,-21.03777778,Flugvöllur
 Siglufjarðarflugvöllur:66.134814,-18.915271,Flugvöllur
@@ -192,7 +191,7 @@ Núpasveit:,,Sveit
 Gufudalssveit:,,Sveit
 
 # Hreppir
-Akrahreppur:65.45416485,-18.956829506,Hreppur
+Akrahreppur:65.456944,-18.961389,Hreppur
 Andakílshreppur:64.5833,-21.7333,Hreppur
 Austur-Landeyjahreppur:63.617,-20.267,Hreppur
 Borgarhafnarhreppur:64.217,-15.933,Hreppur
@@ -208,17 +207,17 @@ Gaulverjahreppur:63.85,-20.8333,Hreppur
 Geithellnahreppur:64.667,-14.783,Hreppur
 Gerðahreppur:64.0833,-22.65,Hreppur
 Glæsibæjarhreppur:65.65,-18.25,Hreppur
-Hlíðarhreppur:,,Hreppur
+Hlíðarhreppur:-65.599972,14.666669,Hreppur
 Hofshreppur:65.866667,-19.2,Hreppur
 Hraungerðishreppur:63.95,-20.8833,Hreppur
 Hraunhreppur:64.7333,-22,Hreppur
 Hvammshreppur:65.217,-21.800,Hreppur
 Hvolhreppur:63.75,-20.2167,Hreppur
-Hálsahreppur:,,Hreppur
+Hálsahreppur:64.6667,21.0667,Hreppur
 Hálshreppur:65.75,-17.866667,Hreppur
 Hólahreppur:65.65,-19,Hreppur
 Höfðahreppur:65.8333,-20.3333,Hreppur
-Kirkjubæjarhreppur:,,Hreppur
+Kirkjubæjarhreppur:63.75,-18,Hreppur
 Kirkjubólshreppur:,,Hreppur
 Kirkjuhvammshreppur:,,Hreppur
 Kolbeinsstaðahreppur:64.85,-22.2,Hreppur
@@ -248,7 +247,7 @@ Kópavogsvöllur:64.104404,-21.897614,Landaörnefni Lítið
 Grafarholtsvöllur:64.120582,-21.771018,Landaörnefni Lítið
 
 # Nes
-Hallsteinsnes:,,Landaörnefni Lítið
+Hallsteinsnes:65.5353,-22.3268,Landaörnefni Lítið
 
 # Sérstakt
 Bessastaðir:64.1059036227962,-21.9957549156328,Landörnefni Lítið
