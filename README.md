@@ -10,8 +10,8 @@
 landmarks, locations and postcodes. The underlying data is contained in a local database and assembled
 from the following sources:
 
-* [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) ([CC-BY](http://opendefinition.org/licenses/cc-by/))
-* [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is)
+* [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) (*Þjóðskra*, [CC-BY](http://opendefinition.org/licenses/cc-by/))
+* [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is) (*Landmælingar Íslands*)
 * The postcode table provided by [Postur.is](https://www.postur.is/gogn/Gotuskra/postnumer.txt), with supplementary data from [Icelandic Wikipedia](https://is.wikipedia.org/wiki/Listi_yfir_%C3%ADslensk_p%C3%B3stn%C3%BAmer)
 
 ## Installation
@@ -255,7 +255,7 @@ Landakotsvöllur
 
 ## BSD License 
 
-Copyright (C) 2018-2020 Sveinbjorn Thordarson (sveinbjorn@sveinbjorn.org)
+Copyright (C) 2018-2021 Sveinbjorn Thordarson (sveinbjorn@sveinbjorn.org)
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
