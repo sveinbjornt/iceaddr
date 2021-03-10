@@ -1,8 +1,7 @@
 # iceaddr
 
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![Python 3.0](https://img.shields.io/badge/python-3.0-blue.svg)](https://www.python.org/downloads/release/python-360/)
-[![Build Status](https://travis-ci.com/sveinbjornt/iceaddr.svg?branch=master)](https://travis-ci.com/sveinbjornt/iceaddr)
+[![Python 3.5](https://img.shields.io/badge/python-3.0-blue.svg)](https://www.python.org/downloads/release/python-360/)
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
