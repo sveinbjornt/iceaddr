@@ -13,19 +13,19 @@ import sqlite3
 from pkg_resources import resource_filename
 
 
-DB_REL_PATH = "resources/iceaddr.db"
+_DB_REL_PATH = "resources/iceaddr.db"
 
 
 class SharedDB:
-    """ Singleton object wrapper for SQLite3 DB """
+    """ Singleton object wrapper for local SQLite3 DB """
 
     def __init__(self):
         self.db_conn = None
 
-    def connection(self):
+    def connection(self) -> sqlite3.Connection:
         # Open connection lazily
         if not self.db_conn:
-            db_path = resource_filename(__name__, DB_REL_PATH)
+            db_path = resource_filename(__name__, _DB_REL_PATH)
             # Open database file in read-only mode via URI
             db_uri = "file:{0}?mode=ro".format(db_path)
             self.db_conn = sqlite3.connect(db_uri, uri=True, check_same_thread=False)

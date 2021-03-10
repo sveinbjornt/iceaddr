@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="iceaddr",
-    version="0.5.1",  # Also update __init__.py
+    version="0.5.2",  # Also update __init__.py
     author="Sveinbjorn Thordarson",
     author_email="sveinbjorn@sveinbjorn.org",
     license="BSD",
@@ -14,7 +14,13 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires=[],
-    extras_require={"dev": ["pytest", "humanize", "fiona",]},
+    extras_require={
+        "dev": [
+            "pytest",
+            "humanize",
+            "fiona",
+        ]
+    },
     packages=["iceaddr"],
     classifiers=[
         "License :: OSI Approved :: BSD License",

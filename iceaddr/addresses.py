@@ -9,6 +9,8 @@
 
 """
 
+from typing import Dict, List
+
 import re
 
 from .db import shared_db
@@ -16,7 +18,7 @@ from .postcodes import POSTCODES, postcodes_for_placename
 from .dist import distance
 
 
-def _add_postcode_info(addr):
+def _add_postcode_info(addr: Dict) -> Dict:
     """ Look up postcode info, add keys to address dictionary. """
     pn = addr.get("postnr")
     if pn and POSTCODES.get(pn):
@@ -24,23 +26,28 @@ def _add_postcode_info(addr):
     return addr
 
 
-def _run_addr_query(q, qargs):
+def _run_addr_query(q: str, qargs: List[str]) -> List:
     """ Run address query, w. additional postcode data added post hoc. """
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, qargs)
     return [_add_postcode_info(dict(row)) for row in res]
 
 
-def _cap_first(s):
-    """ Returns string with first character capitalized. Why this isn't in
-        the Python stdlib is beyond me. The capitalize() function annoyingly
-        lowercases the rest of the string. """
+def _cap_first(s: str) -> str:
+    """Returns string with first character capitalized. Why this isn't in
+    the Python stdlib is beyond me. The capitalize() function annoyingly
+    lowercases the rest of the string."""
     return s[:1].upper() + s[1:] if s else s
 
 
 def iceaddr_lookup(
-    street_name, number=None, letter=None, postcode=None, placename=None, limit=50
-):
+    street_name: str,
+    number: int = None,
+    letter: str = None,
+    postcode: int = None,
+    placename: str = None,
+    limit: int = 50,
+) -> List[Dict]:
     """ Look up all addresses matching criterion """
 
     # Be forgiving, strip and capitalize street name. Al street names in DB are capitalized.
@@ -61,36 +68,37 @@ def iceaddr_lookup(
 
     if number:
         q += " AND (husnr=? OR substr(vidsk, 0, instr(vidsk, '-')) = ?)"
-        sqlargs.extend((number, str(number)))
+        sqlargs.append(str(number))
+        sqlargs.append(str(number))
         if letter:
             q += " AND bokst LIKE ? COLLATE NOCASE"
             sqlargs.append(letter)
 
     if pc:
         qp = " OR ".join([" postnr=?" for p in pc])
-        sqlargs.extend(pc)
+        sqlargs.extend([str(x) for x in pc])
         q += " AND (%s) " % qp
 
     # Ordering by postcode may in fact be a reasonable proxy
     # for delivering by order of match likelihood since the
     # lowest postcodes are generally more densely populated
     q += " ORDER BY vidsk != '', postnr ASC, husnr ASC, bokst ASC LIMIT ?"
-    sqlargs.append(limit)
+    sqlargs.append(str(limit))
 
     return _run_addr_query(q, sqlargs)
 
 
-def iceaddr_suggest(search_str, limit=50):
-    """ Parse search string and fetch matching addresses.
-        Made to handle partial and full text queries in
-        the following formats:
+def iceaddr_suggest(search_str: str, limit: int = 50) -> List[Dict]:
+    """Parse search string and fetch matching addresses.
+    Made to handle partial and full text queries in
+    the following formats:
 
-        Öldug
-        Öldugata
-        Öldugata 4
-        Öldugata 4, 101
-        Öldugata 4, Reykjavík
-        Öldugata 4, 101 Reykjavík
+    Öldug
+    Öldugata
+    Öldugata 4
+    Öldugata 4, 101
+    Öldugata 4, Reykjavík
+    Öldugata 4, 101 Reykjavík
     """
 
     search_str = _cap_first(search_str.strip())
@@ -154,7 +162,7 @@ def iceaddr_suggest(search_str, limit=50):
             # Try to look up placename
             pc = postcodes_for_placename(pns[0].strip(), partial=True)
             if pc:
-                postcodes.extend(pc)
+                postcodes.extend([str(x) for x in pc])
 
         if postcodes:
             qp = " OR ".join([" postnr=? " for p in postcodes])
@@ -162,12 +170,12 @@ def iceaddr_suggest(search_str, limit=50):
             qargs.extend(postcodes)
 
     q += " ORDER BY postnr ASC, husnr ASC, bokst ASC LIMIT ?"
-    qargs.append(limit)
+    qargs.append(str(limit))
 
     return _run_addr_query(q, qargs)
 
 
-def nearest_addr(lat, lon, limit=1):
+def nearest_addr(lat: float, lon: float, limit: int = 1) -> List[Dict]:
     """ Find the address closest to the given coordinates. """
     q = "SELECT * FROM stadfong"
     db_conn = shared_db.connection()

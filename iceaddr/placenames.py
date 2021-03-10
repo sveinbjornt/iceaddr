@@ -9,6 +9,8 @@
 
 """
 
+from typing import List, Dict
+
 from .db import shared_db
 from .dist import distance
 
@@ -26,7 +28,7 @@ HARDCODED_PRIORITY = {
     "Gullfoss": (64.3273264, -20.1193949),  # Túrista-áfanginn fær forgang
     "Grótta": (64.1642163, -22.0218824),  # Á Seltjarnarnesi fær forgang
     "Arnarhóll": (64.147844, -21.9331656),  # Arnarhóll í miðborg Rvk
-    "Reykjanes": (63.8185821975681,-22.692991355433815),  # Nesið nálægt Rvk.
+    "Reykjanes": (63.8185821975681, -22.692991355433815),  # Nesið nálægt Rvk.
 }
 
 # This determines the sort order of results
@@ -57,7 +59,7 @@ ORDER = [
 ]
 
 
-def _precedence(pn):
+def _precedence(pn: Dict) -> int:
     """ Sort priority for placenames. """
     if pn["nafn"] in HARDCODED_PRIORITY:
         (lat, lng) = HARDCODED_PRIORITY[pn["nafn"]]
@@ -70,7 +72,7 @@ def _precedence(pn):
     return 99
 
 
-def placename_lookup(placename, partial=False):
+def placename_lookup(placename: str, partial: bool = False) -> List[Dict]:
     """ Look up Icelandic placename in database. """
     q = "SELECT * FROM ornefni WHERE nafn=?"
     if partial:
@@ -84,7 +86,7 @@ def placename_lookup(placename, partial=False):
     return matches
 
 
-def nearest_placenames(lat, lon, limit=1):
+def nearest_placenames(lat: float, lon: float, limit: int = 1) -> List[Dict]:
     """ Find the placename closest to the given coordinates. """
     q = "SELECT * FROM ornefni"
     db_conn = shared_db.connection()

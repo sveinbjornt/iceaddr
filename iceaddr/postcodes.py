@@ -9,6 +9,8 @@
 
 """
 
+from typing import Dict, Union, List, Optional
+
 POSTCODES = {
     101: {
         "svaedi_nf": "Höfuðborgarsvæðið",
@@ -1380,25 +1382,25 @@ POSTCODES = {
 }
 
 
-def postcode_lookup(postcode):
-    """ Return postcode info dictionary given a postcode.
-        Accepts either numeric or string argument. """
+def postcode_lookup(postcode: Union[int, str]) -> Optional[Dict[str, str]]:
+    """Return postcode info dictionary given a postcode.
+    Accepts either numeric or string argument."""
     return POSTCODES.get(int(postcode))
 
 
-def postcodes_for_region(region_name, partial=False):
-    """ Return postcodes matching a full or partial region name,
-        e.g. "Norðurland", "Höfuðborgarsvæðið". """
+def postcodes_for_region(region_name: str, partial: bool = False) -> List[int]:
+    """Return postcodes matching a full or partial region name,
+    e.g. "Norðurland", "Höfuðborgarsvæðið"."""
     return _filter_postcodes("svaedi", region_name, partial=partial)
 
 
-def postcodes_for_placename(placename, partial=False):
-    """ Returns postcodes matching a full or partial placename,
-        e.g. "Reykjavík", "Dalvík". """
+def postcodes_for_placename(placename: str, partial: bool = False) -> List[int]:
+    """Returns postcodes matching a full or partial placename,
+    e.g. "Reykjavík", "Dalvík"."""
     return _filter_postcodes("stadur", placename, partial=partial)
 
 
-def _filter_postcodes(key, searchstr, partial=False):
+def _filter_postcodes(key: str, searchstr: str, partial: bool = False) -> List[int]:
     """ Utility function to find postcodes matching a criterion. """
     assert key in ["stadur", "svaedi"]
     p = searchstr.lower()

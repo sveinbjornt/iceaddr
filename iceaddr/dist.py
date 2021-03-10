@@ -7,12 +7,15 @@
 
 """
 
+from typing import Tuple
+
 import math
+
 
 _EARTH_RADIUS = 6371.0088  # Earth's radius in km
 
 
-def distance(loc1, loc2):
+def distance(loc1: Tuple[float, float], loc2: Tuple[float, float]) -> float:
     """
     Calculate the Haversine distance.
     Parameters
@@ -34,8 +37,8 @@ def distance(loc1, loc2):
     https://stackoverflow.com/questions/19412462
         /getting-distance-between-two-points-based-on-latitude-longitude
     """
-    lat1, lon1 = loc1
-    lat2, lon2 = loc2
+    (lat1, lon1) = loc1
+    (lat2, lon2) = loc2
 
     # Bad params, or missing coordinates, return infinity for distance-sorting purposes
     if not lat1 or not lon1 or not lat2 or not lon2:

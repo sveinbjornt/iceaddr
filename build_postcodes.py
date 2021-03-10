@@ -12,7 +12,6 @@
 """
 
 import requests
-from contextlib import closing
 import pprint
 import logging
 import csv
