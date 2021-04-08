@@ -243,15 +243,16 @@ Ytri-Torfustaðahreppur:65.3333,-21,Hreppur
 Þorkelshólshreppur:,,Hreppur
 
 # Vellir
-Kópavogsvöllur:64.104404,-21.897614,Landaörnefni Lítið
-Grafarholtsvöllur:64.120582,-21.771018,Landaörnefni Lítið
+Kópavogsvöllur:64.104404,-21.897614,Landörnefni Lítið
+Grafarholtsvöllur:64.120582,-21.771018,Landörnefni Lítið
 
 # Nes
-Hallsteinsnes:65.5353,-22.3268,Landaörnefni Lítið
+Hallsteinsnes:65.5353,-22.3268,Landörnefni Lítið
 
 # Sérstakt
 Bessastaðir:64.1059036227962,-21.9957549156328,Landörnefni Lítið
 Kjarvalsstaðir:64.138224,-21.913707,Landörnefni Lítið
 Háskólatorg:64.139784,-21.950340,Landörnefni Lítið
 Litla-Ávík:66.0213,-21.425,Landörnefni Lítið
-Strandir:65.8600695,-21.3016378,Landaörnefni Stórt
+Strandir:65.8600695,-21.3016378,Landörnefni Stórt
+Reykjanesskagi:63.8185821975681,-22.692991355433815,Landörnefni Mið
