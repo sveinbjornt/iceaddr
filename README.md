@@ -109,7 +109,7 @@ The default limit on results from both functions is 50.
 
 ### Find closest address
 
-Given a set of WGS84 coordinates, the `nearest_addr()` function returns a list of the nearest addresses 
+Given a set of WGS84 coordinates, the `nearest_addr()` function returns a list of the nearest addresses
 in the database:
 
 ```python
@@ -230,12 +230,12 @@ given to municipalities and densely populated areas.
 
 ### Find closest placenames
 
-Given a set of WGS84 coordinates, the `nearest_placename()` function returns a list of the nearest 
+Given a set of WGS84 coordinates, the `nearest_placename()` function returns a list of the nearest
 placenames in the database:
 
 ```python
->>> from iceaddr import nearest_placename
->>> pn = nearest_placename(64.148446, -21.944933, limit=1)[0]
+>>> from iceaddr import nearest_placenames
+>>> pn = nearest_placenames(64.148446, -21.944933, limit=1)[0]
 >>> print(pn["nafn"])
 Landakotsvöllur
 ```
@@ -252,7 +252,7 @@ Landakotsvöllur
 * 0.2.0: Added `iceaddr_suggest`, result limit, changed key names for postcode dicts (22/10/2018)
 * 0.1.2: Initial release (10/10/2018)
 
-## BSD License 
+## BSD License
 
 Copyright (C) 2018-2021 Sveinbjorn Thordarson (sveinbjorn@sveinbjorn.org)
 
@@ -280,4 +280,3 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
-
