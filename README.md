@@ -1,7 +1,7 @@
 # iceaddr
 
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![Python 3.5](https://img.shields.io/badge/python-3.0-blue.svg)](https://www.python.org/downloads/release/python-360/)
+[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
@@ -230,7 +230,7 @@ given to municipalities and densely populated areas.
 
 ### Find closest placenames
 
-Given a set of WGS84 coordinates, the `nearest_placename()` function returns a list of the nearest
+Given a set of WGS84 coordinates, the `nearest_placenames()` function returns a list of the nearest
 placenames in the database:
 
 ```python
