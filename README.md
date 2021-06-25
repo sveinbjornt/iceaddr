@@ -242,6 +242,7 @@ Landakotsvöllur
 
 ## Version History
 
+* 0.5.2: Updated address and placename data, fixed issue with installing on Windows (25/06/2021)
 * 0.5.1: Fixes and additions in placename data (16/10/2020)
 * 0.5.0: Support for address number ranges, fix in house number lookup, new `nearest_addr` and `nearest_placenames` functions, updated data (15/10/2020)
 * 0.4.0: Updated address, placename and postcode data. Better handling of house letters in address lookup (06/05/2020)

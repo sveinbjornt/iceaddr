@@ -86,7 +86,7 @@ if not dbc:
 cursor = dbc.cursor()
 
 
-# Read manual placename additions from text file, insert into ornefn DB table
+# Read manual placename additions from text file, insert into ornefni DB table
 print("Inserting placename additions")
 f = open("placename_additions.txt", "r")
 for line in f.readlines():
