@@ -184,3 +184,10 @@ def nearest_addr(lat: float, lon: float, limit: int = 1) -> List[Dict]:
         res, key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"]))
     )
     return [_add_postcode_info(x) for x in closest[:limit]]
+
+
+def format_addr(addr: Dict) -> str:
+    """Given an address record dict from the database,
+    returns a canonically formatted address string, e.g.
+    'Öldugata 9c, 101 Reykjavík'"""
+    pass

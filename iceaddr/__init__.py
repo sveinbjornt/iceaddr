@@ -10,6 +10,6 @@
 __author__ = "Sveinbjorn Thordarson"
 __version__ = "0.5.2"  # Also update setup.py
 
-from .addresses import *
-from .postcodes import *
-from .placenames import *
+from .addresses import *  # noqa
+from .postcodes import *  # noqa
+from .placenames import *  # noqa

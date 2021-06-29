@@ -1,17 +1,21 @@
 """
 
-    test_iceaddr.py
+    iceaddr: Look up information about Icelandic streets, addresses,
+             placenames, landmarks, locations and postcodes.
 
-    Tests for iceaddr package
+    Copyright (c) 2018-2021 Sveinbjorn Thordarson.
+
+    Tests for iceaddr python package.
 
 """
 
 import sys
 import os
 
+# Add parent directory to import path
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../")
 
-from iceaddr import (
+from iceaddr import (  # noqa
     iceaddr_lookup,
     iceaddr_suggest,
     postcode_lookup,
@@ -113,7 +117,7 @@ def test_address_suggest_with_dashed_numbers():
 
 
 def test_postcode_data_integrity():
-    """ Make sure postcode data is OK. """
+    """ Make sure postcode data is sane. """
     for k, v in POSTCODES.items():
         assert type(k) == int
         _verify_postcode_dict(v)
@@ -126,6 +130,7 @@ def _verify_postcode_dict(pcd):
     assert "stadur_nf" in pcd
     assert "stadur_tgf" in pcd
     assert "tegund" in pcd
+    assert "lysing" not in pcd or pcd["lysing"] != ""
 
 
 def test_postcode_lookup():
@@ -152,7 +157,7 @@ FISKISLOD_31_COORDS = (64.1560233, -21.951407)
 OLDUGATA_4_COORDS = (64.148446, -21.944933)
 
 
-def test_closest_addr():
+def test_nearest_addr():
     """ Test address proxmity function. """
     addr = nearest_addr(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
     assert len(addr) == 1
@@ -167,7 +172,7 @@ def test_closest_addr():
     assert addr[0]["svaedi_tgf"] == "Höfuðborgarsvæðinu"
 
 
-def test_closest_placename():
+def test_nearest_placename():
     """ Test placename proximity function. """
     pn = nearest_placenames(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
     assert len(pn) == 1
