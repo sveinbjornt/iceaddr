@@ -25,7 +25,7 @@ HARDCODED_PRIORITY = {
     "Bláfjöll": (64.0121886, -21.5617119),  # Nálægt Rvk á Reykjanesskaga
     "Bakki": (66.0701681, -17.3481556),  # Hjá Húsavík, sbr. verið
     "Bessastaðir": (64.1059036227962, -21.9957549156328),  # Forsetabústaður
-    "Gullfoss": (64.3273264, -20.1193949),  # Túrista-áfanginn fær forgang
+    "Gullfoss": (64.3273264, -20.1193949),  # Túrista-áfangastaðurinn fær forgang
     "Grótta": (64.1642163, -22.0218824),  # Á Seltjarnarnesi fær forgang
     "Arnarhóll": (64.147844, -21.9331656),  # Arnarhóll í miðborg Rvk
     "Reykjanes": (63.8185821975681, -22.692991355433815),  # Nesið nálægt Rvk.
@@ -69,7 +69,8 @@ def _precedence(pn: Dict) -> int:
     fl = pn["flokkur"]
     if fl in ORDER:
         return ORDER.index(fl)
-    return 99
+    # Any number > len(ORDER) will do for sorting purposes
+    return 9999
 
 
 def placename_lookup(placename: str, partial: bool = False) -> List[Dict]:
