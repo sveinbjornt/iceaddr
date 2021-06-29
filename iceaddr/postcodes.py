@@ -26,7 +26,7 @@ POSTCODES = {
         "stadur_nf": "Reykjavík",
         "stadur_tgf": "Reykjavík",
         "tegund": "Þéttbýli",
-        "lysing": "",
+        "lysing": "Vatnsmýri og Skerjafjörður",
     },
     103: {
         "svaedi_nf": "Höfuðborgarsvæðið",
