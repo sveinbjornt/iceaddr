@@ -10,6 +10,8 @@
 
 """
 
+from typing import Iterator, Dict
+
 from builtins import input
 
 import sys
@@ -48,7 +50,8 @@ COLS = [
 ]
 
 
-def create_db(path):
+def create_db(path: str) -> sqlite3.Connection:
+    """ Create stadfong database table. """
     dbconn = sqlite3.connect(path)
 
     create_table_sql = """
@@ -76,13 +79,13 @@ def create_db(path):
     return dbconn
 
 
-def read_rows(dsv_file, delimiter="|"):
+def read_rows(dsv_file: TextIOWrapper, delimiter: str = "|") -> Iterator:
     reader = csv.DictReader(dsv_file, delimiter=delimiter)
     for row in reader:
         yield row
 
 
-def insert_address_entry(e):
+def insert_address_entry(e: Dict, conn: sqlite3.Connection) -> None:
     # The stadfong datafile is quite dirty so we need to
     # sanitise values before inserting into the database
 
@@ -120,13 +123,13 @@ def insert_address_entry(e):
 
     try:
         qargs = [e[c.upper()] for c in COLS]
-        c = dbconn.cursor()
+        c = conn.cursor()
         c.execute("INSERT INTO stadfong VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", qargs)
     except Exception as e:
         print(e)
 
 
-if __name__ == "__main__":
+def main() -> None:
     # Optional args to specify input and output files
     stadfong_path = sys.argv[1] if len(sys.argv) > 1 else DSV_FILENAME
     db_path = sys.argv[2] if len(sys.argv) > 2 else DEFAULT_DBNAME
@@ -147,11 +150,13 @@ if __name__ == "__main__":
             print("Aborting")
             sys.exit()
 
+    # Create new database file
     dbconn = create_db(db_path)
 
+    # Commit to DB in chunks of 1000 rows
     cnt = 0
     for r in read_rows(f):
-        insert_address_entry(r)
+        insert_address_entry(r, dbconn)
         cnt += 1
         if cnt % 1000 == 0:
             dbconn.commit()
@@ -164,3 +169,8 @@ if __name__ == "__main__":
     human_size = humanize.naturalsize(bytesize)
 
     print("\nCreated database with %d entries (%s)" % (cnt, human_size))
+
+
+if __name__ == "__main__":
+    """ Command line invocation. """
+    main()

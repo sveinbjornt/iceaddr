@@ -15,25 +15,21 @@ import requests
 import pprint
 import logging
 import csv
+from io import StringIO
+
 from reynir import NounPhrase
 
-from io import StringIO
 from iceaddr.postcodes import POSTCODES
+
 
 POSTCODES_REMOTE_URL = "https://www.postur.is/gogn/Gotuskra/postnumer.txt"
 
 
-def read_rows(dsv_file, delimiter="|"):
-    reader = csv.DictReader(dsv_file, delimiter=delimiter)
-    for row in reader:
-        yield row
-
-
-def _clean_name(name):
+def _clean_name(name: str) -> str:
     return name.split(" - ")[0].strip()
 
 
-if __name__ == "__main__":
+def main() -> None:
     pc = dict(POSTCODES)
     pc_keys = pc.keys()
     pp = pprint.PrettyPrinter(indent=4)
@@ -79,3 +75,8 @@ if __name__ == "__main__":
         print("No change since last update")
     else:
         pp.pprint(pc)
+
+
+if __name__ == "__main__":
+    """ Command line invocation. """
+    main()
