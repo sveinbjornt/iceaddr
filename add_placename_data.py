@@ -5,7 +5,7 @@
 
 """
 
-from typing import List, Tuple, Optional
+from typing import List, Tuple
 
 import fiona
 import sqlite3
