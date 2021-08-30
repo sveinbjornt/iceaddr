@@ -9,9 +9,9 @@
 
 """
 
-from typing import Dict, Union, List, Optional
+from typing import Dict, Union, List, Optional, Any
 
-POSTCODES = {
+POSTCODES: Dict[int, Dict[str, Any]] = {
     101: {
         "svaedi_nf": "Höfuðborgarsvæðið",
         "svaedi_tgf": "Höfuðborgarsvæðinu",

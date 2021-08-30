@@ -9,7 +9,7 @@
 
 """
 
-from typing import List, Dict
+from typing import List, Dict, Any
 
 from .db import shared_db
 from .dist import distance
@@ -59,7 +59,7 @@ ORDER = [
 ]
 
 
-def _precedence(pn: Dict) -> int:
+def _precedence(pn: Dict[str, Any]) -> int:
     """ Sort priority for placenames. """
     if pn["nafn"] in HARDCODED_PRIORITY:
         (lat, lng) = HARDCODED_PRIORITY[pn["nafn"]]
@@ -73,7 +73,7 @@ def _precedence(pn: Dict) -> int:
     return 9999
 
 
-def placename_lookup(placename: str, partial: bool = False) -> List[Dict]:
+def placename_lookup(placename: str, partial: bool = False) -> List[Dict[str, Any]]:
     """ Look up Icelandic placename in database. """
     q = "SELECT * FROM ornefni WHERE nafn=?"
     if partial:
@@ -87,7 +87,7 @@ def placename_lookup(placename: str, partial: bool = False) -> List[Dict]:
     return matches
 
 
-def nearest_placenames(lat: float, lon: float, limit: int = 1) -> List[Dict]:
+def nearest_placenames(lat: float, lon: float, limit: int = 1) -> List[Dict[str, Any]]:
     """ Find the placename closest to the given coordinates. """
     q = "SELECT * FROM ornefni"
     db_conn = shared_db.connection()
