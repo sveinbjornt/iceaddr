@@ -9,7 +9,7 @@
 
 """
 
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 
 import re
 
@@ -19,7 +19,7 @@ from .dist import distance
 
 
 def _add_postcode_info(addr: Dict[str, Any]) -> Dict[str, Any]:
-    """ Look up postcode info, add keys to address dictionary. """
+    """Look up postcode info, add keys to address dictionary."""
     pn = addr.get("postnr")
     if pn and POSTCODES.get(pn):
         addr.update(POSTCODES[pn])
@@ -27,7 +27,7 @@ def _add_postcode_info(addr: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def _run_addr_query(q: str, qargs: List[str]) -> List[Dict[str, Any]]:
-    """ Run address query, w. additional postcode data added post hoc. """
+    """Run address query, w. additional postcode data added post hoc."""
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, qargs)
     return [_add_postcode_info(dict(row)) for row in res]
@@ -42,13 +42,13 @@ def _cap_first(s: str) -> str:
 
 def iceaddr_lookup(
     street_name: str,
-    number: int = None,
-    letter: str = None,
-    postcode: int = None,
-    placename: str = None,
+    number: Optional[int] = None,
+    letter: Optional[str] = None,
+    postcode: Optional[int] = None,
+    placename: Optional[str] = None,
     limit: int = 50,
 ) -> List[Dict[str, Any]]:
-    """ Look up all addresses matching criterion """
+    """Look up all addresses matching criterion"""
 
     # Be forgiving, strip and capitalize street name. All street names in DB are capitalized.
     street_name = _cap_first(street_name.strip())
@@ -176,7 +176,7 @@ def iceaddr_suggest(search_str: str, limit: int = 50) -> List[Dict[str, Any]]:
 
 
 def nearest_addr(lat: float, lon: float, limit: int = 1) -> List[Dict[str, Any]]:
-    """ Find the address closest to the given coordinates. """
+    """Find the address closest to the given coordinates."""
     q = "SELECT * FROM stadfong"
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, [])
@@ -186,8 +186,8 @@ def nearest_addr(lat: float, lon: float, limit: int = 1) -> List[Dict[str, Any]]
     return [_add_postcode_info(x) for x in closest[:limit]]
 
 
-def format_addr(addr: Dict[str, Any]) -> str:
-    """Given an address record dict from the database,
-    returns a canonically formatted address string, e.g.
-    'Öldugata 9c, 101 Reykjavík'"""
-    pass
+# def format_addr(addr: Dict[str, Any]) -> str:
+#     """Given an address record dict from the database,
+#     returns a canonically formatted address string, e.g.
+#     'Öldugata 9c, 101 Reykjavík'"""
+#     pass
