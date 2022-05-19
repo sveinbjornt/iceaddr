@@ -18,11 +18,12 @@ import sys
 import os
 import sqlite3
 import csv
-import humanize
 from pathlib import Path
 from io import BytesIO, TextIOWrapper
 from zipfile import ZipFile
 from urllib.request import urlopen
+
+import humanize
 
 
 STADFONG_REMOTE_URL = "ftp://ftp.skra.is/skra/STADFANG.dsv.zip"
@@ -51,7 +52,7 @@ COLS = [
 
 
 def create_db(path: str) -> sqlite3.Connection:
-    """ Create stadfong database table. """
+    """Create stadfong database table."""
     dbconn = sqlite3.connect(path)
 
     create_table_sql = """
@@ -172,5 +173,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    """ Command line invocation. """
+    """Command line invocation."""
     main()

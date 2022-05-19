@@ -7,8 +7,11 @@
 
 from typing import List, Tuple
 
-import fiona
+from pprint import pprint
 import sqlite3
+
+import fiona
+
 
 # This file should be placed in repo root before running this program
 GPKG_FILE = "ornefni.gpkg"
@@ -19,11 +22,13 @@ LAYERS = [
     "ornefni_punktar",
 ]
 
+# https://atlas.lmi.is/heikir/downloadData/is_50v_ornefni_wgs_84_gpkg.zip
+
 DEFAULT_DBNAME = "iceaddr.db"
 
 
 def center_point(coords: List[Tuple]) -> Tuple[float, float]:
-    """ Find the center point of a given set of coordinates. """
+    """Find the center point of a given set of coordinates."""
     x: float = 0
     y: float = 0
 
@@ -38,7 +43,7 @@ def center_point(coords: List[Tuple]) -> Tuple[float, float]:
 
 
 def create_table(dbpath: str) -> sqlite3.Connection:
-    """ Create ornefni database table. """
+    """Create ornefni database table."""
     dbconn = sqlite3.connect(dbpath)
 
     create_table_sql = """
@@ -61,7 +66,7 @@ def create_table(dbpath: str) -> sqlite3.Connection:
 
 
 def delete_table(dbpath: str) -> sqlite3.Connection:
-    """ Drop ornefni database table. """
+    """Drop ornefni database table."""
     dbconn = sqlite3.connect(dbpath)
 
     del_table_sql = """DROP TABLE ornefni"""
@@ -125,8 +130,9 @@ def main() -> None:
                 # from pprint import pprint
                 # pprint(i)
                 try:
-                    fl = i["properties"]["ornefnaflokkur_text"]
-                    n = i["properties"]["nafnfitju"]
+                    pprint(i["properties"])
+                    fl = i["properties"]["ornefnaflokkur"]
+                    n = i["properties"]["ornefni"]
                     c = i["geometry"]["coordinates"]
                     # nc = len(c)
                 except Exception as e:
@@ -180,5 +186,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    """ Command line invocation. """
+    """Command line invocation."""
     main()
