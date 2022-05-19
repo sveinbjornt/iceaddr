@@ -12,8 +12,9 @@ import sqlite3
 
 import fiona
 
-
-# This file should be placed in repo root before running this program
+# Remote URL for latest IS50V data:
+# https://atlas.lmi.is/heikir/downloadData/is_50v_ornefni_wgs_84_gpkg.zip
+# This file should be placed in repo root and renamed before running this program
 GPKG_FILE = "ornefni.gpkg"
 
 LAYERS = [
@@ -22,7 +23,6 @@ LAYERS = [
     "ornefni_punktar",
 ]
 
-# https://atlas.lmi.is/heikir/downloadData/is_50v_ornefni_wgs_84_gpkg.zip
 
 DEFAULT_DBNAME = "iceaddr.db"
 
@@ -80,19 +80,8 @@ def delete_table(dbpath: str) -> sqlite3.Connection:
     return dbconn
 
 
-def main() -> None:
-    # Delete any existing table
-    delete_table(DEFAULT_DBNAME)
-
-    # Start by creating ornefni table
-    dbc = create_table(DEFAULT_DBNAME)
-    if not dbc:
-        print("Failed to connect to DB")
-        exit()
-
-    cursor = dbc.cursor()
-
-    # Read manual placename additions from text file, insert into ornefni DB table
+def add_placename_additions(dbc) -> None:
+    """Read manual placename additions from text file, insert into ornefni DB table."""
     print("Inserting placename additions")
     f = open("placename_additions.txt", "r")
     for line in f.readlines():
@@ -110,14 +99,16 @@ def main() -> None:
             raise
 
         print("Inserting " + first)
-        cursor.execute(
+        dbc.cursor().execute(
             "INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)",
             (first, fl, lat, lon),
         )
     f.close()
     dbc.commit()
 
-    # Read IS50V geo layers from file, add all placenames ("örnefni") to DB
+
+def add_placenames_from_is50v(dbc) -> None:
+    """Read IS50V geo layers from file, add all placenames ("örnefni") to DB."""
     for layer in fiona.listlayers(GPKG_FILE):
         with fiona.open(GPKG_FILE, encoding="utf-8", layer=layer) as src:
             for i in src:
@@ -127,17 +118,15 @@ def main() -> None:
                     # print("Skipping layer " + layer)
                     continue
 
-                # from pprint import pprint
                 # pprint(i)
                 try:
-                    pprint(i["properties"])
+                    # pprint(i["properties"])
                     fl = i["properties"]["ornefnaflokkur"]
                     n = i["properties"]["ornefni"]
                     c = i["geometry"]["coordinates"]
                     # nc = len(c)
                 except Exception as e:
-                    print("ERROR adding item: {0}".format(e))
-                    print(n)
+                    print(f"ERROR adding item {i['properties']}: {e}")
                 else:
                     print(n)
 
@@ -177,12 +166,26 @@ def main() -> None:
                 gps = (cp[1], cp[0])
 
                 # Insert
-                cursor.execute(
+                dbc.cursor().execute(
                     "INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)",
                     (n, fl, gps[0], gps[1]),
                 )
 
             dbc.commit()
+
+
+def main() -> None:
+    # Delete any existing table
+    delete_table(DEFAULT_DBNAME)
+
+    # Start by creating ornefni table
+    dbc = create_table(DEFAULT_DBNAME)
+    if not dbc:
+        print("Failed to connect to DB")
+        exit(1)
+
+    add_placename_additions(dbc)
+    add_placenames_from_is50v(dbc)
 
 
 if __name__ == "__main__":
