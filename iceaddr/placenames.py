@@ -3,7 +3,7 @@
     iceaddr: Look up information about Icelandic streets, addresses,
              placenames, landmarks, locations and postcodes.
 
-    Copyright (c) 2018-2021 Sveinbjorn Thordarson.
+    Copyright (c) 2018-2022 Sveinbjorn Thordarson.
 
     This file contains code related to placename lookup.
 
@@ -60,7 +60,7 @@ ORDER = [
 
 
 def _precedence(pn: Dict[str, Any]) -> int:
-    """ Sort priority for placenames. """
+    """Sort priority for placenames."""
     if pn["nafn"] in HARDCODED_PRIORITY:
         (lat, lng) = HARDCODED_PRIORITY[pn["nafn"]]
         if pn["lat_wgs84"] == lat and pn["long_wgs84"] == lng:
@@ -74,7 +74,7 @@ def _precedence(pn: Dict[str, Any]) -> int:
 
 
 def placename_lookup(placename: str, partial: bool = False) -> List[Dict[str, Any]]:
-    """ Look up Icelandic placename in database. """
+    """Look up Icelandic placename in database."""
     q = "SELECT * FROM ornefni WHERE nafn=?"
     if partial:
         q = "SELECT * FROM ornefni WHERE nafn LIKE '?%'"
@@ -88,7 +88,7 @@ def placename_lookup(placename: str, partial: bool = False) -> List[Dict[str, An
 
 
 def nearest_placenames(lat: float, lon: float, limit: int = 1) -> List[Dict[str, Any]]:
-    """ Find the placename closest to the given coordinates. """
+    """Find the placename closest to the given coordinates."""
     q = "SELECT * FROM ornefni"
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, [])

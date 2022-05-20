@@ -3,7 +3,7 @@
     iceaddr: Look up information about Icelandic streets, addresses,
              placenames, landmarks, locations and postcodes.
 
-    Copyright (c) 2018-2021 Sveinbjorn Thordarson.
+    Copyright (c) 2018-2022 Sveinbjorn Thordarson.
 
     This file contains code related to the iceaddr sqlite3 database.
 
@@ -17,7 +17,7 @@ _DB_REL_PATH = "resources/iceaddr.db"
 
 
 class SharedDB:
-    """ Singleton object wrapper for local SQLite3 DB """
+    """Singleton object wrapper for local SQLite3 DB"""
 
     def __init__(self):
         self.db_conn = None

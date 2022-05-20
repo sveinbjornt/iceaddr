@@ -258,7 +258,7 @@ Landakotsvöllur
 
 ## BSD License
 
-Copyright (C) 2018-2021 Sveinbjorn Thordarson (sveinbjorn@sveinbjorn.org)
+Copyright (C) 2018-2022 Sveinbjorn Thordarson (sveinbjorn@sveinbjorn.org)
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
