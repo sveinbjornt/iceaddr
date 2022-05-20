@@ -3,7 +3,7 @@
     iceaddr: Look up information about Icelandic streets, addresses,
              placenames, landmarks, locations and postcodes.
 
-    Copyright (c) 2018-2021 Sveinbjorn Thordarson.
+    Copyright (c) 2018-2022 Sveinbjorn Thordarson.
 
     Tests for iceaddr python package.
 
@@ -75,11 +75,11 @@ def test_address_lookup_matches_number_range_and_no_number():
     assert results[0]["husnr"] is None
 
 
-def test_address_lookup_can_find_places_of_interest():
-    results = iceaddr_lookup("Harpa", postcode=101)
-    assert results
-    assert results[0]["heiti_nf"] == "Austurbakki"
-    assert results[0]["husnr"]
+# def test_address_lookup_can_find_places_of_interest():
+#     results = iceaddr_lookup("Harpa", postcode=101)
+#     assert results
+#     assert results[0]["heiti_nf"] == "Austurbakki"
+#     assert results[0]["husnr"]
 
 
 def test_address_lookup_does_not_need_letter():
@@ -178,7 +178,7 @@ def test_nearest_placename():
     """Test placename proximity function."""
     pn = nearest_placenames(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
     assert len(pn) == 1
-    assert pn[0]["nafn"] == "Vesturbær"
+    assert pn[0]["nafn"] == "Grandi"
 
     # pn = nearest_placenames(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5)
     # assert len(pn) == 5
