@@ -1,6 +1,7 @@
 
 TODO for iceaddr
 
+* Look up addresses based on proximity (with coordinates being provided)
 * Better automation of geo data processing in db build scripts, should not be a separate step
 * iceaddr_suggest relies on comma separator to separate street address and place name. Could be made smarter.
 * Function to find region of a given pair of coordinates, e.g. which_region(lat,lon) == "Norðurland"
