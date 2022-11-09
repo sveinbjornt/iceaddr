@@ -246,6 +246,7 @@ Landakotsvöllur
 
 ## Version History
 
+* 0.5.4: Updated address and placename data (09/11/2022)
 * 0.5.3: Updated address, postcode and placename data, various minor fixes (19/05/2022)
 * 0.5.2: Updated address and placename data, fixed issue with installing on Windows (25/06/2021)
 * 0.5.1: Fixes and additions in placename data (16/10/2020)
