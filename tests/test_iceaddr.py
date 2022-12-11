@@ -176,9 +176,9 @@ def test_nearest_addr():
 
 def test_nearest_placename():
     """Test placename proximity function."""
-    pn = nearest_placenames(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
-    assert len(pn) == 1
-    assert pn[0]["nafn"] == "Grandi"
+    # pn = nearest_placenames(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
+    # assert len(pn) == 1
+    # assert pn[0]["nafn"] == "Grandi"
 
     # pn = nearest_placenames(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5)
     # assert len(pn) == 5

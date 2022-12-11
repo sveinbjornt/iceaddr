@@ -239,6 +239,7 @@ Landakotsvöllur
 
 ## Version History
 
+* 0.5.5: Updated address and placename data. Removed ISN93 coords. Now requires Python 3.7+ (11/12/2022)
 * 0.5.4: Updated address and placename data (09/11/2022)
 * 0.5.3: Updated address, postcode and placename data, various minor fixes (19/05/2022)
 * 0.5.2: Updated address and placename data, fixed issue with installing on Windows (25/06/2021)

@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="iceaddr",
-    version="0.5.4",  # Also update __init__.py
+    version="0.5.5",  # Also update __init__.py
     author="Sveinbjorn Thordarson",
     author_email="sveinbjorn@sveinbjorn.org",
     license="BSD",
