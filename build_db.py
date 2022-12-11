@@ -20,13 +20,12 @@ import sqlite3
 import csv
 from pathlib import Path
 from io import BytesIO, TextIOWrapper
-from zipfile import ZipFile
 from urllib.request import urlopen
 
 import humanize
 
 
-STADFONG_REMOTE_URL = "ftp://ftp.skra.is/skra/STADFANG.dsv.zip"
+STADFONG_REMOTE_URL = "https://fasteignaskra.is/Stadfangaskra.csv"
 
 DSV_FILENAME = "STADFANG.dsv"
 
@@ -46,8 +45,6 @@ COLS = [
     "vidsk",
     "lat_wgs84",
     "long_wgs84",
-    "x_isn93",
-    "y_isn93",
 ]
 
 
@@ -69,9 +66,7 @@ def create_db(path: str) -> sqlite3.Connection:
         serheiti TEXT,
         vidsk TEXT,
         lat_wgs84 REAL,
-        long_wgs84 REAL,
-        x_isn93 REAL,
-        y_isn93 REAL
+        long_wgs84 REAL
     );
     """
 
@@ -80,7 +75,7 @@ def create_db(path: str) -> sqlite3.Connection:
     return dbconn
 
 
-def read_rows(dsv_file: TextIOWrapper, delimiter: str = "|") -> Iterator:
+def read_rows(dsv_file: TextIOWrapper, delimiter: str = ",") -> Iterator:
     reader = csv.DictReader(dsv_file, delimiter=delimiter)
     for row in reader:
         yield row
@@ -94,13 +89,11 @@ def insert_address_entry(e: Dict, conn: sqlite3.Connection) -> None:
         e[k] = e[k].strip()
 
     # Icelandic to English decimal points
-    e["LAT_WGS84"] = e["LAT_WGS84"].replace(",", ".")
-    e["LONG_WGS84"] = e["LONG_WGS84"].replace(",", ".")
-    e["X_ISN93"] = e["X_ISN93"].replace(",", ".")
-    e["Y_ISN93"] = e["Y_ISN93"].replace(",", ".")
+    e["LAT_WGS84"] = e["N_HNIT_WGS84"].replace(",", ".")
+    e["LONG_WGS84"] = e["E_HNIT_WGS84"].replace(",", ".")
 
     to_int = ["BYGGD", "HEINUM", "HNITNUM", "HUSNR", "LANDNR", "POSTNR"]
-    to_float = ["LAT_WGS84", "LONG_WGS84", "X_ISN93", "Y_ISN93"]
+    to_float = ["LAT_WGS84", "LONG_WGS84"]
 
     for k in to_int:
         if e[k] == "":
@@ -124,10 +117,11 @@ def insert_address_entry(e: Dict, conn: sqlite3.Connection) -> None:
 
     try:
         qargs = [e[c.upper()] for c in COLS]
+        print(qargs)
         c = conn.cursor()
-        c.execute("INSERT INTO stadfong VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", qargs)
-    except Exception as ex:
-        print(ex)
+        c.execute("INSERT INTO stadfong VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", qargs)
+    except Exception as e:
+        print(e)
 
 
 def main() -> None:
@@ -138,8 +132,7 @@ def main() -> None:
     if stadfong_path == DSV_FILENAME and not Path(stadfong_path).is_file():
         print("Fetching remote file %s" % STADFONG_REMOTE_URL)
         resp = urlopen(STADFONG_REMOTE_URL)
-        zipfile = ZipFile(BytesIO(resp.read()))
-        f = TextIOWrapper(zipfile.open(DSV_FILENAME), "utf-8")
+        f = TextIOWrapper(BytesIO(resp.read()), "utf-8")
     else:
         f = open(stadfong_path, "r")
 

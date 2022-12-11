@@ -81,7 +81,7 @@ def delete_table(dbpath: str) -> sqlite3.Connection:
 
 
 def add_placename_additions(dbc) -> None:
-    """Read manual placename additions from text file, insert into ornefni DB table."""
+    """Read manual placename additions from text file, insert into "ornefni" DB table."""
     print("Inserting placename additions")
     f = open("placename_additions.txt", "r")
     for line in f.readlines():

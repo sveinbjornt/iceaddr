@@ -6,7 +6,6 @@
 [![PyPI](https://img.shields.io/pypi/v/iceaddr)]()
 [![Build](https://github.com/sveinbjornt/iceaddr/actions/workflows/python-package.yml/badge.svg)]()
 
-
 ### Look up Icelandic street addresses, postcodes and placenames
 
 `iceaddr` is a Python 3.6+ package to look up information about Icelandic streets, addresses, placenames,
@@ -22,7 +21,7 @@ from the following sources:
 `iceaddr` is available via [PyPI](https://pypi.org/project/iceaddr/).
 
 ```
-$ pip install iceaddr
+pip install iceaddr
 ```
 
 ## Examples
@@ -50,9 +49,7 @@ $ pip install iceaddr
   'svaedi_tgf': 'Höfuðborgarsvæðinu',
   'svfnr': 0,
   'tegund': 'Þéttbýli',
-  'vidsk': '',
-  'x_isn93': 356999.259090909,
-  'y_isn93': 408290.561363636}]
+  'vidsk': ''}]
 ```
 
 ### Look up address with placename
@@ -78,9 +75,7 @@ $ pip install iceaddr
   'svaedi_tgf': 'Höfuðborgarsvæðinu',
   'svfnr': 0,
   'tegund': 'Þéttbýli',
-  'vidsk': '',
-  'x_isn93': 356699.479545455,
-  'y_isn93': 408411.468181818}]
+  'vidsk': ''}]
 ```
 
 Street and place names can be provided in either nominative (nf.) or dative (þgf.) case (e.g. both
@@ -145,8 +140,6 @@ in the database:
 | svfnr         |                                                         |
 | tegund        | Type (either 'Þéttbýli' (urban) or 'Dreifbýli' (rural)) |
 | vidsk         | Additional information                                  |
-| x_isn93       | Coordinate X (ISN93)                                    |
-| y_isn93       | Coordinate Y (ISN93)                                    |
 
 ### Postcodes
 
