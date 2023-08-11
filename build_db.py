@@ -117,7 +117,7 @@ def insert_address_entry(e: Dict, conn: sqlite3.Connection) -> None:
 
     try:
         qargs = [e[c.upper()] for c in COLS]
-        print(qargs)
+        # print(qargs)
         c = conn.cursor()
         c.execute("INSERT INTO stadfong VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", qargs)
     except Exception as exc:
@@ -158,6 +158,9 @@ def main() -> None:
             sys.stdout.flush()
 
     dbconn.commit()
+
+    print("\tInserting: %d\r" % cnt, end="")
+    sys.stdout.flush()
 
     bytesize = os.stat(db_path).st_size
     human_size = humanize.naturalsize(bytesize)

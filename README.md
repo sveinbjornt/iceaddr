@@ -9,14 +9,14 @@
 ### Look up Icelandic street addresses, postcodes and placenames
 
 `iceaddr` is a Python 3.7+ package to look up information about Icelandic streets, addresses, placenames,
-landmarks, locations and postcodes. The underlying data is contained in a local database assembled
+landmarks, locations and postcodes. The underlying data is contained in a local SQLite database assembled
 from the following sources:
 
 * [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) (*Þjóðskra*, [CC-BY](http://opendefinition.org/licenses/cc-by/))
 * [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is) (*Landmælingar Íslands*)
 * The postcode table provided by [Postur.is](https://www.postur.is/gogn/Gotuskra/postnumer.txt), with supplementary data from [Icelandic Wikipedia](https://is.wikipedia.org/wiki/Listi_yfir_%C3%ADslensk_p%C3%B3stn%C3%BAmer)
 
-Since no networking takes place, lookups are fast and can be performed offline. The package is
+Since no networking takes place, lookups are very fast and can be performed offline. The package is
 useful for geocoding and reverse geocoding of Icelandic addresses and placenames, as well as for
 validating addresses and postcodes. No external dependencies are required.
 
@@ -269,6 +269,7 @@ python setup.py install
 
 ## Version History
 
+* 0.5.6: Updated address and placename data. (11/08/2023)
 * 0.5.5: Updated address and placename data. Removed ISN93 coords. Now requires Python 3.7+ (11/12/2022)
 * 0.5.4: Updated address and placename data (09/11/2022)
 * 0.5.3: Updated address, postcode and placename data, various minor fixes (19/05/2022)
