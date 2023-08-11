@@ -16,11 +16,15 @@ from the following sources:
 * [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is) (*Landmælingar Íslands*)
 * The postcode table provided by [Postur.is](https://www.postur.is/gogn/Gotuskra/postnumer.txt), with supplementary data from [Icelandic Wikipedia](https://is.wikipedia.org/wiki/Listi_yfir_%C3%ADslensk_p%C3%B3stn%C3%BAmer)
 
+Since no networking takes place, lookups are fast and can be performed offline. The package is
+useful for geocoding and reverse geocoding of Icelandic addresses and placenames, as well as for
+validating addresses and postcodes. No external dependencies are required.
+
 ## Installation
 
-`iceaddr` is available via [PyPI](https://pypi.org/project/iceaddr/).
+The latest version of `iceaddr` is available via [PyPI](https://pypi.org/project/iceaddr/).
 
-```
+```bash
 pip install iceaddr
 ```
 
@@ -235,6 +239,32 @@ placenames in the database:
 >>> pn = nearest_placenames(64.148446, -21.944933, limit=1)[0]
 >>> print(pn["nafn"])
 Landakotsvöllur
+```
+
+## Build process
+
+To build your own version of the package, you need to have Python 3.7+ installed.
+Then, after optionally creating a virtual environment, run the following command
+from the repository root to install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Then, run the following command to build the database:
+
+```bash
+$ python build_db.py
+...
+$ python add_placename_data.py
+...
+```
+
+This creates an SQLite3 database in the repo root named `iceaddr.db`. Move this file to
+`iceaddr/resources/` and you can now install your own version of the package:
+
+```bash
+python setup.py install
 ```
 
 ## Version History

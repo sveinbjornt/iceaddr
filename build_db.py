@@ -120,8 +120,8 @@ def insert_address_entry(e: Dict, conn: sqlite3.Connection) -> None:
         print(qargs)
         c = conn.cursor()
         c.execute("INSERT INTO stadfong VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", qargs)
-    except Exception as e:
-        print(e)
+    except Exception as exc:
+        print(exc)
 
 
 def main() -> None:
