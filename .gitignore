@@ -16,3 +16,4 @@ ornefni.gpkg
 venv
 *.zip
 *.csv
+.vscode
