@@ -54,3 +54,11 @@ def distance(loc1: Tuple[float, float], loc2: Tuple[float, float]) -> float:
     )
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     return _EARTH_RADIUS * c
+
+
+ICELAND_COORDS = (64.9957538607, -18.5739616708)
+
+
+def in_iceland(loc: Tuple[float, float], km_radius: float = 800.0) -> bool:
+    """Check if coordinates are within or very close to Iceland."""
+    return distance(loc, ICELAND_COORDS) <= km_radius

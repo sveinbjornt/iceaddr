@@ -21,6 +21,7 @@ import csv
 from pathlib import Path
 from io import BytesIO, TextIOWrapper
 from urllib.request import urlopen
+from iceaddr.dist import in_iceland
 
 import humanize
 
@@ -116,6 +117,7 @@ def insert_address_entry(e: Dict, conn: sqlite3.Connection) -> None:
                 e[k] = None
 
     try:
+        assert in_iceland((e["LAT_WGS84"], e["LONG_WGS84"]))
         qargs = [e[c.upper()] for c in COLS]
         # print(qargs)
         c = conn.cursor()

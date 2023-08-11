@@ -13,6 +13,8 @@ from pathlib import Path
 
 import fiona
 
+from iceaddr.dist import in_iceland
+
 # Remote URL for latest IS50V data:
 # https://atlas.lmi.is/heikir/downloadData/is_50v_ornefni_wgs_84_gpkg.zip
 # This file should be placed in repo root and renamed before running this program
@@ -100,6 +102,10 @@ def add_placename_additions(dbc) -> None:
             raise
 
         print("Inserting " + first)
+
+        if lat and lon and not in_iceland((lat, lon)):
+            raise Exception(f"Not in Iceland: {first} ({lat}, {lon})")
+
         dbc.cursor().execute(
             "INSERT INTO ornefni (nafn, flokkur, lat_wgs84, long_wgs84) VALUES (?,?,?,?)",
             (first, fl, lat, lon),
@@ -167,6 +173,9 @@ def add_placenames_from_is50v(dbc) -> None:
 
                 # LMÍ's GPKG coord values are reversed! Why?
                 gps = (cp[1], cp[0])
+
+                if not in_iceland(gps):
+                    print(f"WARNING: Not in Iceland, skipping: {n} ({gps})")
 
                 # Insert
                 dbc.cursor().execute(

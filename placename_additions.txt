@@ -40,7 +40,6 @@ Skorradalshreppur:64.4981736,-21.5535332,Sveitarfélag
 Hvalfjarðarsveit:64.2604043,-22.2458378,Sveitarfélag
 Borgarbyggð:64.5400086,-21.9257547,Sveitarfélag
 Helgafellssveit:65.0411194,-22.7379217,Sveitarfélag
-Eyja- og Miklaholtshreppur:64.8350085,-22.5712548,Sveitarfélag
 Dalabyggð:65.1100083,-21.7757547,Sveitarfélag
 Reykhólahreppur:65.4461193,-22.2168106,Sveitarfélag
 Tálknafjarðarhreppur:65.6278361,-23.8266848,Sveitarfélag
@@ -199,7 +198,7 @@ Borgarhreppur:64.65,-21.85,Hreppur
 Breiðuvíkurhreppur:64.7833,-23.8,Hreppur
 Bæjarhreppur:65.21,-21.098056,Hreppur
 Engihlíðarhreppur:65.6667,-20.15,Hreppur
-Eyja- og Miklaholtshreppur:64.834329996,22.55749777,Hreppur
+Eyja- og Miklaholtshreppur:64.8350085,-22.5712548,Sveitarfélag
 Eyjahreppur:64.900,-22.400,Hreppur
 Fjallahreppur:65.750,-16.000,Hreppur
 Gaulverjabæjarhreppur:63.85,-20.8333,Hreppur
@@ -207,13 +206,13 @@ Gaulverjahreppur:63.85,-20.8333,Hreppur
 Geithellnahreppur:64.667,-14.783,Hreppur
 Gerðahreppur:64.0833,-22.65,Hreppur
 Glæsibæjarhreppur:65.65,-18.25,Hreppur
-Hlíðarhreppur:-65.599972,14.666669,Hreppur
+Hlíðarhreppur:65.599972,-14.666669,Hreppur
 Hofshreppur:65.866667,-19.2,Hreppur
 Hraungerðishreppur:63.95,-20.8833,Hreppur
 Hraunhreppur:64.7333,-22,Hreppur
 Hvammshreppur:65.217,-21.800,Hreppur
 Hvolhreppur:63.75,-20.2167,Hreppur
-Hálsahreppur:64.6667,21.0667,Hreppur
+Hálsahreppur:64.6667,-21.0667,Hreppur
 Hálshreppur:65.75,-17.866667,Hreppur
 Hólahreppur:65.65,-19,Hreppur
 Höfðahreppur:65.8333,-20.3333,Hreppur
@@ -225,7 +224,7 @@ Landmannahreppur:64.000,-20.15,Hreppur
 Laugardalshreppur:64.333,-20.750,Hreppur
 Leiðvallarhreppur:,,Hreppur
 Lýtingsstaðahreppur:65.4,-19.2,Hreppur
-Miklaholtshreppur:64.834329996,22.55749777,Hreppur
+Miklaholtshreppur:64.834329996,-22.55749777,Hreppur
 Mosvallahreppur:65.966667,-23.4,Hreppur
 Reykjahreppur:65.9667,-17.1833,Hreppur
 Skilmannahreppur:64.367,-21.850,Hreppur
