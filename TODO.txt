@@ -1,6 +1,7 @@
 
 TODO for iceaddr
 
+* iceaddr_sql for direct SQL queries to the underlying database
 * Provide placenames and street names in all cases (nf, þf, þgf, ef)
 * Verify that GPS coordinates are rational in DB build process
 * Better automation of geo data processing in db build scripts, should not be a separate step
