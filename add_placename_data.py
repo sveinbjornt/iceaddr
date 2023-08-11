@@ -9,6 +9,7 @@ from typing import List, Tuple
 
 from pprint import pprint
 import sqlite3
+from pathlib import Path
 
 import fiona
 
@@ -109,10 +110,13 @@ def add_placename_additions(dbc) -> None:
 
 def add_placenames_from_is50v(dbc) -> None:
     """Read IS50V geo layers from file, add all placenames ("örnefni") to DB."""
+    if not Path(GPKG_FILE).exists():
+        print(f"Could not find file {GPKG_FILE}")
+        exit(1)
+
     for layer in fiona.listlayers(GPKG_FILE):
         with fiona.open(GPKG_FILE, encoding="utf-8", layer=layer) as src:
             for i in src:
-
                 wanted_layer = [layer.startswith(p) for p in LAYERS]
                 if True not in wanted_layer:
                     # print("Skipping layer " + layer)
@@ -143,7 +147,6 @@ def add_placenames_from_is50v(dbc) -> None:
 
                 # Special handling of flakes - use center point
                 elif type(c) is list:
-
                     if not c:
                         # print("Faulty flake: {0}".format(n))
                         # pprint(i)

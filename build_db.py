@@ -2,7 +2,7 @@
 """
 
     Create stadfong address database from from the
-    DSV file at ftp://ftp.skra.is/skra/STADFANG.dsv.zip
+    Staðfangaskrá CSV dataset.
 
     From data compiled by Registers Iceland (CC-BY):
         https://opingogn.is/dataset/stadfangaskra
@@ -27,7 +27,7 @@ import humanize
 
 STADFONG_REMOTE_URL = "https://fasteignaskra.is/Stadfangaskra.csv"
 
-DSV_FILENAME = "STADFANG.dsv"
+DSV_FILENAME = "Stadfangaskra.csv"
 
 DEFAULT_DBNAME = "iceaddr.db"
 
