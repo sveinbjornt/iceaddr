@@ -154,7 +154,7 @@ def add_placenames_from_is50v(dbc) -> None:
                 # Special handling of flakes - use center point
                 elif type(c) is list:
                     if not c:
-                        # print("Faulty flake: {0}".format(n))
+                        # print(f"Faulty flake: {n}")
                         # pprint(i)
                         # raise
                         continue

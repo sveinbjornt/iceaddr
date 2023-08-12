@@ -17,3 +17,6 @@ venv
 *.zip
 *.csv
 .vscode
+*.pyc
+.coverage
+.coverage.*

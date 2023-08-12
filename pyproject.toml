@@ -1,0 +1,152 @@
+[project]
+name = "iceaddr"
+version = "0.5.7"
+description = "Look up information about Icelandic street addresses, postcodes, landmarks, locations and placenames"
+authors = [
+    { name = "Sveinbjorn Thordarson", email = "sveinbjorn@sveinbjorn.org" },
+]
+readme = { file = "README.md", content-type = "text/markdown" }
+license = { file = "LICENSE.txt" }
+# For classifier list see: https://pypi.org/pypi?%3Aaction=list_classifiers
+classifiers = [
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Natural Language :: Icelandic",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+    "Topic :: Text Processing :: Linguistic",
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/sveinbjornt/iceaddr"
+
+[project.optional-dependencies]
+# Dev dependencies
+dev = [
+    "pytest>=7.2.1",
+    # Building database
+    "fiona>=1.8.18",
+    "humanize>=0.5.1",
+    "reynir>=3.1.0",
+    # Pre-commit hook
+    "pre-commit>=3.3.3",
+    "black>=23.7.0",
+    "mypy>=1.5.1",
+    "ruff>=0.0.285",
+    "coverage[toml]>=7.3.1",
+]
+
+# *** Configuration of tools ***
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    # Ignore deprecation warnings in libraries, their problem not ours
+    "ignore::DeprecationWarning",
+]
+
+[tool.coverage.run]
+branch = true              # Enable branch coverage
+source = ["src/iceaddr"]   # Only test coverage of `iceaddr`
+command_line = "-m pytest" # Run all tests when calculating coverage
+
+[tool.coverage.report]
+exclude_also = ["if TYPE_CHECKING:", "raise NotImplementedError"]
+skip_covered = true                                               # Skip showing fully covered files
+skip_empty = true                                                 # Skip empty files
+sort = "-Cover"                                                   # Sort by coverage percentage
+precision = 2                                                     # Precision of output percentage
+fail_under = 65                                                   # Fail if total covered under threshold
+
+
+[tool.mypy]
+overrides = []
+
+
+[tool.pyright]
+typeCheckingMode = "strict"
+# The following settings are off by default, even in strict mode
+reportCallInDefaultInitializer = "information"
+reportImplicitOverride = "information"
+reportImplicitStringConcatenation = "information"
+reportImportCycles = "warning"
+reportMissingSuperCall = "none"
+reportPropertyTypeMismatch = "warning"
+reportShadowedImports = "warning"
+reportUninitializedInstanceVariable = "information"
+reportUnnecessaryTypeIgnoreComment = "warning"
+reportUnusedCallResult = "none"
+
+
+[tool.ruff]
+# See https://beta.ruff.rs/docs/rules/ for list of rules
+# Enable all rules
+select = ["ALL"]
+# Ignore specific rules
+# (we should aim to have these as few as possible)
+ignore = [
+    "D",       # Docstring style rules
+    "ANN",     # Missing type annotations
+    "TD",      # Pedantic TODO comment rules
+    "FIX002",  # Line contains TODO rule
+    "SLOT000", # str subclass should define __slots__
+    "SIM105",  # contextlib.suppress rule
+    "BLE",     # Blind `except:`
+    "A",       # Shadowing of builtins
+    "ERA",     # Commented out code
+    "FBT",     # Forbids boolean positional arguments
+    "COM",     # Commas (sometimes takes issue with black formatting)
+    "S101",    # Disallow assert statements rule
+    "PLR0912", # "Too many statements" rule
+    "C90",     # Function complexity rules
+    "UP",      # Deprecation rules
+    "TRY",     # Pedantic exception rules
+    "EM",      # Pedantic exception message rules
+    "TID",     # No relative parent imports rule
+    "TCH",     # Move into type checking block - too risky, causes issues
+    "RSE102",  # Bug: https://github.com/astral-sh/ruff/issues/5416
+]
+# Silence complaints when black doesn't format
+# lines that are slightly over 88 characters long
+line-length = 100
+
+[tool.ruff.per-file-ignores]
+"./run.py" = ["T201"]
+"cli_client/run.py" = ["INP001", "T201", "PLR0915"]
+
+[tool.ruff.isort]
+section-order = [
+    "future",
+    "typehints",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+
+[tool.ruff.isort.sections]
+# Have typing libraries above other imports
+typehints = ["typing", "typing_extensions", "types"]
+
+# *** Build system configuration ***
+
+[tool.setuptools_scm]
+fallback_version = "0.0.0"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.setuptools.package-data]
+iceaddr = ["*.db"]
+
+[build-system]
+requires = ["setuptools>=45", "setuptools_scm>=6.2"]
+build-backend = "setuptools.build_meta"
