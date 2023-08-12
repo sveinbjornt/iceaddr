@@ -27,7 +27,7 @@ class SharedDB:
         if not self.db_conn:
             db_path = resource_filename(__name__, _DB_REL_PATH)
             # Open database file in read-only mode via URI
-            db_uri = "file:{0}?mode=ro".format(db_path)
+            db_uri = f"file:{db_path}?mode=ro"
             self.db_conn = sqlite3.connect(db_uri, uri=True, check_same_thread=False)
             # Return rows as key-value dicts
             self.db_conn.row_factory = lambda c, r: dict(

@@ -17,3 +17,4 @@ venv
 *.zip
 *.csv
 .vscode
+*.pyc

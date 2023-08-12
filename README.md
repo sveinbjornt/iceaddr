@@ -118,7 +118,7 @@ in the database:
 ```python
 >>> from iceaddr import nearest_addr
 >>> addr = nearest_addr(64.148446, -21.944933)[0]
->>> print("{0} {1}".format(addr["heiti_nf"], addr["husnr"]))
+>>> print(f"{addr['heiti_nf']} {addr['husnr']}")
 Öldugata 2
 ```
 
