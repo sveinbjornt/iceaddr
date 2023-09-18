@@ -13,3 +13,4 @@ TODO for iceaddr
 * nearest_* functions should also return distance of location
 * Add MANNVIRKI gpkg data from LMÍ?
 * Canonical address formatting utility function?
+* Tests should make sure that no entry in stadfangaskra has a postcode we're not familiar with

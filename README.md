@@ -8,7 +8,7 @@
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
-`iceaddr` is a Python >=3.8 package to look up information about Icelandic streets, addresses, placenames,
+`iceaddr` is a pure Python >=3.8 package to look up information about Icelandic streets, addresses, placenames,
 landmarks, locations and postcodes. The underlying data is contained in a local SQLite database assembled
 from the following sources:
 
