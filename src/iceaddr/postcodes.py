@@ -9,9 +9,11 @@
 
 """
 
-from typing import Dict, Union, List, Optional, Any
+from __future__ import annotations
 
-POSTCODES: Dict[int, Dict[str, Any]] = {
+from typing import Dict, List, Optional, Union
+
+POSTCODES: Dict[int, Dict[str, str]] = {
     101: {
         "lysing": "Miðborg",
         "stadur_nf": "Reykjavík",
@@ -1418,7 +1420,7 @@ def _filter_postcodes(key: str, searchstr: str, partial: bool = False) -> List[i
     """Utility function to find postcodes matching a criterion."""
     assert key in ["stadur", "svaedi"]
     p = searchstr.lower()
-    matches = list()
+    matches: List[int] = []
 
     k1 = key + "_nf"
     k2 = key + "_tgf"

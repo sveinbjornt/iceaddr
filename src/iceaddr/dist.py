@@ -7,10 +7,11 @@
 
 """
 
+from __future__ import annotations
+
 from typing import Tuple
 
 import math
-
 
 _EARTH_RADIUS = 6371.0088  # Earth's radius in km
 

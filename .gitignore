@@ -8,7 +8,7 @@ __pycache__/
 *.py[cod]
 *$py.class/
 /dist/
-/*.egg-info
+*.egg-info
 *.shp
 p3*/
 /stadfangaskra.db

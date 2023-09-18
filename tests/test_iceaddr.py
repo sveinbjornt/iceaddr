@@ -9,6 +9,8 @@
 
 """
 
+from typing import Dict, List, Optional
+
 import sys
 import os
 
@@ -57,7 +59,7 @@ def test_address_lookup():
     ]
 
     for p in POSTCODE_TO_PLACENAME:
-        print("iceaddr_lookup('{0}', number={1}, postcode={2}".format(p[0], p[1], p[2]))
+        # print("iceaddr_lookup('{0}', number={1}, postcode={2}".format(p[0], p[1], p[2]))
         res = iceaddr_lookup(p[0], number=p[1], postcode=p[2])
         assert res[0]["stadur_nf"] == p[3]
         assert res[0]["svaedi_nf"] == p[4]
@@ -123,8 +125,9 @@ def test_postcode_data_integrity():
         _verify_postcode_dict(v)
 
 
-def _verify_postcode_dict(pcd):
+def _verify_postcode_dict(pcd: Optional[Dict[str, str]]):
     """Verify the integrity of a postcode dict."""
+    assert pcd is not None
     assert "svaedi_nf" in pcd
     assert "svaedi_tgf" in pcd
     assert "stadur_nf" in pcd

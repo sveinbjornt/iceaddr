@@ -23,7 +23,7 @@ from io import BytesIO, TextIOWrapper
 from urllib.request import urlopen
 from iceaddr.dist import in_iceland
 
-import humanize
+import humanize  # noqa
 
 
 STADFONG_REMOTE_URL = "https://fasteignaskra.is/Stadfangaskra.csv"
@@ -164,7 +164,7 @@ def main() -> None:
     print("\tInserting: %d\r" % cnt, end="")
     sys.stdout.flush()
 
-    bytesize = os.stat(db_path).st_size
+    bytesize: int = os.stat(db_path).st_size
     human_size = humanize.naturalsize(bytesize)
 
     print("\nCreated database with %d entries (%s)" % (cnt, human_size))

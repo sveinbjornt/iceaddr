@@ -11,7 +11,7 @@ from pprint import pprint
 import sqlite3
 from pathlib import Path
 
-import fiona
+import fiona  # noqa
 
 from iceaddr.dist import in_iceland
 
@@ -30,7 +30,7 @@ LAYERS = [
 DEFAULT_DBNAME = "iceaddr.db"
 
 
-def center_point(coords: List[Tuple]) -> Tuple[float, float]:
+def center_point(coords: List[Tuple[float, float]]) -> Tuple[float, float]:
     """Find the center point of a given set of coordinates."""
     x: float = 0
     y: float = 0
