@@ -9,13 +9,15 @@
 
 """
 
-from typing import Dict, List, Any, Optional
+from __future__ import annotations
+
+from typing import Any, Dict, List, Optional
 
 import re
 
 from .db import shared_db
-from .postcodes import POSTCODES, postcodes_for_placename
 from .dist import distance
+from .postcodes import POSTCODES, postcodes_for_placename
 
 
 def _add_postcode_info(addr: Dict[str, Any]) -> Dict[str, Any]:
@@ -40,7 +42,7 @@ def _cap_first(s: str) -> str:
     return s[:1].upper() + s[1:] if s else s
 
 
-def iceaddr_lookup(
+def iceaddr_lookup(  # noqa: PLR0913
     street_name: str,
     number: Optional[int] = None,
     letter: Optional[str] = None,
@@ -75,7 +77,7 @@ def iceaddr_lookup(
             sqlargs.append(letter)
 
     if pc:
-        qp = " OR ".join([" postnr=?" for p in pc])
+        qp = " OR ".join([" postnr=?" for _ in pc])
         sqlargs.extend([str(x) for x in pc])
         q += " AND (%s) " % qp
 
@@ -86,6 +88,9 @@ def iceaddr_lookup(
     sqlargs.append(str(limit))
 
     return _run_addr_query(q, sqlargs)
+
+
+MIN_SEARCH_STR_LEN = 3
 
 
 def iceaddr_suggest(search_str: str, limit: int = 50) -> List[Dict[str, Any]]:
@@ -102,7 +107,7 @@ def iceaddr_suggest(search_str: str, limit: int = 50) -> List[Dict[str, Any]]:
     """
 
     search_str = _cap_first(search_str.strip())
-    if not search_str or len(search_str) < 3:
+    if not search_str or len(search_str) < MIN_SEARCH_STR_LEN:
         return []
 
     items = [s.strip().split() for s in search_str.split(",")]
@@ -125,13 +130,13 @@ def iceaddr_suggest(search_str: str, limit: int = 50) -> List[Dict[str, Any]]:
         addr = [" ".join(addr)]
 
     q = "SELECT * FROM stadfong WHERE "
-    qargs = list()
+    qargs: List[str] = []
 
     street_name = addr[0]
     if len(addr) == 1:  # "Ölduga"
         q += " (heiti_nf LIKE ? OR heiti_tgf LIKE ?) "
         qargs.extend([street_name + "%", street_name + "%"])
-    elif len(addr) >= 2:  # "Öldugötu 4"
+    elif len(addr) >= 2:  # noqa: PLR2004 "Öldugötu 4"
         # Street name
         q += " (heiti_nf=? OR heiti_tgf=?) "
         qargs.extend([street_name, street_name])
@@ -146,14 +151,14 @@ def iceaddr_suggest(search_str: str, limit: int = 50) -> List[Dict[str, Any]]:
 
         # Street number's trailing character
         # e.g. if it's "Öldugata 4b"
-        if len(addr) == 3:
+        if len(addr) == 3:  # noqa: PLR2004
             q += " AND bokst LIKE ? COLLATE NOCASE"
             qargs.append(addr[2])
 
     # Placename component (postcode or placename)
     if len(items) > 1 and items[1]:
         pns = items[1]
-        postcodes = []
+        postcodes: List[str] = []
 
         # Is it a postcode?
         if re.match(r"\d\d\d$", pns[0]):
@@ -165,7 +170,7 @@ def iceaddr_suggest(search_str: str, limit: int = 50) -> List[Dict[str, Any]]:
                 postcodes.extend([str(x) for x in pc])
 
         if postcodes:
-            qp = " OR ".join([" postnr=? " for p in postcodes])
+            qp = " OR ".join([" postnr=? " for _ in postcodes])
             q += " AND (%s) " % qp
             qargs.extend(postcodes)
 

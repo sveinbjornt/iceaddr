@@ -9,6 +9,8 @@
 
 """
 
+from typing import Dict, Optional
+
 import sys
 import os
 
@@ -30,10 +32,10 @@ from iceaddr import (  # noqa
 def test_address_lookup():
     """Test address lookup using various known addresses."""
     ADDR_TO_POSTCODE = [
-        ["Öldugata", 4, "Reykjavík", 101],
-        ["öldugötu", 12, "hafnarfirði", 220],
-        ["Tómasarhaga", 12, "Reykjavík", 107],
-        ["smiðjuvegur", 22, None, 200],
+        ("Öldugata", 4, "Reykjavík", 101),
+        ("öldugötu", 12, "hafnarfirði", 220),
+        ("Tómasarhaga", 12, "Reykjavík", 107),
+        ("smiðjuvegur", 22, "", 200),
     ]
 
     for a in ADDR_TO_POSTCODE:
@@ -44,20 +46,20 @@ def test_address_lookup():
     assert res and res[0]["postnr"] == 310 and res[0]["stadur_nf"] == "Borgarnes"
 
     POSTCODE_TO_PLACENAME = [
-        ["Öldugata", 4, 101, "Reykjavík", "Höfuðborgarsvæðið", "Þéttbýli"],
-        [
+        ("Öldugata", 4, 101, "Reykjavík", "Höfuðborgarsvæðið", "Þéttbýli"),
+        (
             "dagverðardalur",
             11,
             400,
             "Ísafjörður",
             "Vesturland og Vestfirðir",
             "Þéttbýli",
-        ],
-        ["Höfðabraut", 3, 805, "Selfoss", "Suðurland og Reykjanes", "Þéttbýli"],
+        ),
+        ("Höfðabraut", 3, 805, "Selfoss", "Suðurland og Reykjanes", "Þéttbýli"),
     ]
 
     for p in POSTCODE_TO_PLACENAME:
-        print("iceaddr_lookup('{0}', number={1}, postcode={2}".format(p[0], p[1], p[2]))
+        # print("iceaddr_lookup('{0}', number={1}, postcode={2}".format(p[0], p[1], p[2]))
         res = iceaddr_lookup(p[0], number=p[1], postcode=p[2])
         assert res[0]["stadur_nf"] == p[3]
         assert res[0]["svaedi_nf"] == p[4]
@@ -123,8 +125,9 @@ def test_postcode_data_integrity():
         _verify_postcode_dict(v)
 
 
-def _verify_postcode_dict(pcd):
+def _verify_postcode_dict(pcd: Optional[Dict[str, str]]):
     """Verify the integrity of a postcode dict."""
+    assert pcd is not None
     assert "svaedi_nf" in pcd
     assert "svaedi_tgf" in pcd
     assert "stadur_nf" in pcd
@@ -176,10 +179,10 @@ def test_nearest_addr():
 
 def test_nearest_placename():
     """Test placename proximity function."""
-    # pn = nearest_placenames(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
-    # assert len(pn) == 1
-    # assert pn[0]["nafn"] == "Grandi"
+    pn = nearest_placenames(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
+    assert len(pn) == 1
+    assert pn[0]["nafn"] == "Grandi"
 
-    # pn = nearest_placenames(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5)
-    # assert len(pn) == 5
-    # assert "Landakotshæð" in [x["nafn"] for x in pn]
+    pn = nearest_placenames(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5)
+    assert len(pn) == 5
+    assert "Landakotshæð" in [x["nafn"] for x in pn]

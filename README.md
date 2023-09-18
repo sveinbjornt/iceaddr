@@ -1,14 +1,14 @@
 # iceaddr
 
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
+[![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
 [![Release](https://shields.io/github/v/release/sveinbjornt/iceaddr?display_name=tag)]()
 [![PyPI](https://img.shields.io/pypi/v/iceaddr)]()
 [![Build](https://github.com/sveinbjornt/iceaddr/actions/workflows/python-package.yml/badge.svg)]()
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
-`iceaddr` is a Python 3.7+ package to look up information about Icelandic streets, addresses, placenames,
+`iceaddr` is a Python >=3.8 package to look up information about Icelandic streets, addresses, placenames,
 landmarks, locations and postcodes. The underlying data is contained in a local SQLite database assembled
 from the following sources:
 
@@ -243,7 +243,7 @@ Landakotsvöllur
 
 ## Build process
 
-To build your own version of the package, you need to have Python 3.7+ installed.
+To build your own version of the package, you need to have Python >=3.8 installed.
 Then, after optionally creating a virtual environment, run the following command
 from the repository root to install dependencies:
 
@@ -269,6 +269,7 @@ python setup.py install
 
 ## Version History
 
+* 0.5.7: Updated address and placename data. Now requires Python 3.8+ (18/09/2024)
 * 0.5.6: Updated address and placename data. (11/08/2023)
 * 0.5.5: Updated address and placename data. Removed ISN93 coords. Now requires Python 3.7+ (11/12/2022)
 * 0.5.4: Updated address and placename data (09/11/2022)

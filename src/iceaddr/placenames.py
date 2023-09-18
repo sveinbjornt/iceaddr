@@ -9,11 +9,12 @@
 
 """
 
-from typing import List, Dict, Any
+from __future__ import annotations
+
+from typing import Any, Dict, List
 
 from .db import shared_db
 from .dist import distance
-
 
 # These particular placenames share a name with other, perhaps larger, placenames,
 # but should never the less be given priority when ordering results.

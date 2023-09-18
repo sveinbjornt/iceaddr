@@ -10,7 +10,7 @@
 
 """
 
-from typing import Iterator, Dict
+from typing import Iterator, Dict, Any
 
 from builtins import input
 
@@ -23,7 +23,7 @@ from io import BytesIO, TextIOWrapper
 from urllib.request import urlopen
 from iceaddr.dist import in_iceland
 
-import humanize
+import humanize  # type: ignore
 
 
 STADFONG_REMOTE_URL = "https://fasteignaskra.is/Stadfangaskra.csv"
@@ -76,13 +76,15 @@ def create_db(path: str) -> sqlite3.Connection:
     return dbconn
 
 
-def read_rows(dsv_file: TextIOWrapper, delimiter: str = ",") -> Iterator:
+def read_rows(
+    dsv_file: TextIOWrapper, delimiter: str = ","
+) -> Iterator[Dict[Any, Any]]:
     reader = csv.DictReader(dsv_file, delimiter=delimiter)
     for row in reader:
         yield row
 
 
-def insert_address_entry(e: Dict, conn: sqlite3.Connection) -> None:
+def insert_address_entry(e: Dict[Any, Any], conn: sqlite3.Connection) -> None:
     # The stadfong datafile is quite dirty so we need to
     # sanitise values before inserting into the database
 
@@ -164,8 +166,8 @@ def main() -> None:
     print("\tInserting: %d\r" % cnt, end="")
     sys.stdout.flush()
 
-    bytesize = os.stat(db_path).st_size
-    human_size = humanize.naturalsize(bytesize)
+    bytesize: int = os.stat(db_path).st_size
+    human_size = humanize.naturalsize(bytesize)  # type: ignore
 
     print("\nCreated database with %d entries (%s)" % (cnt, human_size))
 
