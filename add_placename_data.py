@@ -3,6 +3,10 @@
 
     Add placename data to iceaddr database.
 
+    Fetches placename data from the IS50V geospatial database and inserts it
+    into the iceaddr database. Also adds manual placename additions from
+    placename_additions.txt.
+
 """
 
 from typing import List, Tuple
@@ -97,11 +101,11 @@ def add_placename_additions(dbc: sqlite3.Connection) -> None:
             (latstr, lonstr, fl) = last.split(",")
             lat = float(latstr) if latstr else None
             lon = float(lonstr) if lonstr else None
-        except Exception:
-            print(line)
+        except Exception as e:
+            print(f"{line}: error: {e}")
             raise
 
-        print("Inserting " + first)
+        # print("Inserting " + first)
 
         if lat and lon and not in_iceland((lat, lon)):
             raise Exception(f"Not in Iceland: {first} ({lat}, {lon})")
@@ -138,7 +142,8 @@ def add_placenames_from_is50v(dbc: sqlite3.Connection) -> None:
                 except Exception as e:
                     print(f"ERROR adding item {i['properties']}: {e}")
                 else:
-                    print(n)
+                    pass
+                    # print(n)
 
                 # Special handling of lines (e.g. rivers)
                 if layer.startswith("ornefni_linur"):
