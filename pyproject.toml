@@ -33,15 +33,16 @@ Repository = "https://github.com/sveinbjornt/iceaddr"
 [project.optional-dependencies]
 # Dev dependencies
 dev = [
-    "pytest>=7.2.1",
     # Building database
-    "fiona>=1.9.4",    # for GIS data
+    "fiona>=1.9.4",    # for processing GIS data
     "humanize>=0.5.1", # for progress bar
     "reynir>=3.1.0",   # for parsing and declining placenames
-    # Pre-commit hook
+    # Linting, testing
+    "pytest>=7.2.1",
     "pre-commit>=3.3.3",
     "black>=23.7.0",
     "mypy>=1.5.1",
+    "types-setuptools>=68.2.0",
     "ruff>=0.0.285",
     "coverage[toml]>=7.3.1",
 ]
@@ -135,7 +136,7 @@ section-order = [
 
 [tool.ruff.isort.sections]
 # Have typing libraries above other imports
-typehints = ["typing", "typing_extensions", "types"]
+typehints = ["typing", "typing_extensions", "types", "types-setuptools"]
 
 # *** Build system configuration ***
 
