@@ -55,11 +55,11 @@ def test_address_lookup():
             "Vesturland og Vestfirðir",
             "Þéttbýli",
         ),
-        ("Höfðabraut", 3, 805, "Selfoss", "Suðurland og Reykjanes", "Þéttbýli"),
+        ("Höfðabraut", 3, 805, "Selfoss", "Suðurland og Reykjanes", "Stærra dreifbýli"),
     ]
 
     for p in POSTCODE_TO_PLACENAME:
-        # print("iceaddr_lookup('{0}', number={1}, postcode={2}".format(p[0], p[1], p[2]))
+        # print(f"iceaddr_lookup('{p[0]}', number={p[1]}, postcode={p[2]}"
         res = iceaddr_lookup(p[0], number=p[1], postcode=p[2])
         assert res[0]["stadur_nf"] == p[3]
         assert res[0]["svaedi_nf"] == p[4]
