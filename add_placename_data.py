@@ -7,11 +7,11 @@
 
 from typing import List, Tuple
 
-from pprint import pprint
+from pprint import pprint  # type: ignore
 import sqlite3
 from pathlib import Path
 
-import fiona  # noqa
+import fiona  # type: ignore
 
 from iceaddr.dist import in_iceland
 
@@ -83,7 +83,7 @@ def delete_table(dbpath: str) -> sqlite3.Connection:
     return dbconn
 
 
-def add_placename_additions(dbc) -> None:
+def add_placename_additions(dbc: sqlite3.Connection) -> None:
     """Read manual placename additions from text file, insert into "ornefni" DB table."""
     print("Inserting placename additions")
     f = open("placename_additions.txt", "r")
@@ -114,7 +114,7 @@ def add_placename_additions(dbc) -> None:
     dbc.commit()
 
 
-def add_placenames_from_is50v(dbc) -> None:
+def add_placenames_from_is50v(dbc: sqlite3.Connection) -> None:
     """Read IS50V geo layers from file, add all placenames ("örnefni") to DB."""
     if not Path(GPKG_FILE).exists():
         print(f"Could not find file {GPKG_FILE}")

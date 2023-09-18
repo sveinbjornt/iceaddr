@@ -9,7 +9,7 @@
 
 """
 
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 
 import sys
 import os
@@ -25,17 +25,17 @@ from iceaddr import (  # noqa
     postcodes_for_region,
     POSTCODES,
     nearest_addr,
-    nearest_placenames,
+    # nearest_placenames,
 )
 
 
 def test_address_lookup():
     """Test address lookup using various known addresses."""
     ADDR_TO_POSTCODE = [
-        ["Öldugata", 4, "Reykjavík", 101],
-        ["öldugötu", 12, "hafnarfirði", 220],
-        ["Tómasarhaga", 12, "Reykjavík", 107],
-        ["smiðjuvegur", 22, None, 200],
+        ("Öldugata", 4, "Reykjavík", 101),
+        ("öldugötu", 12, "hafnarfirði", 220),
+        ("Tómasarhaga", 12, "Reykjavík", 107),
+        ("smiðjuvegur", 22, "", 200),
     ]
 
     for a in ADDR_TO_POSTCODE:
@@ -46,16 +46,16 @@ def test_address_lookup():
     assert res and res[0]["postnr"] == 310 and res[0]["stadur_nf"] == "Borgarnes"
 
     POSTCODE_TO_PLACENAME = [
-        ["Öldugata", 4, 101, "Reykjavík", "Höfuðborgarsvæðið", "Þéttbýli"],
-        [
+        ("Öldugata", 4, 101, "Reykjavík", "Höfuðborgarsvæðið", "Þéttbýli"),
+        (
             "dagverðardalur",
             11,
             400,
             "Ísafjörður",
             "Vesturland og Vestfirðir",
             "Þéttbýli",
-        ],
-        ["Höfðabraut", 3, 805, "Selfoss", "Suðurland og Reykjanes", "Þéttbýli"],
+        ),
+        ("Höfðabraut", 3, 805, "Selfoss", "Suðurland og Reykjanes", "Þéttbýli"),
     ]
 
     for p in POSTCODE_TO_PLACENAME:

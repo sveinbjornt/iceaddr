@@ -139,11 +139,9 @@ typehints = ["typing", "typing_extensions", "types"]
 
 # *** Build system configuration ***
 
-[tool.setuptools_scm]
-fallback_version = "0.0.0"
-
 [tool.setuptools.packages.find]
 where = ["src"]
+
 [tool.setuptools.package-data]
 iceaddr = ["*.db"]
 
