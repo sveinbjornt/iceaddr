@@ -244,25 +244,24 @@ Landakotsvöllur
 ## Build process
 
 To build your own version of the package, you need to have Python >=3.8 installed.
-Then, after optionally creating a virtual environment, run the following command
+Then, after (optionally) creating a virtual environment, run the following command
 from the repository root to install dependencies:
 
 ```bash
 pip install ".[dev]"
 ```
 
-Then, run the following commands to build the database:
+Then run the following command to build the database:
 
 ```bash
-python build_db.py
-python add_placename_data.py
+bash build.sh
 ```
 
 This creates an SQLite3 database in the repo root named `iceaddr.db`. Move this file to
 `src/iceaddr/` and you can now install your own freshly built version of the package:
 
 ```bash
-python install .
+pip install .
 ```
 
 ## Version History
