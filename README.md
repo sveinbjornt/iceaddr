@@ -178,7 +178,7 @@ in the database:
     "lysing": "Miðborg"}
 ```
 
-#### Get postcodes for a placename
+#### Get postcodes for a placename ("örnefni")
 
 ```python
 >>> from iceaddr import postcodes_for_placename
@@ -190,7 +190,7 @@ in the database:
 [200, 201, 202, 203]
 ```
 
-#### Get postcodes for a region
+#### Get postcodes for a region ("svæði")
 
 ```python
 >>> from iceaddr import postcodes_for_region
@@ -229,7 +229,7 @@ given to municipalities and densely populated areas.
   'nafn': 'Egilsstaðir'}]
 ```
 
-### Find closest placenames
+### Find closest placenames ("örnefni")
 
 Given a set of WGS84 coordinates, the `nearest_placenames()` function returns a list of the nearest
 placenames in the database:
@@ -268,7 +268,7 @@ python install .
 ## Version History
 
 <!--* 0.5.7: Updated address and placename data. Now requires Python 3.8+ (18/09/2024)-->
-* 0.5.6: Updated address and placename data. (11/08/2023)
+* 0.5.6: Updated address and placename data (11/08/2023)
 * 0.5.5: Updated address and placename data. Removed ISN93 coords. Now requires Python 3.7+ (11/12/2022)
 * 0.5.4: Updated address and placename data (09/11/2022)
 * 0.5.3: Updated address, postcode and placename data, various minor fixes (19/05/2022)
