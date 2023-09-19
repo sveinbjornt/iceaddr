@@ -14,10 +14,19 @@ from typing import List, Tuple
 from pprint import pprint  # type: ignore
 import sqlite3
 from pathlib import Path
+from io import BytesIO
+import zipfile
 
 import fiona  # type: ignore
+import requests
 
 from iceaddr.dist import in_iceland
+
+
+ORNEFNI_DATA_FILE = "is_50v_ornefni_wgs_84.gpkg"
+ORNEFNI_DATA_URL = (
+    "https://atlas.lmi.is/heikir/downloadData/is_50v_ornefni_wgs_84_gpkg.zip"
+)
 
 # Remote URL for latest IS50V data:
 # https://atlas.lmi.is/heikir/downloadData/is_50v_ornefni_wgs_84_gpkg.zip
@@ -32,6 +41,21 @@ LAYERS = [
 
 
 DEFAULT_DBNAME = "iceaddr.db"
+
+
+def fetch_ornefni_data() -> None:
+    """Fetch IS50V placename data from remote URL, unzip
+    from memory to current directory and rename file."""
+
+    r = requests.get(ORNEFNI_DATA_URL, allow_redirects=True)
+    if r.status_code != 200:
+        print(f"Failed to download {ORNEFNI_DATA_URL}")
+        exit(1)
+
+    z = zipfile.ZipFile(BytesIO(r.content))
+    z.extractall()
+
+    Path(ORNEFNI_DATA_FILE).rename(GPKG_FILE)
 
 
 def center_point(coords: List[Tuple[float, float]]) -> Tuple[float, float]:
@@ -192,6 +216,9 @@ def add_placenames_from_is50v(dbc: sqlite3.Connection) -> None:
 
 
 def main() -> None:
+    # Fetch placename data from remote URL
+    fetch_ornefni_data()
+
     # Delete any existing table
     delete_table(DEFAULT_DBNAME)
 
