@@ -266,7 +266,7 @@ pip install .
 
 ## Version History
 
-<!--* 0.5.7: Updated address and placename data. Now requires Python 3.8+ (18/09/2024)-->
+* 0.5.7: Updated address and placename data. Now requires Python 3.8+ (20/09/2024)
 * 0.5.6: Updated address and placename data (11/08/2023)
 * 0.5.5: Updated address and placename data. Removed ISN93 coords. Now requires Python 3.7+ (11/12/2022)
 * 0.5.4: Updated address and placename data (09/11/2022)

@@ -8,7 +8,7 @@
 """
 
 __author__ = "Sveinbjorn Thordarson"
-__version__ = "0.5.6"  # Also update setup.py
+__version__ = "0.5.7"  # Also update setup.py
 
 from .addresses import *  # noqa: F403
 from .placenames import *  # noqa: F403
