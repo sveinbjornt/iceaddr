@@ -7,8 +7,11 @@
 
 """
 
+import importlib.metadata
+
 __author__ = "Sveinbjorn Thordarson"
-__version__ = "0.5.7"  # Also update setup.py
+__copyright__ = "(C) 2018-2023 Sveinbjorn Thordarson"
+__version__ = importlib.metadata.version("iceaddr")
 
 from .addresses import *  # noqa: F403
 from .placenames import *  # noqa: F403
