@@ -31,12 +31,12 @@ from iceaddr import (  # noqa
 
 def test_address_lookup():
     """Test address lookup using various known addresses."""
-    ADDR_TO_POSTCODE = [
+    ADDR_TO_POSTCODE = (
         ("Öldugata", 4, "Reykjavík", 101),
         ("öldugötu", 12, "hafnarfirði", 220),
         ("Tómasarhaga", 12, "Reykjavík", 107),
         ("smiðjuvegur", 22, "", 200),
-    ]
+    )
 
     for a in ADDR_TO_POSTCODE:
         res = iceaddr_lookup(a[0], number=a[1], placename=a[2])
@@ -45,7 +45,7 @@ def test_address_lookup():
     res = iceaddr_lookup("Brattagata", number=4, letter="b")
     assert res and res[0]["postnr"] == 310 and res[0]["stadur_nf"] == "Borgarnes"
 
-    POSTCODE_TO_PLACENAME = [
+    POSTCODE_TO_PLACENAME = (
         ("Öldugata", 4, 101, "Reykjavík", "Höfuðborgarsvæðið", "Þéttbýli"),
         (
             "dagverðardalur",
@@ -56,7 +56,7 @@ def test_address_lookup():
             "Þéttbýli",
         ),
         ("Höfðabraut", 3, 805, "Selfoss", "Suðurland og Reykjanes", "Stærra dreifbýli"),
-    ]
+    )
 
     for p in POSTCODE_TO_PLACENAME:
         # print(f"iceaddr_lookup('{p[0]}', number={p[1]}, postcode={p[2]}"

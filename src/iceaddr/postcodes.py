@@ -1425,7 +1425,8 @@ def _filter_postcodes(key: str, searchstr: str, partial: bool = False) -> List[i
     k1 = key + "_nf"
     k2 = key + "_tgf"
 
-    for k, v in POSTCODES.items():
+    pcs = POSTCODES.items()
+    for k, v in pcs:
         nf = v[k1].lower()
         tgf = v[k2].lower()
         if (partial and (nf.startswith(p) or tgf.startswith(p))) or p in (nf, tgf):
