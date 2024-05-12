@@ -1,6 +1,6 @@
 [project]
 name = "iceaddr"
-version = "0.5.7"
+version = "0.5.8"
 description = "Look up information about Icelandic street addresses, postcodes, landmarks, locations and placenames"
 authors = [
     { name = "Sveinbjorn Thordarson", email = "sveinbjorn@sveinbjorn.org" },
@@ -20,6 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Utilities",
     "Topic :: Text Processing :: Linguistic",
