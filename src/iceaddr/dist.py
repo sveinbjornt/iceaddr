@@ -7,13 +7,11 @@
 
 """
 
-from __future__ import annotations
-
 from typing import Tuple
 
 import math
 
-_EARTH_RADIUS = 6371.0088  # Earth's radius in km
+EARTH_RADIUS_KM = 6371.0088
 
 
 def distance(loc1: Tuple[float, float], loc2: Tuple[float, float]) -> float:
@@ -54,7 +52,7 @@ def distance(loc1: Tuple[float, float], loc2: Tuple[float, float]) -> float:
         + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * slon * slon
     )
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-    return _EARTH_RADIUS * c
+    return EARTH_RADIUS_KM * c
 
 
 ICELAND_COORDS = (64.9957538607, -18.5739616708)

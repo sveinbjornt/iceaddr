@@ -117,6 +117,7 @@ ignore = [
     "TID",     # No relative parent imports rule
     "TCH",     # Move into type checking block - too risky, causes issues
     "RSE102",  # Bug: https://github.com/astral-sh/ruff/issues/5416
+    "FA100",   #
 ]
 # Silence complaints when black doesn't format
 # lines that are slightly over 88 characters long
