@@ -20,3 +20,4 @@ venv
 *.pyc
 .coverage
 .coverage.*
+*.gpkg

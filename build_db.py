@@ -23,7 +23,7 @@ from io import BytesIO, TextIOWrapper
 from urllib.request import urlopen
 from iceaddr.dist import in_iceland
 
-import humanize  # type: ignore
+import humanize
 
 
 STADFONG_REMOTE_URL = "https://fasteignaskra.is/Stadfangaskra.csv"
@@ -142,8 +142,8 @@ def main() -> None:
 
     # Delete previous db file
     if Path(db_path).is_file():
-        if input("%s exists, overwrite? (y/n): " % db_path).lower().startswith("y"):
-            os.remove(db_path)
+        if input(f"{db_path} exists, overwrite? (y/n): ").lower().startswith("y"):
+            Path(db_path).unlink()
         else:
             print("Aborting")
             sys.exit()
@@ -167,7 +167,7 @@ def main() -> None:
     sys.stdout.flush()
 
     bytesize: int = os.stat(db_path).st_size
-    human_size = humanize.naturalsize(bytesize)  # type: ignore
+    human_size = humanize.naturalsize(bytesize)
 
     print("\nCreated database with %d entries (%s)" % (cnt, human_size))
 

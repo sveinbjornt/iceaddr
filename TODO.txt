@@ -1,5 +1,5 @@
 
-TODO for iceaddr
+# TODO for iceaddr
 
 * iceaddr_sql for direct SQL queries to the underlying database
 * Provide placenames and street names in all cases (nf, þf, þgf, ef)

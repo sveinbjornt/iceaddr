@@ -16,7 +16,6 @@ classifiers = [
     "Natural Language :: Icelandic",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -25,7 +24,7 @@ classifiers = [
     "Topic :: Utilities",
     "Topic :: Text Processing :: Linguistic",
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = []
 
 [project.urls]
@@ -118,6 +117,9 @@ ignore = [
     "TCH",     # Move into type checking block - too risky, causes issues
     "RSE102",  # Bug: https://github.com/astral-sh/ruff/issues/5416
     "FA100",   #
+    "T201",    # Print statements
+    "SIM115",  #
+    "PTH123",  # Pathlib rule
 ]
 # Silence complaints when black doesn't format
 # lines that are slightly over 88 characters long

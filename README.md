@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
+[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
 [![Release](https://shields.io/github/v/release/sveinbjornt/iceaddr?display_name=tag)]()
 [![PyPI](https://img.shields.io/pypi/v/iceaddr)]()
 [![Build](https://github.com/sveinbjornt/iceaddr/actions/workflows/python-package.yml/badge.svg)]()
@@ -8,7 +8,7 @@
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
-`iceaddr` is a pure Python >=3.8 package to look up information about Icelandic streets, addresses, placenames,
+`iceaddr` is a pure Python >=3.9 package to look up information about Icelandic streets, addresses, placenames,
 landmarks, locations and postcodes. The underlying data is contained in a local SQLite database assembled
 from the following sources:
 
@@ -127,12 +127,12 @@ in the database:
 | Key           |                                                         |
 | ------------- |---------------------------------------------------------|
 | bokst         | House letter, e.g. "A", "b"                             |
-| byggd         |                                                         |
+| byggd         | Byggðarnúmer in municipality                            |
 | heiti_nf      | Street name (nominative case, nf.), e.g. 'Öldugata'     |
 | heiti_tgf     | Street name (dative case, þgf.), e.g. 'Öldugötu'        |
-| hnitnum       |                                                         |
+| hnitnum       | Hnitnúmer staðfangahnits                                |
 | husnr         | House number                                            |
-| landnr        |                                                         |
+| landnr        | Hlaupandi sex stafa auðkennisnúmer í landeignaskrá HMS  |
 | lat_wgs84     | Latitude (WGS84 coordinates)                            |
 | long_wgs84    | Longitude (WGS84 coordinates)                           |
 | postnr        | Postcode (e.g. 101)                                     |
@@ -141,7 +141,7 @@ in the database:
 | stadur_tgf    | Placename (dative case), e.g. 'Selfossi'                |
 | svaedi_nf     | Region (nominative case), e.g. 'Höfuðborgarsvæðið'      |
 | svaedi_tgf    | Region (dative case), e.g. "Höfuðborgarsvæðinu"         |
-| svfnr         |                                                         |
+| svfnr         | Municipality code (e.g. 3609)                           |
 | tegund        | Type (either 'Þéttbýli' (urban) or 'Dreifbýli' (rural)) |
 | vidsk         | Additional information                                  |
 
@@ -243,7 +243,7 @@ Landakotsvöllur
 
 ## Build process
 
-To build your own version of the package, you need to have Python >=3.8 installed.
+To build your own version of the package, you need to have Python >=3.9 installed.
 Then, after (optionally) creating a virtual environment, run the following command
 from the repository root to install dependencies:
 

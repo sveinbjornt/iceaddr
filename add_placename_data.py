@@ -11,17 +11,16 @@
 
 from typing import List, Tuple
 
-from pprint import pprint  # type: ignore
 import sqlite3
-from pathlib import Path
-from io import BytesIO
+import sys
 import zipfile
+from io import BytesIO
+from pathlib import Path
+from pprint import pprint  # type: ignore  # noqa: PGH003
 
-import fiona  # type: ignore
+import fiona  # type: ignore  # noqa: PGH003
 import requests
-
 from iceaddr.dist import in_iceland
-
 
 ORNEFNI_DATA_FILE = "is_50v_ornefni_wgs_84.gpkg"
 ORNEFNI_DATA_URL = (
@@ -47,10 +46,20 @@ def fetch_ornefni_data() -> None:
     """Fetch IS50V placename data from remote URL, unzip
     from memory to current directory and rename file."""
 
-    r = requests.get(ORNEFNI_DATA_URL, allow_redirects=True)
+    if Path(GPKG_FILE).exists():
+        if (
+            input(f"{GPKG_FILE} exists, fetch newer version? (y/n): ")
+            .lower()
+            .startswith("y")
+        ):
+            Path(GPKG_FILE).unlink()
+        else:
+            return
+
+    r = requests.get(ORNEFNI_DATA_URL, allow_redirects=True, timeout=10)
     if r.status_code != 200:
         print(f"Failed to download {ORNEFNI_DATA_URL}")
-        exit(1)
+        sys.exit(1)
 
     z = zipfile.ZipFile(BytesIO(r.content))
     z.extractall()
@@ -91,7 +100,7 @@ def create_table(dbpath: str) -> sqlite3.Connection:
         dbconn.cursor().execute(create_table_sql)
     except Exception:
         print("Unable to create table 'ornefni'")
-        exit()
+        sys.exit()
 
     return dbconn
 
@@ -105,7 +114,7 @@ def delete_table(dbpath: str) -> sqlite3.Connection:
     try:
         dbconn.cursor().execute(del_table_sql)
         print("Deleted pre-existing table 'ornefni'")
-    except Exception:
+    except Exception:  # noqa: S110
         pass
 
     return dbconn
@@ -146,7 +155,7 @@ def add_placenames_from_is50v(dbc: sqlite3.Connection) -> None:
     """Read IS50V geo layers from file, add all placenames ("örnefni") to DB."""
     if not Path(GPKG_FILE).exists():
         print(f"Could not find file {GPKG_FILE}")
-        exit(1)
+        sys.exit(1)
 
     for layer in fiona.listlayers(GPKG_FILE):
         with fiona.open(GPKG_FILE, encoding="utf-8", layer=layer) as src:
@@ -226,7 +235,7 @@ def main() -> None:
     dbc = create_table(DEFAULT_DBNAME)
     if not dbc:
         print("Failed to connect to DB")
-        exit(1)
+        sys.exit(1)
 
     add_placename_additions(dbc)
     add_placenames_from_is50v(dbc)
