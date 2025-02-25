@@ -98,6 +98,17 @@ def create_table(dbpath: str) -> sqlite3.Connection:
 
     try:
         dbconn.cursor().execute(create_table_sql)
+        
+        # Create indexes for common query patterns
+        index_queries = [
+            "CREATE INDEX idx_ornefni_nafn ON ornefni(nafn);",
+            "CREATE INDEX idx_ornefni_flokkur ON ornefni(flokkur);",
+            "CREATE INDEX idx_ornefni_coords ON ornefni(lat_wgs84, long_wgs84);",
+        ]
+        
+        for query in index_queries:
+            dbconn.cursor().execute(query)
+            
     except Exception:
         print("Unable to create table 'ornefni'")
         sys.exit()
@@ -239,6 +250,14 @@ def main() -> None:
 
     add_placename_additions(dbc)
     add_placenames_from_is50v(dbc)
+    
+    # Analyze the database to optimize index usage
+    dbc.execute("ANALYZE;")
+    
+    # Optimize the database
+    dbc.execute("VACUUM;")
+    
+    print("Database indexing completed")
 
 
 if __name__ == "__main__":

@@ -73,6 +73,20 @@ def create_db(path: str) -> sqlite3.Connection:
 
     dbconn.cursor().execute(create_table_sql)
 
+    # Create indexes for common query patterns
+    index_queries = [
+        "CREATE INDEX idx_stadfong_heiti_nf ON stadfong(heiti_nf);",
+        "CREATE INDEX idx_stadfong_heiti_tgf ON stadfong(heiti_tgf);",
+        "CREATE INDEX idx_stadfong_postnr ON stadfong(postnr);",
+        "CREATE INDEX idx_stadfong_heiti_husnr ON stadfong(heiti_nf, husnr);",
+        "CREATE INDEX idx_stadfong_heiti_husnr_bokst ON stadfong(heiti_nf, husnr, bokst);",
+        "CREATE INDEX idx_stadfong_serheiti ON stadfong(serheiti);",
+        "CREATE INDEX idx_stadfong_coords ON stadfong(lat_wgs84, long_wgs84);",
+    ]
+    
+    for query in index_queries:
+        dbconn.cursor().execute(query)
+
     return dbconn
 
 
@@ -169,6 +183,9 @@ def main() -> None:
     bytesize: int = os.stat(db_path).st_size
     human_size = humanize.naturalsize(bytesize)
 
+    # After data import, analyze the database to optimize index usage
+    dbconn.execute("ANALYZE;")
+    
     print("\nCreated database with %d entries (%s)" % (cnt, human_size))
 
 
