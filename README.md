@@ -15,6 +15,7 @@ from the following sources:
 * [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) (*Þjóðskra*, [CC-BY](http://opendefinition.org/licenses/cc-by/))
 * [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is) (*Landmælingar Íslands*)
 * The postcode table provided by [Postur.is](https://www.postur.is/gogn/Gotuskra/postnumer.txt), with supplementary data from [Icelandic Wikipedia](https://is.wikipedia.org/wiki/Listi_yfir_%C3%ADslensk_p%C3%B3stn%C3%BAmer)
+* Municipality data provided by the [Icelandic Government](https://www.government.is/lisalib/getfile.aspx?itemid=4289e993-446d-11eb-812c-005056bc8c60)
 
 Since no networking takes place, lookups are very fast and can be performed offline. The package is
 useful for geocoding and reverse geocoding of Icelandic addresses and placenames, as well as for

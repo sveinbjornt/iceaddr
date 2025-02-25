@@ -88,3 +88,10 @@ MUNICIPALITIES: Dict[int, str] = {
 def municipality_for_municipality_code(code: int) -> Optional[str]:
     """Return the name of a municipality given its code."""
     return MUNICIPALITIES.get(code)
+
+def municipality_code_for_municipality(name: str) -> Optional[int]:
+    """Return the code of a municipality given its name."""
+    for code, mn in MUNICIPALITIES.items():
+        if mn == name:
+            return code
+    return None
