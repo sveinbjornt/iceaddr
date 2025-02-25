@@ -10,6 +10,7 @@
 """
 
 import sqlite3
+
 from pkg_resources import resource_filename
 
 _DB_REL_PATH = "iceaddr.db"

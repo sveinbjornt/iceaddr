@@ -22,14 +22,14 @@ from .postcodes import POSTCODES, postcodes_for_placename
 def _add_postcode_info(addr: Dict[str, Any]) -> Dict[str, Any]:
     """Look up postcode info, add keys to address dictionary."""
     pn = addr.get("postnr")
-    if pn and POSTCODES.get(pn):
+    if pn is not None and POSTCODES.get(pn):
         addr.update(POSTCODES[pn])
     return addr
 
 def _add_municipality_info(addr: Dict[str, Any]) -> Dict[str, Any]:
     """Look up municipality info, add keys to address dictionary."""
     mn = addr.get("svfnr")
-    if mn and MUNICIPALITIES.get(mn):
+    if mn is not None and MUNICIPALITIES.get(mn):
         addr["svfheiti"] = MUNICIPALITIES[mn]
     return addr
 
