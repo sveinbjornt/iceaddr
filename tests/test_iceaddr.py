@@ -3,7 +3,7 @@
     iceaddr: Look up information about Icelandic streets, addresses,
              placenames, landmarks, locations and postcodes.
 
-    Copyright (c) 2018-2024 Sveinbjorn Thordarson.
+    Copyright (c) 2018-2025 Sveinbjorn Thordarson.
 
     Tests for iceaddr python package.
 
@@ -11,8 +11,8 @@
 
 from typing import Dict, Optional
 
-import sys
 import os
+import sys
 
 # Add parent directory to import path
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../")

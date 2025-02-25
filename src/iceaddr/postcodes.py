@@ -3,7 +3,7 @@
     iceaddr: Look up information about Icelandic streets, addresses,
              placenames, landmarks, locations and postcodes.
 
-    Copyright (c) 2018-2024 Sveinbjorn Thordarson.
+    Copyright (c) 2018-2025 Sveinbjorn Thordarson.
 
     This file contains code and data related to Icelandic postcodes.
 
@@ -356,29 +356,29 @@ POSTCODES: Dict[int, Dict[str, str]] = {
         "tegund": "Dreifbýli",
     },
     245: {
-        "stadur_nf": "Suðurnesjabær",
-        "stadur_tgf": "Suðurnesjabæ",
+        "stadur_nf": "Sandgerði",
+        "stadur_tgf": "Sandgerði",
         "svaedi_nf": "Suðurland og Reykjanes",
         "svaedi_tgf": "Suðurlandi og Reykjanesi",
         "tegund": "Stærra dreifbýli",
     },
     246: {
-        "stadur_nf": "Suðurnesjabær",
-        "stadur_tgf": "Suðurnesjabæ",
+        "stadur_nf": "Sandgerði",
+        "stadur_tgf": "Sandgerði",
         "svaedi_nf": "Suðurland og Reykjanes",
         "svaedi_tgf": "Suðurlandi og Reykjanesi",
         "tegund": "Dreifbýli",
     },
     250: {
-        "stadur_nf": "Suðurnesjabær",
-        "stadur_tgf": "Suðurnesjabæ",
+        "stadur_nf": "Garður",
+        "stadur_tgf": "Garður",
         "svaedi_nf": "Suðurland og Reykjanes",
         "svaedi_tgf": "Suðurlandi og Reykjanesi",
         "tegund": "Stærra dreifbýli",
     },
     251: {
-        "stadur_nf": "Suðurnesjabær",
-        "stadur_tgf": "Suðurnesjabæ",
+        "stadur_nf": "Garður",
+        "stadur_tgf": "Garður",
         "svaedi_nf": "Suðurland og Reykjanes",
         "svaedi_tgf": "Suðurlandi og Reykjanesi",
         "tegund": "Dreifbýli",
@@ -414,8 +414,8 @@ POSTCODES: Dict[int, Dict[str, str]] = {
     },
     276: {
         "lysing": "Kjós",
-        "stadur_nf": "Mosfellsbær",
-        "stadur_tgf": "Mosfellsbæ",
+        "stadur_nf": "Kjós",
+        "stadur_tgf": "Kjós",
         "svaedi_nf": "Höfuðborgarsvæðið",
         "svaedi_tgf": "Höfuðborgarsvæðinu",
         "tegund": "Stærra dreifbýli",
