@@ -284,7 +284,7 @@ pip install .
 
 ## BSD License
 
-Copyright (C) 2018-2024 Sveinbjorn Thordarson [&lt;sveinbjorn@sveinbjorn.org&gt;](mailto:sveinbjorn@sveinbjorn.org)
+Copyright (C) 2018-2025 Sveinbjorn Thordarson [&lt;sveinbjorn@sveinbjorn.org&gt;](mailto:sveinbjorn@sveinbjorn.org)
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
