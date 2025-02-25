@@ -8,8 +8,9 @@
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
-`iceaddr` is a pure Python >=3.9 package to look up information about Icelandic streets, addresses, placenames,
-landmarks, locations and postcodes. The underlying data is contained in a local SQLite database assembled
+`iceaddr` is a pure Python >=3.9 package to look up information about
+Icelandic streets, addresses, placenames, landmarks, locations and postcodes.
+The underlying data is contained in a local SQLite database assembled
 from the following sources:
 
 * [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) (*Þjóðskra*, [CC-BY](http://opendefinition.org/licenses/cc-by/))
@@ -17,9 +18,10 @@ from the following sources:
 * The postcode table provided by [Postur.is](https://www.postur.is/gogn/Gotuskra/postnumer.txt), with supplementary data from [Icelandic Wikipedia](https://is.wikipedia.org/wiki/Listi_yfir_%C3%ADslensk_p%C3%B3stn%C3%BAmer)
 * Municipality data provided by the [Icelandic Government](https://www.government.is/lisalib/getfile.aspx?itemid=4289e993-446d-11eb-812c-005056bc8c60)
 
-Since no networking takes place, lookups are very fast and can be performed offline. The package is
-useful for geocoding and reverse geocoding of Icelandic addresses and placenames, as well as for
-validating addresses and postcodes. No external dependencies are required.
+Since no networking takes place, lookups are very fast and can be performed
+offline. The package is useful for geocoding and reverse geocoding of Icelandic
+addresses and placenames, as well as for validating addresses and postcodes.
+No external dependencies are required.
 
 ## Installation
 
@@ -83,10 +85,12 @@ pip install iceaddr
   'vidsk': ''}]
 ```
 
-Street and place names can be provided in either nominative (nf.) or dative (þgf.) case (e.g. both
-'Öldugata' and 'Öldugötu' will work, as will both 'Selfoss' and 'Selfossi').
+Street and place names can be provided in either nominative (nf.) or
+dative (þgf.) case (e.g. both 'Öldugata' and 'Öldugötu' will work, as
+will both 'Selfoss' and 'Selfossi').
 
-Please note that `iceaddr_lookup()` returns a list of zero or more addresses matching the criterion.
+Please note that `iceaddr_lookup()` returns a list of zero or more
+addresses matching the criterion.
 
 ```python
 >>> from iceaddr import iceaddr_lookup
@@ -113,8 +117,8 @@ The default limit on results from both functions is 50.
 
 ### Find closest address
 
-Given a set of WGS84 coordinates, the `nearest_addr()` function returns a list of the nearest addresses
-in the database:
+Given a set of WGS84 coordinates, the `nearest_addr()` function returns
+a list of the nearest addresses in the database:
 
 ```python
 >>> from iceaddr import nearest_addr
@@ -125,7 +129,7 @@ in the database:
 
 ### Address Keys
 
-| Key           |                                                         |
+| Key           | Value description                                       |
 | ------------- |---------------------------------------------------------|
 | bokst         | House letter, e.g. "A", "b"                             |
 | byggd         | Byggðarnúmer in municipality                            |
@@ -141,7 +145,8 @@ in the database:
 | stadur_nf     | Placename (nominative case), e.g. 'Selfoss'             |
 | stadur_tgf    | Placename (dative case), e.g. 'Selfossi'                |
 | svaedi_nf     | Region (nominative case), e.g. 'Höfuðborgarsvæðið'      |
-| svaedi_tgf    | Region (dative case), e.g. "Höfuðborgarsvæðinu"         |
+| svaedi_tgf    | Region (dative case), e.g. 'Höfuðborgarsvæðinu'         |
+| svfheiti      | Municipality name (e.g. 'Borgarbyggð')                  |
 | svfnr         | Municipality code (e.g. 3609)                           |
 | tegund        | Type (either 'Þéttbýli' (urban) or 'Dreifbýli' (rural)) |
 | vidsk         | Additional information                                  |
@@ -213,8 +218,8 @@ in the database:
   'nafn': 'Meðalfellsvatn'}]
 ```
 
-If more than one placename match is found, the results are ordered by size, with precedence
-given to municipalities and densely populated areas.
+If more than one placename match is found, the results are ordered by size,
+with precedence given to municipalities and densely populated areas.
 
 ```python
 >>> placename_lookup("Egilsstað", partial=True)
@@ -232,8 +237,8 @@ given to municipalities and densely populated areas.
 
 ### Find closest placenames ("örnefni")
 
-Given a set of WGS84 coordinates, the `nearest_placenames()` function returns a list of the nearest
-placenames in the database:
+Given a set of WGS84 coordinates, the `nearest_placenames()` function
+returns a list of the nearest placenames in the database:
 
 ```python
 >>> from iceaddr import nearest_placenames
@@ -244,9 +249,10 @@ Landakotsvöllur
 
 ## Build process
 
-To build your own version of the package, you need to have Python >=3.9 installed.
-Then, after (optionally) creating a virtual environment, run the following command
-from the repository root to install dependencies:
+To build your own version of the package, you need to have
+Python >=3.9 installed. Then, after (optionally) creating a virtual
+environment, run the following command from the repository root to
+install dependencies:
 
 ```bash
 pip install ".[dev]"
@@ -258,8 +264,9 @@ Then run the following command to build the database:
 bash build.sh
 ```
 
-This creates an SQLite3 database in the repo root named `iceaddr.db`. Move this file to
-`src/iceaddr/` and you can now install your own freshly built version of the package:
+This creates an SQLite3 database in the repo root named `iceaddr.db`.
+Move this file to `src/iceaddr/` and you can now install your own
+freshly built version of the package:
 
 ```bash
 pip install .
