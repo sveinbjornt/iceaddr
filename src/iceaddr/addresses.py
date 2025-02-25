@@ -15,6 +15,7 @@ import re
 
 from .db import shared_db
 from .dist import distance
+from .municipalities import MUNICIPALITIES
 from .postcodes import POSTCODES, postcodes_for_placename
 
 
@@ -25,12 +26,19 @@ def _add_postcode_info(addr: Dict[str, Any]) -> Dict[str, Any]:
         addr.update(POSTCODES[pn])
     return addr
 
+def _add_municipality_info(addr: Dict[str, Any]) -> Dict[str, Any]:
+    """Look up municipality info, add keys to address dictionary."""
+    mn = addr.get("svfnr")
+    if mn and MUNICIPALITIES.get(mn):
+        addr["svfheiti"] = MUNICIPALITIES[mn]
+    return addr
+
 
 def _run_addr_query(q: str, qargs: List[str]) -> List[Dict[str, Any]]:
     """Run address query, w. additional postcode data added post hoc."""
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, qargs)
-    return [_add_postcode_info(dict(row)) for row in res]
+    return [_add_municipality_info(_add_postcode_info(dict(row))) for row in res]
 
 
 def _cap_first(s: str) -> str:
