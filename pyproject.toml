@@ -114,7 +114,6 @@ ignore = [
     "TRY",     # Pedantic exception rules
     "EM",      # Pedantic exception message rules
     "TID",     # No relative parent imports rule
-    "TCH",     # Move into type checking block - too risky, causes issues
     "RSE102",  # Bug: https://github.com/astral-sh/ruff/issues/5416
     "FA100",   #
     "T201",    # Print statements

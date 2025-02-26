@@ -6,7 +6,7 @@
 
 # iceaddr
 
-### Look up Icelandic street addresses, postcodes and placenames
+**Look up Icelandic street addresses, postcodes and placenames**
 
 `iceaddr` is a pure Python >=3.9 package to look up information about
 Icelandic streets, addresses, placenames, landmarks, locations and postcodes.
@@ -63,7 +63,7 @@ pip install iceaddr
 
 ```python
 >>> from iceaddr import iceaddr_lookup
->>> a = iceaddr_lookup('Öldugötu', number=4, placename='Reykjavík')
+>>> a = iceaddr_lookup('Öldugötu', 4, 'Reykjavík')
 >>> pprint(a)
 [{'bokst': '',
   'byggd': 1,
@@ -80,6 +80,7 @@ pip install iceaddr
   'stadur_tgf': 'Reykjavík',
   'svaedi_nf': 'Höfuðborgarsvæðið',
   'svaedi_tgf': 'Höfuðborgarsvæðinu',
+  'svfheiti': 'Reykjavíkurborg',
   'svfnr': 0,
   'tegund': 'Þéttbýli',
   'vidsk': ''}]
@@ -94,9 +95,9 @@ addresses matching the criterion.
 
 ```python
 >>> from iceaddr import iceaddr_lookup
->>> iceaddr_lookup('Dúfnahólar', number=10)
+>>> iceaddr_lookup('Dúfnahólar', 10)
 []
->>> res = iceaddr_lookup('Öldugata', number=9)
+>>> res = iceaddr_lookup('Öldugata', 9)
 >>> [(a['postnr'], a['stadur_nf']) for a in res]
 [(101, 'Reykjavík'), (220, 'Hafnarfjörður'), (621, 'Dalvík')]
 ```
@@ -124,7 +125,7 @@ a list of the nearest addresses in the database:
 >>> from iceaddr import nearest_addr
 >>> addr = nearest_addr(64.148446, -21.944933)[0]
 >>> print(f"{addr['heiti_nf']} {addr['husnr']}")
-Öldugata 2
+Öldugata 4
 ```
 
 ### Address Keys
