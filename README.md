@@ -8,7 +8,7 @@
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
-`iceaddr` is a pure Python >=3.9 package to look up information about
+`iceaddr` is a pure Python >= 3.9 package to look up information about
 Icelandic streets, addresses, placenames, landmarks, locations and postcodes.
 The underlying data is contained in a local SQLite database assembled
 from the following sources:
@@ -54,6 +54,7 @@ pip install iceaddr
   'stadur_tgf': 'Reykjavík',
   'svaedi_nf': 'Höfuðborgarsvæðið',
   'svaedi_tgf': 'Höfuðborgarsvæðinu',
+  'svfheiti': 'Reykjavíkurborg',
   'svfnr': 0,
   'tegund': 'Þéttbýli',
   'vidsk': ''}]
@@ -275,7 +276,7 @@ pip install .
 
 ## Version History
 
-* 0.5.8: Updated address and placename data. Added municipality name data to address records. Now requires Python 3.9+ (27/02/2025)
+* 0.5.8: Updated address and placename data. Added municipality name data to address records. Now requires Python 3.9+ (26/02/2025)
 * 0.5.7: Updated address and placename data. Now requires Python 3.8+ (20/09/2024)
 * 0.5.6: Updated address and placename data (11/08/2023)
 * 0.5.5: Updated address and placename data. Removed ISN93 coords. Now requires Python 3.7+ (11/12/2022)
