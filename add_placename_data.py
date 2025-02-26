@@ -1,31 +1,27 @@
 #!/usr/bin/env python3
 """
 
-    Add placename data to iceaddr database.
+Add placename data to iceaddr database.
 
-    Fetches placename data from the IS50V geospatial database and inserts it
-    into the iceaddr database. Also adds manual placename additions from
-    placename_additions.txt.
+Fetches placename data from the IS50V geospatial database and inserts it
+into the iceaddr database. Also adds manual placename additions from
+placename_additions.txt.
 
 """
-
-from typing import List, Tuple
 
 import sqlite3
 import sys
 import zipfile
 from io import BytesIO
 from pathlib import Path
-from pprint import pprint  # type: ignore  # noqa: PGH003
 
 import fiona  # type: ignore  # noqa: PGH003
 import requests
+
 from iceaddr.dist import in_iceland
 
 ORNEFNI_DATA_FILE = "is_50v_ornefni_wgs_84.gpkg"
-ORNEFNI_DATA_URL = (
-    "https://atlas.lmi.is/heikir/downloadData/is_50v_ornefni_wgs_84_gpkg.zip"
-)
+ORNEFNI_DATA_URL = "https://atlas.lmi.is/heikir/downloadData/is_50v_ornefni_wgs_84_gpkg.zip"
 
 # Remote URL for latest IS50V data:
 # https://atlas.lmi.is/heikir/downloadData/is_50v_ornefni_wgs_84_gpkg.zip
@@ -47,11 +43,7 @@ def fetch_ornefni_data() -> None:
     from memory to current directory and rename file."""
 
     if Path(GPKG_FILE).exists():
-        if (
-            input(f"{GPKG_FILE} exists, fetch newer version? (y/n): ")
-            .lower()
-            .startswith("y")
-        ):
+        if input(f"{GPKG_FILE} exists, fetch newer version? (y/n): ").lower().startswith("y"):
             Path(GPKG_FILE).unlink()
         else:
             return
@@ -67,7 +59,7 @@ def fetch_ornefni_data() -> None:
     Path(ORNEFNI_DATA_FILE).rename(GPKG_FILE)
 
 
-def center_point(coords: List[Tuple[float, float]]) -> Tuple[float, float]:
+def center_point(coords: list[tuple[float, float]]) -> tuple[float, float]:
     """Find the center point of a given set of coordinates."""
     x: float = 0
     y: float = 0
@@ -98,17 +90,17 @@ def create_table(dbpath: str) -> sqlite3.Connection:
 
     try:
         dbconn.cursor().execute(create_table_sql)
-        
+
         # Create indexes for common query patterns
         index_queries = [
             "CREATE INDEX idx_ornefni_nafn ON ornefni(nafn);",
             "CREATE INDEX idx_ornefni_flokkur ON ornefni(flokkur);",
             "CREATE INDEX idx_ornefni_coords ON ornefni(lat_wgs84, long_wgs84);",
         ]
-        
+
         for query in index_queries:
             dbconn.cursor().execute(query)
-            
+
     except Exception:
         print("Unable to create table 'ornefni'")
         sys.exit()
@@ -250,13 +242,13 @@ def main() -> None:
 
     add_placename_additions(dbc)
     add_placenames_from_is50v(dbc)
-    
+
     # Analyze the database to optimize index usage
     dbc.execute("ANALYZE;")
-    
+
     # Optimize the database
     dbc.execute("VACUUM;")
-    
+
     print("Database indexing completed")
 
 

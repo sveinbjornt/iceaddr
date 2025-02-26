@@ -1,20 +1,18 @@
 """
 
-    iceaddr: Look up information about Icelandic streets, addresses,
-             placenames, landmarks, locations and postcodes.
+iceaddr: Look up information about Icelandic streets, addresses,
+         placenames, landmarks, locations and postcodes.
 
-    This file contains code related to distance calculation.
+This file contains code related to distance calculation.
 
 """
-
-from typing import Tuple
 
 import math
 
 EARTH_RADIUS_KM = 6371.0088
 
 
-def distance(loc1: Tuple[float, float], loc2: Tuple[float, float]) -> float:
+def distance(loc1: tuple[float, float], loc2: tuple[float, float]) -> float:
     """
     Calculate the Haversine distance.
     Parameters
@@ -47,10 +45,7 @@ def distance(loc1: Tuple[float, float], loc2: Tuple[float, float]) -> float:
     dlon = math.radians(lon2 - lon1)
     slat = math.sin(dlat / 2)
     slon = math.sin(dlon / 2)
-    a = (
-        slat * slat
-        + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * slon * slon
-    )
+    a = slat * slat + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * slon * slon
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     return EARTH_RADIUS_KM * c
 
@@ -58,6 +53,6 @@ def distance(loc1: Tuple[float, float], loc2: Tuple[float, float]) -> float:
 ICELAND_COORDS = (64.9957538607, -18.5739616708)
 
 
-def in_iceland(loc: Tuple[float, float], km_radius: float = 800.0) -> bool:
+def in_iceland(loc: tuple[float, float], km_radius: float = 800.0) -> bool:
     """Check if coordinates are within or very close to Iceland."""
     return distance(loc, ICELAND_COORDS) <= km_radius

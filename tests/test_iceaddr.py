@@ -1,15 +1,15 @@
 """
 
-    iceaddr: Look up information about Icelandic streets, addresses,
-             placenames, landmarks, locations and postcodes.
+iceaddr: Look up information about Icelandic streets, addresses,
+         placenames, landmarks, locations and postcodes.
 
-    Copyright (c) 2018-2025 Sveinbjorn Thordarson.
+Copyright (c) 2018-2025 Sveinbjorn Thordarson.
 
-    Tests for iceaddr python package.
+Tests for iceaddr python package.
 
 """
 
-from typing import Dict, Optional
+from typing import Optional
 
 import os
 import sys
@@ -17,21 +17,21 @@ import sys
 # Add parent directory to import path
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../")
 
-from iceaddr import (  # noqa
+from iceaddr import (
+    POSTCODES,
     iceaddr_lookup,
     iceaddr_suggest,
+    nearest_addr,
+    nearest_placenames,
     postcode_lookup,
     postcodes_for_placename,
     postcodes_for_region,
-    POSTCODES,
-    nearest_addr,
-    nearest_placenames,
 )
 
 
 def test_address_lookup():
     """Test address lookup using various known addresses."""
-    ADDR_TO_POSTCODE = (
+    ADDR_TO_POSTCODE = (  # noqa: N806
         ("Öldugata", 4, "Reykjavík", 101),
         ("öldugötu", 12, "hafnarfirði", 220),
         ("Tómasarhaga", 12, "Reykjavík", 107),
@@ -40,12 +40,13 @@ def test_address_lookup():
 
     for a in ADDR_TO_POSTCODE:
         res = iceaddr_lookup(a[0], number=a[1], placename=a[2])
-        assert res and res[0]["postnr"] == a[3]
+        assert res[0]["postnr"] == a[3]
 
     res = iceaddr_lookup("Brattagata", number=4, letter="b")
-    assert res and res[0]["postnr"] == 310 and res[0]["stadur_nf"] == "Borgarnes"
+    assert res[0]["postnr"] == 310
+    assert res[0]["stadur_nf"] == "Borgarnes"
 
-    POSTCODE_TO_PLACENAME = (
+    POSTCODE_TO_PLACENAME = (  # noqa: N806
         ("Öldugata", 4, 101, "Reykjavík", "Höfuðborgarsvæðið", "Þéttbýli"),
         (
             "dagverðardalur",
@@ -105,7 +106,8 @@ def test_address_suggestions():
     assert res[0]["stadur_tgf"] == "Dalvík"
 
     res = iceaddr_suggest("öldugötu 4B, 621")
-    assert res and res[0]["bokst"].lower() == "b"
+    assert res
+    assert res[0]["bokst"].lower() == "b"
 
     assert iceaddr_suggest("Öldugata a4B") == []
     assert iceaddr_suggest("Öldugötu 4Baaa") == []
@@ -121,11 +123,11 @@ def test_address_suggest_with_dashed_numbers():
 def test_postcode_data_integrity():
     """Make sure postcode data is sane."""
     for k, v in POSTCODES.items():
-        assert type(k) == int
+        assert type(k) is int
         _verify_postcode_dict(v)
 
 
-def _verify_postcode_dict(pcd: Optional[Dict[str, str]]):
+def _verify_postcode_dict(pcd: Optional[dict[str, str]]):
     """Verify the integrity of a postcode dict."""
     assert pcd is not None
     assert "svaedi_nf" in pcd
@@ -142,7 +144,8 @@ def test_postcode_lookup():
     _verify_postcode_dict(postcode_lookup(900))
     _record102 = postcode_lookup("102")
     _verify_postcode_dict(_record102)
-    assert _record102 and _record102["stadur_nf"] == "Reykjavík"
+    assert _record102
+    assert _record102["stadur_nf"] == "Reykjavík"
 
     kop_pc_num = 5
     assert len(postcodes_for_placename("Kópavogur")) == kop_pc_num
@@ -160,6 +163,7 @@ def test_postcode_lookup():
 
 FISKISLOD_31_COORDS = (64.1560233, -21.951407)
 OLDUGATA_4_COORDS = (64.148446, -21.944933)
+POSTCODE_101 = 101
 
 
 def test_nearest_addr():
@@ -167,13 +171,13 @@ def test_nearest_addr():
     addr = nearest_addr(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
     assert len(addr) == 1
     assert addr[0]["heiti_nf"] == "Fiskislóð"
-    assert addr[0]["postnr"] == 101
+    assert addr[0]["postnr"] == POSTCODE_101
     assert addr[0]["svaedi_nf"] == "Höfuðborgarsvæðið"
 
     addr = nearest_addr(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=3)
     assert len(addr) == 3
     assert addr[0]["heiti_nf"] == "Öldugata"
-    assert addr[0]["postnr"] == 101
+    assert addr[0]["postnr"] == POSTCODE_101
     assert addr[0]["svaedi_tgf"] == "Höfuðborgarsvæðinu"
 
 

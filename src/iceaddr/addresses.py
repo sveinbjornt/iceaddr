@@ -1,15 +1,15 @@
 """
 
-    iceaddr: Look up information about Icelandic streets, addresses,
-             placenames, landmarks, locations and postcodes.
+iceaddr: Look up information about Icelandic streets, addresses,
+         placenames, landmarks, locations and postcodes.
 
-    Copyright (c) 2018-2025 Sveinbjorn Thordarson.
+Copyright (c) 2018-2025 Sveinbjorn Thordarson.
 
-    This file contains code related to Icelandic address lookup.
+This file contains code related to Icelandic address lookup.
 
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 import re
 
@@ -19,14 +19,15 @@ from .municipalities import MUNICIPALITIES
 from .postcodes import POSTCODES, postcodes_for_placename
 
 
-def _add_postcode_info(addr: Dict[str, Any]) -> Dict[str, Any]:
+def _add_postcode_info(addr: dict[str, Any]) -> dict[str, Any]:
     """Look up postcode info, add keys to address dictionary."""
     pn = addr.get("postnr")
     if pn is not None and POSTCODES.get(pn):
         addr.update(POSTCODES[pn])
     return addr
 
-def _add_municipality_info(addr: Dict[str, Any]) -> Dict[str, Any]:
+
+def _add_municipality_info(addr: dict[str, Any]) -> dict[str, Any]:
     """Look up municipality info, add keys to address dictionary."""
     mn = addr.get("svfnr")
     if mn is not None and MUNICIPALITIES.get(mn):
@@ -34,7 +35,7 @@ def _add_municipality_info(addr: Dict[str, Any]) -> Dict[str, Any]:
     return addr
 
 
-def _run_addr_query(q: str, qargs: List[str]) -> List[Dict[str, Any]]:
+def _run_addr_query(q: str, qargs: list[str]) -> list[dict[str, Any]]:
     """Run address query, w. additional postcode data added post hoc."""
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, qargs)
@@ -55,7 +56,7 @@ def iceaddr_lookup(  # noqa: PLR0913
     postcode: Optional[int] = None,
     placename: Optional[str] = None,
     limit: int = 50,
-) -> List[Dict[str, Any]]:
+) -> list[dict[str, Any]]:
     """Look up all addresses matching criterion"""
 
     # Be forgiving, strip and capitalize street name. All street names in DB are capitalized.
@@ -99,7 +100,7 @@ def iceaddr_lookup(  # noqa: PLR0913
 MIN_SEARCH_STR_LEN = 3
 
 
-def iceaddr_suggest(search_str: str, limit: int = 50) -> List[Dict[str, Any]]:
+def iceaddr_suggest(search_str: str, limit: int = 50) -> list[dict[str, Any]]:
     """Parse search string and fetch matching addresses.
     Made to handle partial and full text queries in
     the following formats:
@@ -136,7 +137,7 @@ def iceaddr_suggest(search_str: str, limit: int = 50) -> List[Dict[str, Any]]:
         addr = [" ".join(addr)]
 
     q = "SELECT * FROM stadfong WHERE "
-    qargs: List[str] = []
+    qargs: list[str] = []
 
     street_name = addr[0]
     if len(addr) == 1:  # "Ölduga"
@@ -164,7 +165,7 @@ def iceaddr_suggest(search_str: str, limit: int = 50) -> List[Dict[str, Any]]:
     # Placename component (postcode or placename)
     if len(items) > 1 and items[1]:
         pns = items[1]
-        postcodes: List[str] = []
+        postcodes: list[str] = []
 
         # Is it a postcode?
         if re.match(r"\d\d\d$", pns[0]):
@@ -186,19 +187,10 @@ def iceaddr_suggest(search_str: str, limit: int = 50) -> List[Dict[str, Any]]:
     return _run_addr_query(q, qargs)
 
 
-def nearest_addr(lat: float, lon: float, limit: int = 1) -> List[Dict[str, Any]]:
+def nearest_addr(lat: float, lon: float, limit: int = 1) -> list[dict[str, Any]]:
     """Find the address closest to the given coordinates."""
     q = "SELECT * FROM stadfong"
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, [])
-    closest = sorted(
-        res, key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"]))
-    )
+    closest = sorted(res, key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"])))
     return [_add_postcode_info(x) for x in closest[:limit]]
-
-
-# def format_addr(addr: Dict[str, Any]) -> str:
-#     """Given an address record dict from the database,
-#     returns a canonically formatted address string, e.g.
-#     'Öldugata 9c, 101 Reykjavík'"""
-#     pass

@@ -1,15 +1,15 @@
 """
 
-    iceaddr: Look up information about Icelandic streets, addresses,
-             placenames, landmarks, locations and postcodes.
+iceaddr: Look up information about Icelandic streets, addresses,
+         placenames, landmarks, locations and postcodes.
 
-    Copyright (c) 2018-2024 Sveinbjorn Thordarson.
+Copyright (c) 2018-2024 Sveinbjorn Thordarson.
 
-    This file contains code related to placename lookup.
+This file contains code related to placename lookup.
 
 """
 
-from typing import Any, Dict, List
+from typing import Any
 
 from .db import shared_db
 from .dist import distance
@@ -58,7 +58,7 @@ ORDER = [
 ]
 
 
-def _precedence(pn: Dict[str, Any]) -> int:
+def _precedence(pn: dict[str, Any]) -> int:
     """Sort priority for placenames."""
     if pn["nafn"] in HARDCODED_PRIORITY:
         (lat, lng) = HARDCODED_PRIORITY[pn["nafn"]]
@@ -72,7 +72,7 @@ def _precedence(pn: Dict[str, Any]) -> int:
     return 9999
 
 
-def placename_lookup(placename: str, partial: bool = False) -> List[Dict[str, Any]]:
+def placename_lookup(placename: str, partial: bool = False) -> list[dict[str, Any]]:
     """Look up Icelandic placename in database."""
     q = "SELECT * FROM ornefni WHERE nafn=?"
     if partial:
@@ -86,12 +86,10 @@ def placename_lookup(placename: str, partial: bool = False) -> List[Dict[str, An
     return matches
 
 
-def nearest_placenames(lat: float, lon: float, limit: int = 1) -> List[Dict[str, Any]]:
+def nearest_placenames(lat: float, lon: float, limit: int = 1) -> list[dict[str, Any]]:
     """Find the placename closest to the given coordinates."""
     q = "SELECT * FROM ornefni"
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, [])
-    closest = sorted(
-        res, key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"]))
-    )
+    closest = sorted(res, key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"])))
     return closest[:limit]

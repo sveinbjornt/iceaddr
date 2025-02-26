@@ -1,17 +1,17 @@
 """
 
-    iceaddr: Look up information about Icelandic streets, addresses,
-             placenames, landmarks, locations and postcodes.
+iceaddr: Look up information about Icelandic streets, addresses,
+         placenames, landmarks, locations and postcodes.
 
-    Copyright (c) 2018-2025 Sveinbjorn Thordarson.
+Copyright (c) 2018-2025 Sveinbjorn Thordarson.
 
-    This file contains code and data related to Icelandic postcodes.
+This file contains code and data related to Icelandic postcodes.
 
 """
 
-from typing import Dict, List, Optional, Union
+from typing import Optional, Union
 
-POSTCODES: Dict[int, Dict[str, str]] = {
+POSTCODES: dict[int, dict[str, str]] = {
     101: {
         "lysing": "Miðborg",
         "stadur_nf": "Reykjavík",
@@ -1396,29 +1396,29 @@ POSTCODES: Dict[int, Dict[str, str]] = {
 }
 
 
-def postcode_lookup(postcode: Union[int, str]) -> Optional[Dict[str, str]]:
+def postcode_lookup(postcode: Union[int, str]) -> Optional[dict[str, str]]:
     """Return postcode info dictionary given a postcode.
     Accepts either numeric or string argument."""
     return POSTCODES.get(int(postcode))
 
 
-def postcodes_for_region(region_name: str, partial: bool = False) -> List[int]:
+def postcodes_for_region(region_name: str, partial: bool = False) -> list[int]:
     """Return postcodes matching a full or partial region name,
     e.g. "Norðurland", "Höfuðborgarsvæðið"."""
     return _filter_postcodes("svaedi", region_name, partial=partial)
 
 
-def postcodes_for_placename(placename: str, partial: bool = False) -> List[int]:
+def postcodes_for_placename(placename: str, partial: bool = False) -> list[int]:
     """Returns postcodes matching a full or partial placename,
     e.g. "Reykjavík", "Dalvík"."""
     return _filter_postcodes("stadur", placename, partial=partial)
 
 
-def _filter_postcodes(key: str, searchstr: str, partial: bool = False) -> List[int]:
+def _filter_postcodes(key: str, searchstr: str, partial: bool = False) -> list[int]:
     """Utility function to find postcodes matching a criterion."""
     assert key in ["stadur", "svaedi"]
     p = searchstr.lower()
-    matches: List[int] = []
+    matches: list[int] = []
 
     k1 = key + "_nf"
     k2 = key + "_tgf"

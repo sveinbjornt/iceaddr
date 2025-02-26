@@ -1,30 +1,29 @@
 #!/usr/bin/env python3
 """
 
-    Create stadfong address database from from the
-    Staðfangaskrá CSV dataset.
+Create stadfong address database from from the
+Staðfangaskrá CSV dataset.
 
-    From data compiled by Registers Iceland (CC-BY):
-        https://opingogn.is/dataset/stadfangaskra
-        https://opendefinition.org/licenses/cc-by/
+From data compiled by Registers Iceland (CC-BY):
+    https://opingogn.is/dataset/stadfangaskra
+    https://opendefinition.org/licenses/cc-by/
 
 """
 
-from typing import Iterator, Dict, Any
+from typing import Any, Iterator
 
-from builtins import input
-
-import sys
+import csv
 import os
 import sqlite3
-import csv
-from pathlib import Path
+import sys
+from builtins import input
 from io import BytesIO, TextIOWrapper
+from pathlib import Path
 from urllib.request import urlopen
-from iceaddr.dist import in_iceland
 
 import humanize
 
+from iceaddr.dist import in_iceland
 
 STADFONG_REMOTE_URL = "https://fasteignaskra.is/Stadfangaskra.csv"
 
@@ -83,26 +82,24 @@ def create_db(path: str) -> sqlite3.Connection:
         "CREATE INDEX idx_stadfong_serheiti ON stadfong(serheiti);",
         "CREATE INDEX idx_stadfong_coords ON stadfong(lat_wgs84, long_wgs84);",
     ]
-    
+
     for query in index_queries:
         dbconn.cursor().execute(query)
 
     return dbconn
 
 
-def read_rows(
-    dsv_file: TextIOWrapper, delimiter: str = ","
-) -> Iterator[Dict[Any, Any]]:
+def read_rows(dsv_file: TextIOWrapper, delimiter: str = ",") -> Iterator[dict[Any, Any]]:
     reader = csv.DictReader(dsv_file, delimiter=delimiter)
     for row in reader:
         yield row
 
 
-def insert_address_entry(e: Dict[Any, Any], conn: sqlite3.Connection) -> None:
+def insert_address_entry(e: dict[Any, Any], conn: sqlite3.Connection) -> None:
     # The stadfong datafile is quite dirty so we need to
     # sanitise values before inserting into the database
 
-    for k in e:
+    for k in e:  # noqa: PLC0206
         e[k] = e[k].strip()
 
     # Icelandic to English decimal points
@@ -185,7 +182,7 @@ def main() -> None:
 
     # After data import, analyze the database to optimize index usage
     dbconn.execute("ANALYZE;")
-    
+
     print("\nCreated database with %d entries (%s)" % (cnt, human_size))
 
 
