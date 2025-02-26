@@ -1,26 +1,25 @@
 #!/usr/bin/env python3
 """
 
-    Fetch list of postcodes from the Icelandic postal service,
-    create and print dict mapping postcode to placename and
-    other related information. Also adds placenames in the
-    nominative case (nefnifall) since the source data only
-    includes placenames in dative (þágufall).
+Fetch list of postcodes from the Icelandic postal service,
+create and print dict mapping postcode to placename and
+other related information. Also adds placenames in the
+nominative case (nefnifall) since the source data only
+includes placenames in dative (þágufall).
 
-    https://www.postur.is/gogn/Gotuskra/postnumer.txt
+https://www.postur.is/gogn/Gotuskra/postnumer.txt
 
 """
 
-import requests
-import pprint
-import logging
 import csv
+import logging
+import pprint
 from io import StringIO
 
+import requests
 from reynir import NounPhrase
 
 from iceaddr.postcodes import POSTCODES
-
 
 POSTCODES_REMOTE_URL = "https://www.postur.is/gogn/Gotuskra/postnumer.txt"
 
@@ -34,7 +33,7 @@ def main() -> None:
     pc_keys = pc.keys()
     pp = pprint.PrettyPrinter(indent=4)
 
-    req = requests.get(POSTCODES_REMOTE_URL, allow_redirects=True)
+    req = requests.get(POSTCODES_REMOTE_URL, allow_redirects=True, timeout=10)
     f = StringIO(req.text)
 
     changed = False

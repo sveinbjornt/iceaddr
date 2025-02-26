@@ -21,6 +21,8 @@ from iceaddr import (
     POSTCODES,
     iceaddr_lookup,
     iceaddr_suggest,
+    municipality_code_for_municipality,
+    municipality_for_municipality_code,
     nearest_addr,
     nearest_placenames,
     postcode_lookup,
@@ -97,6 +99,9 @@ def test_address_suggestions():
     assert res[0]["heiti_nf"] == "Öldugata"
     assert res[0]["husnr"] == 4
     assert res[0]["stadur_nf"] == "Reykjavík"
+    assert res[0]["postnr"] == 101
+    assert res[0]["svaedi_nf"] == "Höfuðborgarsvæðið"
+    assert res[0]["svfheiti"] == "Reykjavíkurborg"
 
     res = iceaddr_suggest("Öldugata 4, Rey")
     assert [n["stadur_tgf"] for n in res] == ["Reykjavík", "Reyðarfirði"]
@@ -159,6 +164,13 @@ def test_postcode_lookup():
 
     assert postcodes_for_region("Norðurland")
     assert postcodes_for_region("Höfuðborgarsvæðið")
+
+
+def test_municipality_lookup():
+    """Test municipality code lookup functions."""
+    assert municipality_code_for_municipality("Reykjavíkurborg") == 0
+
+    assert municipality_for_municipality_code(0) == "Reykjavíkurborg"
 
 
 FISKISLOD_31_COORDS = (64.1560233, -21.951407)
