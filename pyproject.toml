@@ -42,8 +42,6 @@ dev = [
     # Linting, testing
     "pytest>=7.2.1",
     "pre-commit>=3.3.3",
-    "black>=23.7.0",
-    "mypy>=1.5.1",
     "types-setuptools>=68.2.0",
     "ruff>=0.0.285",
     "coverage[toml]>=7.3.1",
@@ -65,15 +63,11 @@ command_line = "-m pytest" # Run all tests when calculating coverage
 
 [tool.coverage.report]
 exclude_also = ["if TYPE_CHECKING:", "raise NotImplementedError"]
-skip_covered = true                                               # Skip showing fully covered files
-skip_empty = true                                                 # Skip empty files
-sort = "-Cover"                                                   # Sort by coverage percentage
-precision = 2                                                     # Precision of output percentage
-fail_under = 65                                                   # Fail if total covered under threshold
-
-
-[tool.mypy]
-overrides = []
+# skip_covered = true                                               # Skip showing fully covered files
+skip_empty = true # Skip empty files
+sort = "-Cover"   # Sort by coverage percentage
+precision = 2     # Precision of output percentage
+fail_under = 65   # Fail if total covered under threshold
 
 
 [tool.pyright]
