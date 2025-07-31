@@ -25,10 +25,12 @@ from iceaddr import (
     municipality_for_municipality_code,
     nearest_addr,
     nearest_placenames,
+    placename_lookup,
     postcode_lookup,
     postcodes_for_placename,
     postcodes_for_region,
 )
+from iceaddr.dist import in_iceland, ICELAND_COORDS
 
 
 def test_address_lookup():
@@ -169,8 +171,21 @@ def test_postcode_lookup():
 def test_municipality_lookup():
     """Test municipality code lookup functions."""
     assert municipality_code_for_municipality("Reykjavíkurborg") == 0
+    assert municipality_code_for_municipality("Blerghsmergh") is None
 
     assert municipality_for_municipality_code(0) == "Reykjavíkurborg"
+
+
+def test_placename_lookup():
+    """Test placename lookup."""
+    assert len(placename_lookup("Meðalfellsvatn")) != 0
+    assert len(placename_lookup("Meðalfell", partial=True)) != 0
+    assert len(placename_lookup("Hellisheiði")) > 1
+
+
+def test_in_iceland():
+    """Test if coordinates are within Iceland."""
+    assert in_iceland(ICELAND_COORDS)
 
 
 FISKISLOD_31_COORDS = (64.1560233, -21.951407)

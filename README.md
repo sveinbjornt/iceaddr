@@ -4,11 +4,11 @@
 [![PyPI](https://img.shields.io/pypi/v/iceaddr)]()
 [![Build](https://github.com/sveinbjornt/iceaddr/actions/workflows/python-package.yml/badge.svg)]()
 
-<img src="iceaddr_logo.svg" width="192" height="192" align="right" style="float: right; margin-left: 30px;">
-
 # iceaddr
 
 ### Look up Icelandic street addresses, postcodes and placenames
+
+<img src="iceaddr_logo.svg" width="192" height="192" align="right" style="float: right; margin-left: 30px;">
 
 `iceaddr` is a pure Python >= 3.9 package to look up information about
 Icelandic streets, addresses, placenames, landmarks, locations and postcodes.

@@ -76,7 +76,8 @@ def placename_lookup(placename: str, partial: bool = False) -> list[dict[str, An
     """Look up Icelandic placename in database."""
     q = "SELECT * FROM ornefni WHERE nafn=?"
     if partial:
-        q = "SELECT * FROM ornefni WHERE nafn LIKE '?%'"
+        q = "SELECT * FROM ornefni WHERE nafn LIKE ?"
+        placename = f"%{placename}%"
 
     db_conn = shared_db.connection()
     res = db_conn.cursor().execute(q, [placename])
