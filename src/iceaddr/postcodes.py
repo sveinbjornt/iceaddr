@@ -10,6 +10,7 @@ This file contains code and data related to Icelandic postcodes.
 """
 
 from typing import Optional, Union
+
 from collections import defaultdict
 
 POSTCODES: dict[int, dict[str, str]] = {
@@ -1423,13 +1424,20 @@ def postcodes_for_region(region_name: str, partial: bool = False) -> list[int]:
     if not partial:
         return sorted(_REGION_TO_POSTCODES.get(region_name.lower(), []))
 
-    # Partial search is less efficient but still better than a full scan
-    matches = []
+    matches: list[int] = []
     search_str = region_name.lower()
     for name, codes in _REGION_TO_POSTCODES.items():
         if name.startswith(search_str):
             matches.extend(codes)
-    return sorted(list(set(matches)))
+    return sorted(set(matches))
+
+
+def region_for_postcode(postcode: Union[int, str]) -> Optional[str]:
+    """Return the region name for a given postcode."""
+    code = int(postcode)
+    if code in POSTCODES:
+        return POSTCODES[code]["svaedi_nf"]
+    return None
 
 
 def postcodes_for_placename(placename: str, partial: bool = False) -> list[int]:
@@ -1438,10 +1446,9 @@ def postcodes_for_placename(placename: str, partial: bool = False) -> list[int]:
     if not partial:
         return sorted(_PLACENAME_TO_POSTCODES.get(placename.lower(), []))
 
-    # Partial search is less efficient but still better than a full scan
-    matches = []
+    matches: list[int] = []
     search_str = placename.lower()
     for name, codes in _PLACENAME_TO_POSTCODES.items():
         if name.startswith(search_str):
             matches.extend(codes)
-    return sorted(list(set(matches)))
+    return sorted(set(matches))

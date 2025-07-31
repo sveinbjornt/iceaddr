@@ -29,8 +29,9 @@ from iceaddr import (
     postcode_lookup,
     postcodes_for_placename,
     postcodes_for_region,
+    region_for_postcode,
 )
-from iceaddr.dist import in_iceland, ICELAND_COORDS
+from iceaddr.dist import ICELAND_COORDS, in_iceland
 
 
 def test_address_lookup():
@@ -166,6 +167,8 @@ def test_postcode_lookup():
 
     assert postcodes_for_region("Norðurland")
     assert postcodes_for_region("Höfuðborgarsvæðið")
+
+    assert region_for_postcode(101) == "Höfuðborgarsvæðið"
 
 
 def test_municipality_lookup():
