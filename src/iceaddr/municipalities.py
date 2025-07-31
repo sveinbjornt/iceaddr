@@ -84,6 +84,9 @@ MUNICIPALITIES: dict[int, str] = {
     8722: "Flóahreppur",
 }
 
+# Create a reverse mapping for faster lookups
+_NAME_TO_CODE: dict[str, int] = {v: k for k, v in MUNICIPALITIES.items()}
+
 
 def municipality_for_municipality_code(code: int) -> Optional[str]:
     """Return the name of a municipality given its code."""
@@ -92,7 +95,4 @@ def municipality_for_municipality_code(code: int) -> Optional[str]:
 
 def municipality_code_for_municipality(name: str) -> Optional[int]:
     """Return the code of a municipality given its name."""
-    for code, mn in MUNICIPALITIES.items():
-        if mn == name:
-            return code
-    return None
+    return _NAME_TO_CODE.get(name)
