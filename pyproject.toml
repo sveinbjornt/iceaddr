@@ -35,10 +35,6 @@ Repository = "https://github.com/sveinbjornt/iceaddr"
 [project.optional-dependencies]
 # Dev dependencies
 dev = [
-    # Building database
-    "fiona>=1.9.4",    # for processing GIS data
-    "humanize>=0.5.1", # for progress bar
-    "reynir>=3.1.0",   # for parsing and declining placenames
     # Linting, testing
     "pytest>=7.2.1",
     "pre-commit>=3.3.3",
@@ -47,6 +43,13 @@ dev = [
     "coverage[toml]>=7.3.1",
     "requests>=2.26.0",
 ]
+build = [
+    # Building database
+    "fiona>=1.9.4",    # for processing GIS data
+    "humanize>=0.5.1", # for progress bar
+    "reynir>=3.1.0",   # for parsing and declining placenames
+]
+all = ["dev", "build"]
 
 # *** Configuration of tools ***
 
