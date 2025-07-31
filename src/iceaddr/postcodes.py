@@ -371,14 +371,14 @@ POSTCODES: dict[int, dict[str, str]] = {
     },
     250: {
         "stadur_nf": "Garður",
-        "stadur_tgf": "Garður",
+        "stadur_tgf": "Garði",
         "svaedi_nf": "Suðurland og Reykjanes",
         "svaedi_tgf": "Suðurlandi og Reykjanesi",
         "tegund": "Stærra dreifbýli",
     },
     251: {
         "stadur_nf": "Garður",
-        "stadur_tgf": "Garður",
+        "stadur_tgf": "Garði",
         "svaedi_nf": "Suðurland og Reykjanes",
         "svaedi_tgf": "Suðurlandi og Reykjanesi",
         "tegund": "Dreifbýli",
