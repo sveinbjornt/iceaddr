@@ -278,6 +278,7 @@ pip install .
 
 ## Version History
 
+* 0.5.9: Updated address and placename data. Fixed bug in `placename_lookup` function (31/ö7/2025)
 * 0.5.8: Updated address and placename data. Added municipality name data to address records. Now requires Python 3.9+ (26/02/2025)
 * 0.5.7: Updated address and placename data. Now requires Python 3.8+ (20/09/2024)
 * 0.5.6: Updated address and placename data (11/08/2023)

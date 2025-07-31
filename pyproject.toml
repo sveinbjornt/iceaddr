@@ -1,6 +1,6 @@
 [project]
 name = "iceaddr"
-version = "0.5.8"
+version = "0.5.9"
 description = "Look up information about Icelandic street addresses, postcodes, landmarks, locations and placenames"
 authors = [
     { name = "Sveinbjorn Thordarson", email = "sveinbjorn@sveinbjorn.org" },
