@@ -10,6 +10,7 @@ This file contains code and data related to Icelandic postcodes.
 """
 
 from typing import Optional, Union
+from collections import defaultdict
 
 POSTCODES: dict[int, dict[str, str]] = {
     101: {
@@ -1396,6 +1397,20 @@ POSTCODES: dict[int, dict[str, str]] = {
 }
 
 
+# Pre-calculate reverse mappings for faster lookups
+_PLACENAME_TO_POSTCODES: dict[str, list[int]] = defaultdict(list)
+_REGION_TO_POSTCODES: dict[str, list[int]] = defaultdict(list)
+
+for code, data in POSTCODES.items():
+    # Placenames (nominative and dative cases)
+    _PLACENAME_TO_POSTCODES[data["stadur_nf"].lower()].append(code)
+    _PLACENAME_TO_POSTCODES[data["stadur_tgf"].lower()].append(code)
+
+    # Regions (nominative and dative cases)
+    _REGION_TO_POSTCODES[data["svaedi_nf"].lower()].append(code)
+    _REGION_TO_POSTCODES[data["svaedi_tgf"].lower()].append(code)
+
+
 def postcode_lookup(postcode: Union[int, str]) -> Optional[dict[str, str]]:
     """Return postcode info dictionary given a postcode.
     Accepts either numeric or string argument."""
@@ -1405,29 +1420,28 @@ def postcode_lookup(postcode: Union[int, str]) -> Optional[dict[str, str]]:
 def postcodes_for_region(region_name: str, partial: bool = False) -> list[int]:
     """Return postcodes matching a full or partial region name,
     e.g. "Norðurland", "Höfuðborgarsvæðið"."""
-    return _filter_postcodes("svaedi", region_name, partial=partial)
+    if not partial:
+        return sorted(_REGION_TO_POSTCODES.get(region_name.lower(), []))
+
+    # Partial search is less efficient but still better than a full scan
+    matches = []
+    search_str = region_name.lower()
+    for name, codes in _REGION_TO_POSTCODES.items():
+        if name.startswith(search_str):
+            matches.extend(codes)
+    return sorted(list(set(matches)))
 
 
 def postcodes_for_placename(placename: str, partial: bool = False) -> list[int]:
     """Returns postcodes matching a full or partial placename,
     e.g. "Reykjavík", "Dalvík"."""
-    return _filter_postcodes("stadur", placename, partial=partial)
+    if not partial:
+        return sorted(_PLACENAME_TO_POSTCODES.get(placename.lower(), []))
 
-
-def _filter_postcodes(key: str, searchstr: str, partial: bool = False) -> list[int]:
-    """Utility function to find postcodes matching a criterion."""
-    assert key in ["stadur", "svaedi"]
-    p = searchstr.lower()
-    matches: list[int] = []
-
-    k1 = key + "_nf"
-    k2 = key + "_tgf"
-
-    pcs = POSTCODES.items()
-    for k, v in pcs:
-        nf = v[k1].lower()
-        tgf = v[k2].lower()
-        if (partial and (nf.startswith(p) or tgf.startswith(p))) or p in (nf, tgf):
-            matches.append(k)
-
-    return matches
+    # Partial search is less efficient but still better than a full scan
+    matches = []
+    search_str = placename.lower()
+    for name, codes in _PLACENAME_TO_POSTCODES.items():
+        if name.startswith(search_str):
+            matches.extend(codes)
+    return sorted(list(set(matches)))
