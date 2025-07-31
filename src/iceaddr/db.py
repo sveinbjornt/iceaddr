@@ -1,17 +1,16 @@
 """
 
-    iceaddr: Look up information about Icelandic streets, addresses,
-             placenames, landmarks, locations and postcodes.
+iceaddr: Look up information about Icelandic streets, addresses,
+         placenames, landmarks, locations and postcodes.
 
-    Copyright (c) 2018-2025 Sveinbjorn Thordarson.
+Copyright (c) 2018-2025 Sveinbjorn Thordarson.
 
-    This file contains code related to the iceaddr sqlite3 database.
+This file contains code related to the iceaddr sqlite3 database.
 
 """
 
 import sqlite3
-
-from pkg_resources import resource_filename
+from importlib import resources
 
 _DB_REL_PATH = "iceaddr.db"
 
@@ -25,10 +24,11 @@ class SharedDB:
     def connection(self) -> sqlite3.Connection:
         # Open connection lazily
         if not self.db_conn:
-            db_path = resource_filename(__name__, _DB_REL_PATH)
+            db_path = resources.files("iceaddr").joinpath(_DB_REL_PATH)
 
             # Open database file in read-only mode via URI
             db_uri = f"file:{db_path}?mode=ro"
+            # As long as we're read-only, thread safety is not an issue
             self.db_conn = sqlite3.connect(db_uri, uri=True, check_same_thread=False)
 
             # Return rows as key-value dicts
