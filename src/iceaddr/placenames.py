@@ -3,7 +3,7 @@
 iceaddr: Look up information about Icelandic streets, addresses,
          placenames, landmarks, locations and postcodes.
 
-Copyright (c) 2018-2024 Sveinbjorn Thordarson.
+Copyright (c) 2018-2025 Sveinbjorn Thordarson.
 
 This file contains code related to placename lookup.
 

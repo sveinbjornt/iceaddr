@@ -31,8 +31,7 @@ def distance(loc1: tuple[float, float], loc2: tuple[float, float]) -> float:
     >>> round(distance(origin, destination), 1)
     504.2
     Source:
-    https://stackoverflow.com/questions/19412462
-        /getting-distance-between-two-points-based-on-latitude-longitude
+    https://stackoverflow.com/questions/19412462/getting-distance-between-two-points-based-on-latitude-longitude
     """
     (lat1, lon1) = loc1
     (lat2, lon2) = loc2
