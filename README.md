@@ -278,6 +278,7 @@ pip install .
 
 ## Version History
 
+* 0.5.10: Updated address and placename data. Added `region_for_postcode` function. Minor optimizations (07/11/2025)
 * 0.5.9: Updated address and placename data. Fixed bug in `placename_lookup` function (31/07/2025)
 * 0.5.8: Updated address and placename data. Added municipality name data to address records. Now requires Python 3.9+ (26/02/2025)
 * 0.5.7: Updated address and placename data. Now requires Python 3.8+ (20/09/2024)
@@ -294,11 +295,11 @@ pip install .
 * 0.3.1: Added more placenames from LMÍ data, support for multithreaded use
 * 0.3.0: Added `placename_lookup` to look up coordinates for Icelandic placenames + minor fixes (10/12/2018)
 * 0.2.0: Added `iceaddr_suggest`, result limit, changed key names for postcode dicts (22/10/2018)
-* 0.1.2: Initial release (10/10/2018)
+* 0.1.2: Initial public release (10/10/2018)
 
 ## BSD License
 
-Copyright (C) 2018-2025 Sveinbjorn Thordarson [&lt;sveinbjorn@sveinbjorn.org&gt;](mailto:sveinbjorn@sveinbjorn.org)
+Copyright (C) 2018-2025 [Sveinbjorn Thordarson](mailto:sveinbjorn@sveinbjorn.org)
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
