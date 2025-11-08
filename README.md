@@ -6,9 +6,9 @@
 
 # iceaddr
 
-### Look up Icelandic street addresses, postcodes and placenames
+<img src="https://github.com/sveinbjornt/iceaddr/blob/master/iceaddr_logo.svg" width="192" height="192" align="right" style="float: right; margin-left: 30px;" alt="iceaddr logo">
 
-<img src="iceaddr_logo.svg" width="192" height="192" align="right" style="float: right; margin-left: 30px;" alt="iceaddr logo">
+### Look up Icelandic street addresses, postcodes and placenames
 
 `iceaddr` is a pure Python >= 3.9 package to look up information about
 Icelandic streets, addresses, placenames, landmarks, locations and postcodes.
