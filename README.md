@@ -6,7 +6,7 @@
 
 # iceaddr
 
-<img src="https://github.com/sveinbjornt/iceaddr/blob/master/iceaddr_logo.svg" width="192" height="192" align="right" style="float: right; margin-left: 30px;" alt="iceaddr logo">
+<img src="https://raw.githubusercontent.com/sveinbjornt/iceaddr/refs/heads/master/iceaddr_logo.svg" width="192" height="192" align="right" style="float: right; margin-left: 30px;" alt="iceaddr logo">
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
@@ -16,7 +16,7 @@ The underlying data is contained in a local SQLite database assembled
 from the following sources:
 
 * [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) (*Þjóðskra*, [CC-BY](http://opendefinition.org/licenses/cc-by/))
-* [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is) (*Landmælingar Íslands*)
+* [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is) (*Landmælingar Íslands*, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/))
 * The postcode table provided by [Postur.is](https://www.postur.is/gogn/Gotuskra/postnumer.txt), with supplementary data from [Icelandic Wikipedia](https://is.wikipedia.org/wiki/Listi_yfir_%C3%ADslensk_p%C3%B3stn%C3%BAmer)
 * Municipality data provided by the [Icelandic Government](https://www.government.is/lisalib/getfile.aspx?itemid=4289e993-446d-11eb-812c-005056bc8c60)
 
