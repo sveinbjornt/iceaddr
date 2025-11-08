@@ -11,11 +11,11 @@ Tests for iceaddr python package.
 
 from typing import Optional
 
-import os
 import sys
+from pathlib import Path
 
 # Add parent directory to import path
-sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../")
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from iceaddr import (
     POSTCODES,
@@ -83,11 +83,9 @@ def test_address_lookup_matches_number_range_and_no_number():
     assert results[0]["husnr"] is None
 
 
-# def test_address_lookup_can_find_places_of_interest():
-#     results = iceaddr_lookup("Harpa", postcode=101)
-#     assert results
-#     assert results[0]["heiti_nf"] == "Austurbakki"
-#     assert results[0]["husnr"]
+def test_address_lookup_can_find_places_of_interest():
+    results = iceaddr_lookup("Hallgrímskirkja", postcode=101)
+    assert len(results) == 1
 
 
 def test_address_lookup_does_not_need_letter():
@@ -122,6 +120,9 @@ def test_address_suggestions():
 
     assert len(iceaddr_suggest("Kl")) == 0  # always empty for fewer than 3 chars
     assert len(iceaddr_suggest("öldu", limit=75)) == 75
+
+    assert iceaddr_suggest("") == []
+    assert iceaddr_suggest(" , , ") == []
 
 
 def test_address_suggest_with_dashed_numbers():
@@ -166,9 +167,14 @@ def test_postcode_lookup():
     assert postcodes_for_placename("SELFOS", partial=True) == selfoss_pc
 
     assert postcodes_for_region("Norðurland")
+    assert postcodes_for_region("Austurland")
     assert postcodes_for_region("Höfuðborgarsvæðið")
+    assert postcodes_for_region("Norður", partial=True)
 
     assert region_for_postcode(101) == "Höfuðborgarsvæðið"
+    assert region_for_postcode(900) == "Suðurland og Reykjanes"
+    assert region_for_postcode(710) == "Austurland"
+    assert region_for_postcode(123459843) is None
 
 
 def test_municipality_lookup():
