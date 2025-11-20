@@ -1,8 +1,8 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
-[![Release](https://shields.io/github/v/release/sveinbjornt/iceaddr?display_name=tag)]()
-[![PyPI](https://img.shields.io/pypi/v/iceaddr)]()
-[![Build](https://github.com/sveinbjornt/iceaddr/actions/workflows/python-package.yml/badge.svg)]()
+[![Release](https://shields.io/github/v/release/sveinbjornt/iceaddr?display_name=tag)](https://github.com/sveinbjornt/iceaddr/releases)
+[![PyPI](https://img.shields.io/pypi/v/iceaddr)](https://pypi.org/project/iceaddr/)
+[![Build](https://github.com/sveinbjornt/iceaddr/actions/workflows/python-package.yml/badge.svg)](https://github.com/sveinbjornt/iceaddr/actions)
 
 # iceaddr
 
@@ -15,7 +15,7 @@ Icelandic streets, addresses, placenames, landmarks, locations and postcodes.
 The underlying data is contained in a local SQLite database assembled
 from the following sources:
 
-* [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) (*Þjóðskra*, [CC-BY](http://opendefinition.org/licenses/cc-by/))
+* [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) (*Þjóðskra*, [license](https://vefsafn.is/is/20170111023510/http://www.skra.is/?PageId=401e3483-e1ac-48c9-aec0-5159581d2222))
 * [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is) (*Landmælingar Íslands*, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/))
 * The postcode table provided by [Postur.is](https://www.postur.is/gogn/Gotuskra/postnumer.txt), with supplementary data from [Icelandic Wikipedia](https://is.wikipedia.org/wiki/Listi_yfir_%C3%ADslensk_p%C3%B3stn%C3%BAmer)
 * Municipality data provided by the [Icelandic Government](https://www.government.is/lisalib/getfile.aspx?itemid=4289e993-446d-11eb-812c-005056bc8c60)

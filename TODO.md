@@ -1,15 +1,16 @@
 
-# TODO for iceaddr
+# TODO for `iceaddr`
 
-* iceaddr_sql for direct SQL queries to the underlying database
-* Provide placenames and street names in all cases (nf, þf, þgf, ef)
+* `iceaddr_sql_query` for direct SQL queries to the underlying database
+* Provide placenames, street names, etc. in all cases (nf, þf, þgf, ef) using BÍN data
 * Verify that GPS coordinates are rational in DB build process
 * Better automation of geo data processing in db build scripts, should not be a separate step
 * iceaddr_suggest relies on comma separator to separate street address and place name. Could be made smarter.
 * Function to find region of a given pair of coordinates, e.g. which_region(lat,lon) == "Norðurland"
 * Add function to parse Icelandic address strings in a robust, forgiving way (see Greynir geo.py impl.)
-* Add automation where package can report the last time its data was updated
+* Add automation where package can report the last time its data was updated (store in SQLite DB on generation)
 * Add preposition functions from Greynir (e.g. "í Reykjavík", "á Dalvík", etc.)
+* Dative case for placenames?
 * nearest_* functions should also return distance of location
 * Add MANNVIRKI gpkg data from LMÍ?
 * Canonical address formatting utility function?
