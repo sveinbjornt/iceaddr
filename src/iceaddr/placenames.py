@@ -12,7 +12,6 @@ This file contains code related to placename lookup.
 from typing import Any
 
 from .db import shared_db
-from .dist import distance
 from .nearest import find_nearest
 
 # These particular placenames share a name with other, perhaps larger, placenames,
@@ -102,4 +101,3 @@ def nearest_placenames(
         max_dist=max_dist,
         post_process=None,  # No extra processing needed for placenames
     )
-

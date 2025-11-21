@@ -9,6 +9,8 @@ This file contains shared logic for nearest-neighbor spatial queries.
 
 """
 
+from __future__ import annotations
+
 from typing import Any, Callable
 
 from .db import shared_db
@@ -86,18 +88,20 @@ def find_nearest(
     )
 
     # Convert to dicts and apply post-processing if provided
-    results = []
+    results: list[dict[str, Any]] = []
     for x in closest[:limit]:
-        result = dict(x)
+        result: dict[str, Any] = dict(x)
         if post_process:
             result = post_process(result)
         results.append(result)
 
     # Optional max distance filter - filter all results within max_dist
     if max_dist > 0.0:
-        results = [
-            r for r in results
+        filtered: list[dict[str, Any]] = [
+            r
+            for r in results
             if distance((lat, lon), (r["lat_wgs84"], r["long_wgs84"])) <= max_dist
         ]
+        results = filtered
 
     return results

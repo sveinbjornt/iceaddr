@@ -14,7 +14,6 @@ from typing import Any, Optional
 import re
 
 from .db import shared_db
-from .dist import distance
 from .municipalities import MUNICIPALITIES
 from .nearest import find_nearest
 from .postcodes import POSTCODES, postcodes_for_placename
@@ -207,4 +206,3 @@ def nearest_addr(
         max_dist=max_dist,
         post_process=_process_addr,
     )
-
