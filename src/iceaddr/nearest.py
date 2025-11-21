@@ -55,14 +55,14 @@ def find_nearest(
     for _ in range(6):  # Expand search radius up to 6 times
         q_ids = f"""
             SELECT id FROM {rtree_table}
-            WHERE min_long >= ? AND max_long <= ? AND min_lat >= ? AND max_lat <= ?
+            WHERE max_long >= ? AND min_long <= ? AND max_lat >= ? AND min_lat <= ?
         """
-        # We use native SQLite parameter substitution to avoid SQL injection
+        # Standard R-Tree overlap check: box overlaps if it's not entirely outside
         params = [
-            lon - search_radius,
-            lon + search_radius,
-            lat - search_radius,
-            lat + search_radius,
+            lon - search_radius,  # Not entirely west of search box
+            lon + search_radius,  # Not entirely east of search box
+            lat - search_radius,  # Not entirely south of search box
+            lat + search_radius,  # Not entirely north of search box
         ]
         res = cur.execute(q_ids, params)
         ids = [r["id"] for r in res]
@@ -80,28 +80,25 @@ def find_nearest(
         q_detail = f"SELECT * FROM {main_table} WHERE {id_column} IN ({','.join(['?'] * len(ids))})"
         res = list(db_conn.cursor().execute(q_detail, ids))
 
-    # Sort the results by precise distance
-    # The result from the DB is an iterator of sqlite3.Row objects
-    closest = sorted(
-        res,
-        key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"])),
-    )
+    # Compute distance once for each result and pair with the data
+    # This avoids computing distance twice (once for sort, once for filter)
+    with_distances = [
+        (x, distance((lat, lon), (x["lat_wgs84"], x["long_wgs84"]))) for x in res
+    ]
 
-    # Convert to dicts and apply post-processing if provided
+    # Sort by distance
+    closest = sorted(with_distances, key=lambda t: t[1])
+
+    # Filter by max_dist before slicing if specified
+    if max_dist > 0.0:
+        closest = [(x, d) for x, d in closest if d <= max_dist]
+
+    # Take top 'limit' results, convert to dicts and apply post-processing
     results: list[dict[str, Any]] = []
-    for x in closest[:limit]:
+    for x, _dist in closest[:limit]:
         result: dict[str, Any] = dict(x)
         if post_process:
             result = post_process(result)
         results.append(result)
-
-    # Optional max distance filter - filter all results within max_dist
-    if max_dist > 0.0:
-        filtered: list[dict[str, Any]] = [
-            r
-            for r in results
-            if distance((lat, lon), (r["lat_wgs84"], r["long_wgs84"])) <= max_dist
-        ]
-        results = filtered
 
     return results
