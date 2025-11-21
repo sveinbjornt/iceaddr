@@ -74,7 +74,7 @@ def find_nearest(
     if not ids:
         # Fallback for very sparse areas, using the old brute-force method.
         # This should be rare.
-        res = db_conn.cursor().execute(f"SELECT * FROM {main_table}", [])
+        res = list(db_conn.cursor().execute(f"SELECT * FROM {main_table}", []))
     else:
         # We have candidate IDs, now fetch their full details
         q_detail = f"SELECT * FROM {main_table} WHERE {id_column} IN ({','.join(['?'] * len(ids))})"
