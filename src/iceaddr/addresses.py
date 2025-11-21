@@ -12,6 +12,7 @@ This file contains code related to Icelandic address lookup.
 from typing import Any, Optional
 
 import re
+import math
 
 from .db import shared_db
 from .dist import distance
@@ -187,10 +188,66 @@ def iceaddr_suggest(search_str: str, limit: int = 50) -> list[dict[str, Any]]:
     return _run_addr_query(q, qargs)
 
 
-def nearest_addr(lat: float, lon: float, limit: int = 1) -> list[dict[str, Any]]:
+def nearest_addr(
+    lat: float, lon: float, limit: int = 1, max_dist: float = 0.0
+) -> list[dict[str, Any]]:
     """Find the address closest to the given coordinates."""
-    q = "SELECT * FROM stadfong"
     db_conn = shared_db.connection()
-    res = db_conn.cursor().execute(q, [])
-    closest = sorted(res, key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"])))
-    return [_add_postcode_info(x) for x in closest[:limit]]
+    cur = db_conn.cursor()
+
+    # Search within an expanding bounding box to find candidates
+    search_radius = 0.01  # Start with a box of roughly 1.1km side
+    ids = []
+    # We want at least 'limit' candidates, but also a few more to sort through
+    min_candidates = max(limit, 20)
+
+    for _ in range(6):  # Expand search radius up to 5 times
+        q_ids = """
+            SELECT id FROM stadfong_rtree
+            WHERE min_long >= ? AND max_long <= ? AND min_lat >= ? AND max_lat <= ?
+        """
+        # We use native SQLite parameter substitution to avoid SQL injection
+        params = [
+            lon - search_radius,
+            lon + search_radius,
+            lat - search_radius,
+            lat + search_radius,
+        ]
+        res = cur.execute(q_ids, params)
+        ids = [str(r["id"]) for r in res]
+
+        if len(ids) >= min_candidates:
+            break
+        search_radius *= 2  # Double the search area
+
+    if not ids:
+        # Fallback for very sparse areas, using the old brute-force method.
+        # This should be rare.
+        res = db_conn.cursor().execute("SELECT * FROM stadfong", [])
+    else:
+        # We have candidate IDs, now fetch their full details
+        q_detail = (
+            f"SELECT * FROM stadfong WHERE hnitnum IN ({','.join(['?'] * len(ids))})"
+        )
+        res = list(db_conn.cursor().execute(q_detail, ids))
+
+    # Sort the results by precise distance
+    # The result from the DB is an iterator of sqlite3.Row objects
+    closest = sorted(
+        res,
+        key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"])),
+    )
+
+    # Add extra info and return the top 'limit' results
+    results = [
+        _add_municipality_info(_add_postcode_info(dict(x))) for x in closest[:limit]
+    ]
+
+    # Optional max distance check
+    if max_dist > 0.0 and results:
+        dist = distance((lat, lon), (results[0]["lat_wgs84"], results[0]["long_wgs84"]))
+        if dist > max_dist:
+            return []
+
+    return results
+

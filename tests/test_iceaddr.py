@@ -210,8 +210,9 @@ def test_nearest_addr():
     assert addr[0]["postnr"] == POSTCODE_101
     assert addr[0]["svaedi_nf"] == "Höfuðborgarsvæðið"
 
-    addr = nearest_addr(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=3)
-    assert len(addr) == 3
+    expected_num = 3
+    addr = nearest_addr(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=expected_num)
+    assert len(addr) == expected_num
     assert addr[0]["heiti_nf"] == "Öldugata"
     assert addr[0]["postnr"] == POSTCODE_101
     assert addr[0]["svaedi_tgf"] == "Höfuðborgarsvæðinu"
@@ -226,3 +227,24 @@ def test_nearest_placename():
     pn = nearest_placenames(OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5)
     assert len(pn) == 5
     assert "Landakotshæð" in [x["nafn"] for x in pn]
+
+
+def test_nearest_max_dist():
+    """Test max_dist parameter for nearest address and placename functions."""
+    # First, test with a max_dist that is too small
+    addr = nearest_addr(
+        FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1], max_dist=0.001
+    )
+    assert addr == []
+    pn = nearest_placenames(
+        FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1], max_dist=0.001
+    )
+    assert pn == []
+
+    # Then, test with a max_dist that is large enough
+    addr = nearest_addr(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1], max_dist=1.0)
+    assert len(addr) == 1
+    pn = nearest_placenames(
+        FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1], max_dist=1.0
+    )
+    assert len(pn) == 1

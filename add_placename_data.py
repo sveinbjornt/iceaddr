@@ -43,10 +43,10 @@ def fetch_ornefni_data() -> None:
     from memory to current directory and rename file."""
 
     if Path(GPKG_FILE).exists():
-        if input(f"{GPKG_FILE} exists, fetch newer version? (y/n): ").lower().startswith("y"):
-            Path(GPKG_FILE).unlink()
-        else:
-            return
+        # if input(f"{GPKG_FILE} exists, fetch newer version? (y/n): ").lower().startswith("y"):
+        #     Path(GPKG_FILE).unlink()
+        # else:
+        return
 
     r = requests.get(ORNEFNI_DATA_URL, allow_redirects=True, timeout=10)
     if r.status_code != 200:
@@ -95,10 +95,22 @@ def create_table(dbpath: str) -> sqlite3.Connection:
         index_queries = [
             "CREATE INDEX idx_ornefni_nafn ON ornefni(nafn);",
             "CREATE INDEX idx_ornefni_flokkur ON ornefni(flokkur);",
-            "CREATE INDEX idx_ornefni_coords ON ornefni(lat_wgs84, long_wgs84);",
         ]
 
         for query in index_queries:
+            dbconn.cursor().execute(query)
+
+        # Create R-Tree virtual table for spatial indexing
+        rtree_queries = [
+            """
+            CREATE VIRTUAL TABLE ornefni_rtree USING rtree(
+                id,
+                min_long, max_long,
+                min_lat, max_lat
+            );
+            """
+        ]
+        for query in rtree_queries:
             dbconn.cursor().execute(query)
 
     except Exception:
@@ -242,6 +254,16 @@ def main() -> None:
 
     add_placename_additions(dbc)
     add_placenames_from_is50v(dbc)
+
+    print("Populating R-Tree index...")
+    dbc.execute(
+        """
+        INSERT INTO ornefni_rtree (id, min_long, max_long, min_lat, max_lat)
+        SELECT id, long_wgs84, long_wgs84, lat_wgs84, lat_wgs84 FROM ornefni
+        WHERE lat_wgs84 IS NOT NULL AND long_wgs84 IS NOT NULL;
+        """
+    )
+    dbc.commit()
 
     # Analyze the database to optimize index usage
     dbc.execute("ANALYZE;")

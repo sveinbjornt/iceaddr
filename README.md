@@ -16,7 +16,7 @@ The underlying data is contained in a local SQLite database assembled
 from the following sources:
 
 * [Staðfangaskrá](https://opingogn.is/dataset/stadfangaskra), the official Icelandic address registry maintained by [Registers Iceland](https://www.skra.is) (*Þjóðskra*, [license](https://vefsafn.is/is/20170111023510/http://www.skra.is/?PageId=401e3483-e1ac-48c9-aec0-5159581d2222))
-* [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is) (*Landmælingar Íslands*, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/))
+* [IS 50V Örnefni](https://opingogn.is/dataset/is-50v-ornefni-isn93) from the [National Land Survey of Iceland](https://www.lmi.is) (*Landmælingar Íslands*, [CC BY 4.0](https://www.natt.is/is/midlun/opin-gogn))
 * The postcode table provided by [Postur.is](https://www.postur.is/gogn/Gotuskra/postnumer.txt), with supplementary data from [Icelandic Wikipedia](https://is.wikipedia.org/wiki/Listi_yfir_%C3%ADslensk_p%C3%B3stn%C3%BAmer)
 * Municipality data provided by the [Icelandic Government](https://www.government.is/lisalib/getfile.aspx?itemid=4289e993-446d-11eb-812c-005056bc8c60)
 
