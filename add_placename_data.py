@@ -43,9 +43,6 @@ def fetch_ornefni_data() -> None:
     from memory to current directory and rename file."""
 
     if Path(GPKG_FILE).exists():
-        # if input(f"{GPKG_FILE} exists, fetch newer version? (y/n): ").lower().startswith("y"):
-        #     Path(GPKG_FILE).unlink()
-        # else:
         return
 
     r = requests.get(ORNEFNI_DATA_URL, allow_redirects=True, timeout=10)
