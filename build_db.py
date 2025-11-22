@@ -25,7 +25,9 @@ import humanize
 
 from iceaddr.dist import in_iceland
 
-STADFONG_REMOTE_URL = "https://fasteignaskra.is/Stadfangaskra.csv"
+STADFONG_REMOTE_URL = (
+    "https://hmsstgsftpprodweu001.blob.core.windows.net/fasteignaskra/Stadfangaskra.csv"
+)
 
 DSV_FILENAME = "Stadfangaskra.csv"
 
@@ -80,10 +82,23 @@ def create_db(path: str) -> sqlite3.Connection:
         "CREATE INDEX idx_stadfong_heiti_husnr ON stadfong(heiti_nf, husnr);",
         "CREATE INDEX idx_stadfong_heiti_husnr_bokst ON stadfong(heiti_nf, husnr, bokst);",
         "CREATE INDEX idx_stadfong_serheiti ON stadfong(serheiti);",
-        "CREATE INDEX idx_stadfong_coords ON stadfong(lat_wgs84, long_wgs84);",
     ]
 
     for query in index_queries:
+        dbconn.cursor().execute(query)
+
+    # Create R-Tree virtual table for spatial indexing
+    rtree_queries = [
+        """
+        CREATE VIRTUAL TABLE stadfong_rtree USING rtree(
+            id,
+            min_long, max_long,
+            min_lat, max_lat
+        );
+        """
+    ]
+
+    for query in rtree_queries:
         dbconn.cursor().execute(query)
 
     return dbconn
@@ -172,6 +187,16 @@ def main() -> None:
             print("\tInserting: %d\r" % cnt, end="")
             sys.stdout.flush()
 
+    dbconn.commit()
+
+    print("\tPopulating R-Tree index...")
+    dbconn.execute(
+        """
+        INSERT INTO stadfong_rtree (id, min_long, max_long, min_lat, max_lat)
+        SELECT hnitnum, long_wgs84, long_wgs84, lat_wgs84, lat_wgs84 FROM stadfong
+        WHERE lat_wgs84 IS NOT NULL AND long_wgs84 IS NOT NULL;
+        """
+    )
     dbconn.commit()
 
     print("\tInserting: %d\r" % cnt, end="")

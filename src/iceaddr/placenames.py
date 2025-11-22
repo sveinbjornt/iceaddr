@@ -12,7 +12,7 @@ This file contains code related to placename lookup.
 from typing import Any
 
 from .db import shared_db
-from .dist import distance
+from .nearest import find_nearest
 
 # These particular placenames share a name with other, perhaps larger, placenames,
 # but should never the less be given priority when ordering results.
@@ -87,10 +87,17 @@ def placename_lookup(placename: str, partial: bool = False) -> list[dict[str, An
     return matches
 
 
-def nearest_placenames(lat: float, lon: float, limit: int = 1) -> list[dict[str, Any]]:
+def nearest_placenames(
+    lat: float, lon: float, limit: int = 1, max_dist: float = 0.0
+) -> list[dict[str, Any]]:
     """Find the placename closest to the given coordinates."""
-    q = "SELECT * FROM ornefni"
-    db_conn = shared_db.connection()
-    res = db_conn.cursor().execute(q, [])
-    closest = sorted(res, key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"])))
-    return closest[:limit]
+    return find_nearest(
+        lat=lat,
+        lon=lon,
+        rtree_table="ornefni_rtree",
+        main_table="ornefni",
+        id_column="id",
+        limit=limit,
+        max_dist=max_dist,
+        post_process=None,  # No extra processing needed for placenames
+    )

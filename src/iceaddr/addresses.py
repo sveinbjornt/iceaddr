@@ -14,8 +14,8 @@ from typing import Any, Optional
 import re
 
 from .db import shared_db
-from .dist import distance
 from .municipalities import MUNICIPALITIES
+from .nearest import find_nearest
 from .postcodes import POSTCODES, postcodes_for_placename
 
 
@@ -187,10 +187,22 @@ def iceaddr_suggest(search_str: str, limit: int = 50) -> list[dict[str, Any]]:
     return _run_addr_query(q, qargs)
 
 
-def nearest_addr(lat: float, lon: float, limit: int = 1) -> list[dict[str, Any]]:
+def nearest_addr(
+    lat: float, lon: float, limit: int = 1, max_dist: float = 0.0
+) -> list[dict[str, Any]]:
     """Find the address closest to the given coordinates."""
-    q = "SELECT * FROM stadfong"
-    db_conn = shared_db.connection()
-    res = db_conn.cursor().execute(q, [])
-    closest = sorted(res, key=lambda i: distance((lat, lon), (i["lat_wgs84"], i["long_wgs84"])))
-    return [_add_postcode_info(x) for x in closest[:limit]]
+
+    def _process_addr(addr: dict[str, Any]) -> dict[str, Any]:
+        """Add postcode and municipality info to address."""
+        return _add_municipality_info(_add_postcode_info(addr))
+
+    return find_nearest(
+        lat=lat,
+        lon=lon,
+        rtree_table="stadfong_rtree",
+        main_table="stadfong",
+        id_column="hnitnum",
+        limit=limit,
+        max_dist=max_dist,
+        post_process=_process_addr,
+    )
