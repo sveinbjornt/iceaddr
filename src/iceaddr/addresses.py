@@ -196,6 +196,36 @@ def nearest_addr(
         """Add postcode and municipality info to address."""
         return _add_municipality_info(_add_postcode_info(addr))
 
+    results_with_dist = find_nearest(
+        lat=lat,
+        lon=lon,
+        rtree_table="stadfong_rtree",
+        main_table="stadfong",
+        id_column="hnitnum",
+        limit=limit,
+        max_dist=max_dist,
+        post_process=_process_addr,
+    )
+
+    # Strip out distances for backward compatibility
+    return [addr for addr, _dist in results_with_dist]
+
+
+def nearest_addr_with_dist(
+    lat: float, lon: float, limit: int = 1, max_dist: float = 0.0
+) -> list[tuple[dict[str, Any], float]]:
+    """
+    Find the address closest to the given coordinates, with distances.
+
+    Returns a list of tuples where each tuple contains:
+    - dict: Address information with postcode and municipality
+    - float: Distance from the search point in kilometers
+    """
+
+    def _process_addr(addr: dict[str, Any]) -> dict[str, Any]:
+        """Add postcode and municipality info to address."""
+        return _add_municipality_info(_add_postcode_info(addr))
+
     return find_nearest(
         lat=lat,
         lon=lon,
