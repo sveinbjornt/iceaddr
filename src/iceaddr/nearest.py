@@ -26,9 +26,8 @@ def find_nearest(
     limit: int = 1,
     max_dist: float = 0.0,
     post_process: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
-) -> list[dict[str, Any]]:
-    """
-    Generic nearest-neighbor search using R-Tree spatial indexing.
+) -> list[tuple[dict[str, Any], float]]:
+    """Generic nearest-neighbor search using R-Tree spatial indexing.
 
     Args:
         lat: Latitude in WGS84
@@ -38,10 +37,10 @@ def find_nearest(
         id_column: Name of the ID column in main table (e.g., 'hnitnum' or 'id')
         limit: Maximum number of results to return
         max_dist: Optional maximum distance in km (0.0 = no limit)
-        post_process: Optional function to process each result dict
+        post_process: Optional function to postprocess each result dict
 
     Returns:
-        List of dictionaries containing the nearest locations
+        List of tuples of (dict, distance_km) for the nearest locations
     """
     db_conn = shared_db.connection()
     cur = db_conn.cursor()
@@ -82,9 +81,7 @@ def find_nearest(
 
     # Compute distance once for each result and pair with the data
     # This avoids computing distance twice (once for sort, once for filter)
-    with_distances = [
-        (x, distance((lat, lon), (x["lat_wgs84"], x["long_wgs84"]))) for x in res
-    ]
+    with_distances = [(x, distance((lat, lon), (x["lat_wgs84"], x["long_wgs84"]))) for x in res]
 
     # Sort by distance
     closest = sorted(with_distances, key=lambda t: t[1])
@@ -93,12 +90,12 @@ def find_nearest(
     if max_dist > 0.0:
         closest = [(x, d) for x, d in closest if d <= max_dist]
 
-    # Take top 'limit' results, convert to dicts and apply post-processing
-    results: list[dict[str, Any]] = []
-    for x, _dist in closest[:limit]:
+    # Take top limit results, convert to dicts and apply post-processing
+    results_with_dist: list[tuple[dict[str, Any], float]] = []
+    for x, dist in closest[:limit]:
         result: dict[str, Any] = dict(x)
         if post_process:
             result = post_process(result)
-        results.append(result)
+        results_with_dist.append((result, dist))
 
-    return results
+    return results_with_dist

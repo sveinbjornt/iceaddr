@@ -91,6 +91,30 @@ def nearest_placenames(
     lat: float, lon: float, limit: int = 1, max_dist: float = 0.0
 ) -> list[dict[str, Any]]:
     """Find the placename closest to the given coordinates."""
+    results_with_dist = find_nearest(
+        lat=lat,
+        lon=lon,
+        rtree_table="ornefni_rtree",
+        main_table="ornefni",
+        id_column="id",
+        limit=limit,
+        max_dist=max_dist,
+        post_process=None,  # No extra processing needed for placenames
+    )
+
+    # Strip out distances for backward compatibility
+    return [placename for placename, _dist in results_with_dist]
+
+
+def nearest_placenames_with_dist(
+    lat: float, lon: float, limit: int = 1, max_dist: float = 0.0
+) -> list[tuple[dict[str, Any], float]]:
+    """Find the placename closest to the given coordinates, with distances.
+
+    Returns a list of tuples where each tuple contains:
+    - dict: Placename information
+    - float: Distance from the search point in kilometers
+    """
     return find_nearest(
         lat=lat,
         lon=lon,

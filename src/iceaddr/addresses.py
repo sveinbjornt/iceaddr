@@ -35,6 +35,11 @@ def _add_municipality_info(addr: dict[str, Any]) -> dict[str, Any]:
     return addr
 
 
+def _postprocess_addr(addr: dict[str, Any]) -> dict[str, Any]:
+    """Add postcode and municipality info to address."""
+    return _add_municipality_info(_add_postcode_info(addr))
+
+
 def _run_addr_query(q: str, qargs: list[str]) -> list[dict[str, Any]]:
     """Run address query, w. additional postcode data added post hoc."""
     db_conn = shared_db.connection()
@@ -192,9 +197,30 @@ def nearest_addr(
 ) -> list[dict[str, Any]]:
     """Find the address closest to the given coordinates."""
 
-    def _process_addr(addr: dict[str, Any]) -> dict[str, Any]:
-        """Add postcode and municipality info to address."""
-        return _add_municipality_info(_add_postcode_info(addr))
+    results_with_dist = find_nearest(
+        lat=lat,
+        lon=lon,
+        rtree_table="stadfong_rtree",
+        main_table="stadfong",
+        id_column="hnitnum",
+        limit=limit,
+        max_dist=max_dist,
+        post_process=_postprocess_addr,
+    )
+
+    # Strip out distances for backward compatibility
+    return [addr for addr, _dist in results_with_dist]
+
+
+def nearest_addr_with_dist(
+    lat: float, lon: float, limit: int = 1, max_dist: float = 0.0
+) -> list[tuple[dict[str, Any], float]]:
+    """Find the address closest to the given coordinates, with distances.
+
+    Returns a list of tuples where each tuple contains:
+    - dict: Address information with postcode and municipality
+    - float: Distance from the search point in kilometers
+    """
 
     return find_nearest(
         lat=lat,
@@ -204,5 +230,5 @@ def nearest_addr(
         id_column="hnitnum",
         limit=limit,
         max_dist=max_dist,
-        post_process=_process_addr,
+        post_process=_postprocess_addr,
     )

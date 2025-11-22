@@ -24,7 +24,9 @@ from iceaddr import (
     municipality_code_for_municipality,
     municipality_for_municipality_code,
     nearest_addr,
+    nearest_addr_with_dist,
     nearest_placenames,
+    nearest_placenames_with_dist,
     placename_lookup,
     postcode_lookup,
     postcodes_for_placename,
@@ -248,3 +250,138 @@ def test_nearest_max_dist():
         FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1], max_dist=1.0
     )
     assert len(pn) == 1
+
+
+def test_nearest_addr_with_dist():
+    """Test nearest_addr_with_dist returns addresses with distances."""
+    # Test single result
+    results = nearest_addr_with_dist(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
+    assert len(results) == 1
+    assert isinstance(results, list)
+    assert isinstance(results[0], tuple)
+    assert len(results[0]) == 2
+
+    addr, dist = results[0]
+    assert isinstance(addr, dict)
+    assert isinstance(dist, float)
+    assert addr["heiti_nf"] == "Fiskislóð"
+    assert addr["postnr"] == POSTCODE_101
+    assert dist > 0  # Distance should be positive
+    assert dist < 1.0  # Should be less than 1km away
+
+    # Test multiple results
+    results = nearest_addr_with_dist(
+        OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5
+    )
+    assert len(results) == 5
+
+    # Verify all results have correct format
+    for addr, dist in results:
+        assert isinstance(addr, dict)
+        assert isinstance(dist, float)
+        assert "heiti_nf" in addr
+        assert "postnr" in addr
+        assert dist > 0
+
+    # Verify distances are sorted (ascending)
+    distances = [dist for _, dist in results]
+    assert distances == sorted(distances)
+
+    # Verify first result matches
+    assert results[0][0]["heiti_nf"] == "Öldugata"
+    assert results[0][0]["postnr"] == POSTCODE_101
+
+    # Test consistency with nearest_addr (without distances)
+    addrs_without_dist = nearest_addr(
+        OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5
+    )
+    addrs_with_dist = nearest_addr_with_dist(
+        OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5
+    )
+    assert len(addrs_without_dist) == len(addrs_with_dist)
+    for i, (addr_with, (addr_dict, _)) in enumerate(
+        zip(addrs_without_dist, addrs_with_dist)
+    ):
+        assert addr_with == addr_dict
+
+
+def test_nearest_placenames_with_dist():
+    """Test nearest_placenames_with_dist returns placenames with distances."""
+    # Test single result
+    results = nearest_placenames_with_dist(
+        FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1]
+    )
+    assert len(results) == 1
+    assert isinstance(results, list)
+    assert isinstance(results[0], tuple)
+    assert len(results[0]) == 2
+
+    place, dist = results[0]
+    assert isinstance(place, dict)
+    assert isinstance(dist, float)
+    assert place["nafn"] == "Grandi"
+    assert dist > 0  # Distance should be positive
+    assert dist < 1.0  # Should be less than 1km away
+
+    # Test multiple results
+    results = nearest_placenames_with_dist(
+        OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5
+    )
+    assert len(results) == 5
+
+    # Verify all results have correct format
+    for place, dist in results:
+        assert isinstance(place, dict)
+        assert isinstance(dist, float)
+        assert "nafn" in place
+        assert dist > 0
+
+    # Verify distances are sorted (ascending)
+    distances = [dist for _, dist in results]
+    assert distances == sorted(distances)
+
+    # Verify expected placename is in results
+    placenames = [place["nafn"] for place, _ in results]
+    assert "Landakotshæð" in placenames
+
+    # Test consistency with nearest_placenames (without distances)
+    places_without_dist = nearest_placenames(
+        OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5
+    )
+    places_with_dist = nearest_placenames_with_dist(
+        OLDUGATA_4_COORDS[0], OLDUGATA_4_COORDS[1], limit=5
+    )
+    assert len(places_without_dist) == len(places_with_dist)
+    for i, (place_with, (place_dict, _)) in enumerate(
+        zip(places_without_dist, places_with_dist)
+    ):
+        assert place_with == place_dict
+
+
+def test_nearest_with_dist_max_dist():
+    """Test max_dist parameter works correctly with _with_dist functions."""
+    # Test with max_dist that excludes all results
+    addr_results = nearest_addr_with_dist(
+        FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1], max_dist=0.001
+    )
+    assert addr_results == []
+
+    place_results = nearest_placenames_with_dist(
+        FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1], max_dist=0.001
+    )
+    assert place_results == []
+
+    # Test with max_dist that includes results
+    addr_results = nearest_addr_with_dist(
+        FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1], limit=10, max_dist=0.5
+    )
+    # All returned results should be within max_dist
+    for addr, dist in addr_results:
+        assert dist <= 0.5
+
+    place_results = nearest_placenames_with_dist(
+        FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1], limit=10, max_dist=1.0
+    )
+    # All returned results should be within max_dist
+    for place, dist in place_results:
+        assert dist <= 1.0
