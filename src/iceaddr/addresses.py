@@ -199,16 +199,7 @@ def nearest_addr(
 ) -> list[dict[str, Any]]:
     """Find the address closest to the given coordinates."""
 
-    results_with_dist = find_nearest(
-        lat=lat,
-        lon=lon,
-        rtree_table="stadfong_rtree",
-        main_table="stadfong",
-        id_column="hnitnum",
-        limit=limit,
-        max_dist=max_dist,
-        post_process=_postprocess_addr,
-    )
+    results_with_dist = nearest_addr_with_dist(lat=lat, lon=lon, limit=limit, max_dist=max_dist)
 
     # Strip out distances for backward compatibility
     return [addr for addr, _dist in results_with_dist]
@@ -223,6 +214,12 @@ def nearest_addr_with_dist(
     - dict: Address information with postcode and municipality
     - float: Distance from the search point in kilometers
     """
+
+    if lat > 90.0 or lat < -90.0 or lon > 180.0 or lon < -180.0:
+        raise ValueError("Invalid latitude or longitude value: {}, {}".format(lat, lon))
+
+    if limit < 0 or max_dist < 0.0:
+        raise ValueError("limit and max_dist must be non-negative")
 
     return find_nearest(
         lat=lat,

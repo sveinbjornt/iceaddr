@@ -278,7 +278,7 @@ pip install .
 
 ## Version History
 
-* 0.6.0: `nearest_*` functions now use R-Trees for much faster lookups. Added `nearest_*_with_dist`functions. Updated address and placename data. (22/11/2025)
+* 0.6.0: `nearest_*` functions now use R-Trees for much faster lookups. Added `nearest_*_with_dist` functions. Updated address and placename data. (22/11/2025)
 * 0.5.10: Updated address and placename data. Added `region_for_postcode` function. Minor optimizations (07/11/2025)
 * 0.5.9: Updated address and placename data. Fixed bug in `placename_lookup` function (31/07/2025)
 * 0.5.8: Updated address and placename data. Added municipality name data to address records. Now requires Python 3.9+ (26/02/2025)

@@ -93,15 +93,9 @@ def nearest_placenames(
     lat: float, lon: float, limit: int = 1, max_dist: float = 0.0
 ) -> list[dict[str, Any]]:
     """Find the placename closest to the given coordinates."""
-    results_with_dist = find_nearest(
-        lat=lat,
-        lon=lon,
-        rtree_table="ornefni_rtree",
-        main_table="ornefni",
-        id_column="id",
-        limit=limit,
-        max_dist=max_dist,
-        post_process=None,  # No extra processing needed for placenames
+
+    results_with_dist = nearest_placenames_with_dist(
+        lat=lat, lon=lon, limit=limit, max_dist=max_dist
     )
 
     # Strip out distances for backward compatibility
@@ -117,6 +111,13 @@ def nearest_placenames_with_dist(
     - dict: Placename information
     - float: Distance from the search point in kilometers
     """
+
+    if lat > 90.0 or lat < -90.0 or lon > 180.0 or lon < -180.0:
+        raise ValueError("Invalid latitude or longitude value: {}, {}".format(lat, lon))
+
+    if limit < 0 or max_dist < 0.0:
+        raise ValueError("limit and max_dist must be non-negative")
+
     return find_nearest(
         lat=lat,
         lon=lon,
