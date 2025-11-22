@@ -109,8 +109,7 @@ def nearest_placenames(
 def nearest_placenames_with_dist(
     lat: float, lon: float, limit: int = 1, max_dist: float = 0.0
 ) -> list[tuple[dict[str, Any], float]]:
-    """
-    Find the placename closest to the given coordinates, with distances.
+    """Find the placename closest to the given coordinates, with distances.
 
     Returns a list of tuples where each tuple contains:
     - dict: Placename information
