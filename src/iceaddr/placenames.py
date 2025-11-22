@@ -9,6 +9,8 @@ This file contains code related to placename lookup.
 
 """
 
+from __future__ import annotations
+
 from typing import Any
 
 from .db import shared_db

@@ -9,6 +9,8 @@ This file contains code related to Icelandic address lookup.
 
 """
 
+from __future__ import annotations
+
 from typing import Any, Optional
 
 import re
