@@ -18,7 +18,7 @@ from pathlib import Path
 import fiona  # type: ignore  # noqa: PGH003
 import requests
 
-from iceaddr.dist import in_iceland
+from iceaddr.geo import in_iceland
 
 ORNEFNI_DATA_FILE = "is_50v_ornefni_wgs_84.gpkg"
 ORNEFNI_DATA_URL = "https://atlas.lmi.is/heikir/downloadData/is_50v_ornefni_wgs_84_gpkg.zip"

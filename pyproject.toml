@@ -39,7 +39,7 @@ dev = [
     "pytest>=8.4.2",
     "pre-commit>=3.3.3",
     "types-setuptools>=68.2.0",
-    "ruff>=0.0.285",
+    "ruff>=0.12.17",
     "coverage[toml]>=7.3.1",
     "requests>=2.26.0",
 ]
@@ -105,7 +105,7 @@ lint.ignore = [
     "A",       # Shadowing of builtins
     "ERA",     # Commented out code
     "FBT",     # Forbids boolean positional arguments
-    "COM",     # Commas (sometimes takes issue with black formatting)
+    "COM",     # Commas (sometimes takes issue with formatting)
     "S101",    # Disallow assert statements rule
     "PLR0912", # "Too many statements" rule
     "C90",     # Function complexity rules
@@ -119,8 +119,7 @@ lint.ignore = [
     "SIM115",  #
     "PTH123",  # Pathlib rule
 ]
-# Silence complaints when black doesn't format
-# lines that are slightly over 88 characters long
+# Silence complaints when lines are slightly over 88 characters long
 line-length = 100
 
 [tool.ruff.lint.per-file-ignores]

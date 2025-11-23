@@ -23,7 +23,7 @@ from urllib.request import urlopen
 
 import humanize
 
-from iceaddr.dist import in_iceland
+from iceaddr.geo import in_iceland
 
 STADFONG_REMOTE_URL = (
     "https://hmsstgsftpprodweu001.blob.core.windows.net/fasteignaskra/Stadfangaskra.csv"

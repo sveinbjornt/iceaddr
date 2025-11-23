@@ -16,6 +16,7 @@ from typing import Any, Optional
 import re
 
 from .db import shared_db
+from .geo import valid_wgs84_coord
 from .municipalities import MUNICIPALITIES
 from .nearest import find_nearest
 from .postcodes import POSTCODES, postcodes_for_placename
@@ -215,7 +216,7 @@ def nearest_addr_with_dist(
     - float: Distance from the search point in kilometers
     """
 
-    if lat > 90.0 or lat < -90.0 or lon > 180.0 or lon < -180.0:
+    if not valid_wgs84_coord(lat, lon):
         raise ValueError("Invalid latitude or longitude value: {}, {}".format(lat, lon))
 
     if limit < 0 or max_dist < 0.0:

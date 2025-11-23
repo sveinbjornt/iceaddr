@@ -15,6 +15,7 @@ from typing import Any
 
 from .db import shared_db
 from .nearest import find_nearest
+from .geo import valid_wgs84_coord
 
 # These particular placenames share a name with other, perhaps larger, placenames,
 # but should never the less be given priority when ordering results.
@@ -112,7 +113,7 @@ def nearest_placenames_with_dist(
     - float: Distance from the search point in kilometers
     """
 
-    if lat > 90.0 or lat < -90.0 or lon > 180.0 or lon < -180.0:
+    if not valid_wgs84_coord(lat, lon):
         raise ValueError("Invalid latitude or longitude value: {}, {}".format(lat, lon))
 
     if limit < 0 or max_dist < 0.0:

@@ -55,3 +55,12 @@ ICELAND_COORDS = (64.9957538607, -18.5739616708)
 def in_iceland(loc: tuple[float, float], km_radius: float = 800.0) -> bool:
     """Check if coordinates are within or very close to Iceland."""
     return distance(loc, ICELAND_COORDS) <= km_radius
+
+
+def valid_wgs84_coord(lat: float, lon: float) -> bool:
+    """Check if coordinates are valid WGS84 latitude and longitude coordinates."""
+    if lat < -90.0 or lat > 90.0:
+        return False
+    if lon < -180.0 or lon > 180.0:
+        return False
+    return True

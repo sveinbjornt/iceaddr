@@ -14,7 +14,7 @@ from __future__ import annotations
 from typing import Any, Callable
 
 from .db import shared_db
-from .dist import distance
+from .geo import distance
 
 
 def find_nearest(
