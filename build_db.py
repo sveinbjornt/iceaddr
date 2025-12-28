@@ -24,6 +24,9 @@ from urllib.request import urlopen
 import humanize
 
 from iceaddr.geo import in_iceland
+from iceaddr.postcodes import POSTCODES
+
+POSTCODE_SET = frozenset(POSTCODES.keys())
 
 STADFONG_REMOTE_URL = (
     "https://hmsstgsftpprodweu001.blob.core.windows.net/fasteignaskra/Stadfangaskra.csv"
@@ -146,6 +149,7 @@ def insert_address_entry(e: dict[Any, Any], conn: sqlite3.Connection) -> None:
 
     try:
         assert in_iceland((e["LAT_WGS84"], e["LONG_WGS84"]))
+        assert e["POSTNR"] in POSTCODE_SET
         qargs = [e[c.upper()] for c in COLS]
         # print(qargs)
         c = conn.cursor()

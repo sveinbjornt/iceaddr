@@ -259,7 +259,7 @@ environment, run the following command from the repository root to
 install dependencies:
 
 ```bash
-pip install ".[dev]"
+pip install ".[dev,build]"
 ```
 
 Then run the following command to build the database:

@@ -65,7 +65,6 @@ build = [
     "humanize>=0.5.1", # for progress bar
     "reynir>=3.1.0",   # for parsing and declining placenames
 ]
-all = ["dev", "build"]
 
 # *** Configuration of tools ***
 
