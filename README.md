@@ -251,6 +251,17 @@ returns a list of the nearest placenames in the database:
 Landakotsvöllur
 ```
 
+### Metadata
+
+Get information about the database version, etc.:
+
+```python
+>>> from iceaddr import iceaddr_metadata
+>>> meta = iceaddr_metadata()
+>>> pprint(meta["date_created"].date())
+'2025-11-22'
+```
+
 ## Build process
 
 To build your own version of the package, you need to have
@@ -259,7 +270,7 @@ environment, run the following command from the repository root to
 install dependencies:
 
 ```bash
-pip install ".[dev]"
+pip install ".[dev,build]"
 ```
 
 Then run the following command to build the database:
@@ -278,6 +289,7 @@ pip install .
 
 ## Version History
 
+* 0.6.1: Updated address and placename data. Added `iceaddr_metadata` function. Better package metadata. (29/12/2025)
 * 0.6.0: `nearest_*` functions now use R-Trees for much faster lookups. Added `nearest_*_with_dist` functions. Updated address and placename data. (22/11/2025)
 * 0.5.10: Updated address and placename data. Added `region_for_postcode` function. Minor optimizations (07/11/2025)
 * 0.5.9: Updated address and placename data. Fixed bug in `placename_lookup` function (31/07/2025)

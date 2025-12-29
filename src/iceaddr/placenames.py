@@ -19,7 +19,7 @@ from .geo import valid_wgs84_coord
 
 # These particular placenames share a name with other, perhaps larger, placenames,
 # but should never the less be given priority when ordering results.
-HARDCODED_PRIORITY = {
+_HARDCODED_PRIORITY = {
     "Hellisheiði": (64.0221268, -21.3413149),  # Nálægt Rvk fær forgang
     "Snæfellsnes": (64.8731746, -23.0309911),  # Nesið norðan við Reykjanes!
     "Mýrdalur": (63.4462885, -19.0832988),  # Nálægt Vík
@@ -35,7 +35,7 @@ HARDCODED_PRIORITY = {
 
 # This determines the sort order of results
 # if there's more than one placename match.
-ORDER = [
+_ORDER = [
     "Dummy",  # Index 0 is reserved for hardcoded priority
     "Sveitarfélag",
     "Þéttbýli",
@@ -63,15 +63,15 @@ ORDER = [
 
 def _precedence(pn: dict[str, Any]) -> int:
     """Sort priority for placenames."""
-    if pn["nafn"] in HARDCODED_PRIORITY:
-        (lat, lng) = HARDCODED_PRIORITY[pn["nafn"]]
+    if pn["nafn"] in _HARDCODED_PRIORITY:
+        (lat, lng) = _HARDCODED_PRIORITY[pn["nafn"]]
         if pn["lat_wgs84"] == lat and pn["long_wgs84"] == lng:
             return 0
 
     fl = pn["flokkur"]
-    if fl in ORDER:
-        return ORDER.index(fl)
-    # Any number > len(ORDER) will do for sorting purposes
+    if fl in _ORDER:
+        return _ORDER.index(fl)
+    # Any number > len(_ORDER) will do for sorting purposes
     return 9999
 
 

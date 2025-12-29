@@ -17,7 +17,7 @@ import pprint
 from io import StringIO
 
 import requests
-from reynir import NounPhrase
+from reynir import NounPhrase  # GreynirPackage
 
 from iceaddr.postcodes import POSTCODES
 
@@ -40,7 +40,7 @@ def main() -> None:
     reader = csv.DictReader(f, delimiter=";")
     for r in reader:
         # CSV file from postur.is only contains postcode placenames in
-        # the dative form (þgf.). Try to lemmatise to nominative (nf.) using Reynir.
+        # the dative form (þgf.). Try to lemmatise to nominative (nf.) using GreynirPackage.
         postcode = int(r["Póstnúmer"])
         if postcode not in pc_keys:
             logging.warning(f"Postcode '{postcode}' did not already exist in data.")

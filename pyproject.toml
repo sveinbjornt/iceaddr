@@ -1,14 +1,16 @@
 [project]
 name = "iceaddr"
-version = "0.6.0"
+version = "0.6.1"
 description = "Look up information about Icelandic street addresses, postcodes, landmarks, locations and placenames"
 authors = [
     { name = "Sveinbjorn Thordarson", email = "sveinbjorn@sveinbjorn.org" },
 ]
-readme = { file = "README.md", content-type = "text/markdown" }
-license = { file = "LICENSE.txt" }
+maintainers = [
+    { name = "Sveinbjorn Thordarson", email = "sveinbjorn@sveinbjorn.org" },
+]
+readme = "README.md"
+license = "BSD-3-Clause"
 classifiers = [
-    "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -26,30 +28,43 @@ classifiers = [
     "Topic :: Utilities",
     "Topic :: Text Processing :: Linguistic",
 ] # For classifier list see: https://pypi.org/pypi?%3Aaction=list_classifiers
+keywords = [
+    "addresses",
+    "postcodes",
+    "placenames",
+    "landmarks",
+    "locations",
+    "iceland",
+    "icelandic",
+    "geocoding",
+    "geopositioning",
+]
 requires-python = ">=3.9"
 dependencies = []
 
 [project.urls]
 Repository = "https://github.com/sveinbjornt/iceaddr"
+Documentation = "https://github.com/sveinbjornt/iceaddr#readme"
+Issues = "https://github.com/sveinbjornt/iceaddr/issues"
+Changelog = "https://github.com/sveinbjornt/iceaddr#version-history"
 
 [project.optional-dependencies]
 # Dev dependencies
 dev = [
     # Linting, testing
     "pytest>=8.4.2",
-    "pre-commit>=3.3.3",
     "types-setuptools>=68.2.0",
     "ruff>=0.12.17",
+    "pyright>=1.1.0",
     "coverage[toml]>=7.3.1",
     "requests>=2.26.0",
 ]
+# Building database
 build = [
-    # Building database
     "fiona>=1.9.4",    # for processing GIS data
     "humanize>=0.5.1", # for progress bar
     "reynir>=3.1.0",   # for parsing and declining placenames
 ]
-all = ["dev", "build"]
 
 # *** Configuration of tools ***
 
@@ -66,12 +81,11 @@ command_line = "-m pytest" # Run all tests when calculating coverage
 
 [tool.coverage.report]
 exclude_also = ["if TYPE_CHECKING:", "raise NotImplementedError"]
-# skip_covered = true                                               # Skip showing fully covered files
+# skip_covered = true        # Skip showing fully covered files
 skip_empty = true # Skip empty files
 sort = "-Cover"   # Sort by coverage percentage
 precision = 2     # Precision of output percentage
 fail_under = 65   # Fail if total covered under threshold
-
 
 [tool.pyright]
 typeCheckingMode = "strict"
@@ -82,11 +96,9 @@ reportImplicitStringConcatenation = "information"
 reportImportCycles = "warning"
 reportMissingSuperCall = "none"
 reportPropertyTypeMismatch = "warning"
-reportShadowedImports = "warning"
 reportUninitializedInstanceVariable = "information"
 reportUnnecessaryTypeIgnoreComment = "warning"
 reportUnusedCallResult = "none"
-
 
 [tool.ruff]
 # See https://beta.ruff.rs/docs/rules/ for list of rules

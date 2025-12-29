@@ -57,7 +57,7 @@ def _cap_first(s: str) -> str:
     return s[:1].upper() + s[1:] if s else s
 
 
-def iceaddr_lookup(  # noqa: PLR0913
+def iceaddr_lookup(
     street_name: str,
     number: Optional[int] = None,
     letter: Optional[str] = None,

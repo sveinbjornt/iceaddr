@@ -13,6 +13,7 @@ From data compiled by Registers Iceland (CC-BY):
 from typing import Any, Iterator
 
 import csv
+import datetime
 import os
 import sqlite3
 import sys
@@ -24,6 +25,9 @@ from urllib.request import urlopen
 import humanize
 
 from iceaddr.geo import in_iceland
+from iceaddr.postcodes import POSTCODES
+
+POSTCODE_SET = frozenset(POSTCODES.keys())
 
 STADFONG_REMOTE_URL = (
     "https://hmsstgsftpprodweu001.blob.core.windows.net/fasteignaskra/Stadfangaskra.csv"
@@ -101,6 +105,15 @@ def create_db(path: str) -> sqlite3.Connection:
     for query in rtree_queries:
         dbconn.cursor().execute(query)
 
+    # Create metadata table
+    metadata_table_sql = """
+    CREATE TABLE metadata (
+        key TEXT UNIQUE PRIMARY KEY NOT NULL,
+        value TEXT NOT NULL
+    );
+    """
+    dbconn.cursor().execute(metadata_table_sql)
+
     return dbconn
 
 
@@ -108,6 +121,15 @@ def read_rows(dsv_file: TextIOWrapper, delimiter: str = ",") -> Iterator[dict[An
     reader = csv.DictReader(dsv_file, delimiter=delimiter)
     for row in reader:
         yield row
+
+
+def insert_metadata(conn: sqlite3.Connection) -> None:
+    """Insert metadata into the metadata table."""
+    timestamp = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    conn.cursor().execute(
+        "INSERT INTO metadata (key, value) VALUES (?, ?)",
+        ("date_created", timestamp),
+    )
 
 
 def insert_address_entry(e: dict[Any, Any], conn: sqlite3.Connection) -> None:
@@ -146,6 +168,7 @@ def insert_address_entry(e: dict[Any, Any], conn: sqlite3.Connection) -> None:
 
     try:
         assert in_iceland((e["LAT_WGS84"], e["LONG_WGS84"]))
+        assert e["POSTNR"] in POSTCODE_SET
         qargs = [e[c.upper()] for c in COLS]
         # print(qargs)
         c = conn.cursor()
@@ -177,7 +200,7 @@ def main() -> None:
     # Create new database file
     dbconn = create_db(db_path)
 
-    # Commit to DB in chunks of 1000 rows
+    # Commit addresses to DB in chunks of 1000 rows
     cnt = 0
     for r in read_rows(f):
         insert_address_entry(r, dbconn)
@@ -189,6 +212,9 @@ def main() -> None:
 
     dbconn.commit()
 
+    print("\tInserting: %d\r" % cnt)
+    sys.stdout.flush()
+
     print("\tPopulating R-Tree index...")
     dbconn.execute(
         """
@@ -199,8 +225,9 @@ def main() -> None:
     )
     dbconn.commit()
 
-    print("\tInserting: %d\r" % cnt, end="")
-    sys.stdout.flush()
+    print("\tInserting metadata...")
+    insert_metadata(dbconn)
+    dbconn.commit()
 
     bytesize: int = os.stat(db_path).st_size
     human_size = humanize.naturalsize(bytesize)
@@ -208,7 +235,7 @@ def main() -> None:
     # After data import, analyze the database to optimize index usage
     dbconn.execute("ANALYZE;")
 
-    print("\nCreated database with %d entries (%s)" % (cnt, human_size))
+    print("Created database with %d entries (%s)" % (cnt, human_size))
 
 
 if __name__ == "__main__":

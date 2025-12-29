@@ -28,6 +28,9 @@ jobs:
       - name: Run ruff linter
         run: |
           ruff check src/iceaddr
+      - name: Type check with pyright
+        run: |
+          python -m pyright src/iceaddr
       - name: Test with pytest
         run: |
           python -m pytest -vvv

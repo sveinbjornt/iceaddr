@@ -21,3 +21,4 @@ venv
 .coverage
 .coverage.*
 *.gpkg
+.claude

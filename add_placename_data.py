@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# type: ignore
 """
 
 Add placename data to iceaddr database.
@@ -18,7 +19,7 @@ from pathlib import Path
 import fiona  # type: ignore  # noqa: PGH003
 import requests
 
-from iceaddr.geo import in_iceland
+from iceaddr.geo import in_iceland, valid_wgs84_coord
 
 ORNEFNI_DATA_FILE = "is_50v_ornefni_wgs_84.gpkg"
 ORNEFNI_DATA_URL = "https://atlas.lmi.is/heikir/downloadData/is_50v_ornefni_wgs_84_gpkg.zip"
@@ -224,8 +225,13 @@ def add_placenames_from_is50v(dbc: sqlite3.Connection) -> None:
                 # LMÍ's GPKG coord values are reversed! Why?
                 gps = (cp[1], cp[0])
 
+                if not valid_wgs84_coord(cp[1], cp[0]):
+                    print(f"WARNING: Invalid WGS84 coord, skipping: {n} ({gps})")
+                    continue
+
                 if not in_iceland(gps):
                     print(f"WARNING: Not in Iceland, skipping: {n} ({gps})")
+                    continue
 
                 # Insert
                 dbc.cursor().execute(
