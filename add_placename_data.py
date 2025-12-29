@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# type: ignore
 """
 
 Add placename data to iceaddr database.
