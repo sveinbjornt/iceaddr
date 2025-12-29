@@ -11,6 +11,7 @@ Tests for iceaddr python package.
 
 from typing import Optional
 
+import datetime
 import sys
 from pathlib import Path
 
@@ -20,6 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from iceaddr import (
     POSTCODES,
     iceaddr_lookup,
+    iceaddr_metadata,
     iceaddr_suggest,
     municipality_code_for_municipality,
     municipality_for_municipality_code,
@@ -393,3 +395,23 @@ def test_nearest_with_dist_max_dist():
     # All returned results should be within max_dist
     for _, dist in place_results:
         assert dist <= 1.0
+
+
+def test_metadata():
+    """Test database metadata function."""
+    metadata = iceaddr_metadata()
+
+    assert isinstance(metadata, dict)
+    if "date_created" not in metadata:
+        return
+    date_created = metadata["date_created"]
+
+    # Should be a datetime object with timezone info
+    assert isinstance(date_created, datetime.datetime)
+    assert date_created.tzinfo is not None
+
+    # Should be a date that makes sense
+    now = datetime.datetime.now(datetime.timezone.utc)
+    assert date_created <= now
+    project_start = datetime.datetime(2018, 1, 1, tzinfo=datetime.timezone.utc)
+    assert date_created >= project_start

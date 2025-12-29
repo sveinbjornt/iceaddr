@@ -13,6 +13,7 @@ From data compiled by Registers Iceland (CC-BY):
 from typing import Any, Iterator
 
 import csv
+import datetime
 import os
 import sqlite3
 import sys
@@ -104,6 +105,15 @@ def create_db(path: str) -> sqlite3.Connection:
     for query in rtree_queries:
         dbconn.cursor().execute(query)
 
+    # Create metadata table
+    metadata_table_sql = """
+    CREATE TABLE metadata (
+        key TEXT UNIQUE PRIMARY KEY NOT NULL,
+        value TEXT NOT NULL
+    );
+    """
+    dbconn.cursor().execute(metadata_table_sql)
+
     return dbconn
 
 
@@ -111,6 +121,15 @@ def read_rows(dsv_file: TextIOWrapper, delimiter: str = ",") -> Iterator[dict[An
     reader = csv.DictReader(dsv_file, delimiter=delimiter)
     for row in reader:
         yield row
+
+
+def insert_metadata(conn: sqlite3.Connection) -> None:
+    """Insert metadata into the metadata table."""
+    timestamp = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    conn.cursor().execute(
+        "INSERT INTO metadata (key, value) VALUES (?, ?)",
+        ("date_created", timestamp),
+    )
 
 
 def insert_address_entry(e: dict[Any, Any], conn: sqlite3.Connection) -> None:
@@ -181,7 +200,7 @@ def main() -> None:
     # Create new database file
     dbconn = create_db(db_path)
 
-    # Commit to DB in chunks of 1000 rows
+    # Commit addresses to DB in chunks of 1000 rows
     cnt = 0
     for r in read_rows(f):
         insert_address_entry(r, dbconn)
@@ -201,6 +220,10 @@ def main() -> None:
         WHERE lat_wgs84 IS NOT NULL AND long_wgs84 IS NOT NULL;
         """
     )
+    dbconn.commit()
+
+    print("\tInserting metadata...")
+    insert_metadata(dbconn)
     dbconn.commit()
 
     print("\tInserting: %d\r" % cnt, end="")

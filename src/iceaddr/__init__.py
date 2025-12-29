@@ -15,6 +15,7 @@ __version__ = importlib.metadata.version("iceaddr")
 
 from .addresses import iceaddr_lookup, iceaddr_suggest, nearest_addr, nearest_addr_with_dist
 from .geo import distance, in_iceland
+from .meta import iceaddr_metadata
 from .municipalities import (
     MUNICIPALITIES,
     municipality_for_municipality_code,
@@ -36,6 +37,7 @@ __all__ = [
     "nearest_addr_with_dist",
     "distance",
     "in_iceland",
+    "iceaddr_metadata",
     "MUNICIPALITIES",
     "municipality_for_municipality_code",
     "municipality_code_for_municipality",

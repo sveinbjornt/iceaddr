@@ -7,7 +7,6 @@
 * iceaddr_suggest relies on comma separator to separate street address and place name. Could be made smarter.
 * Function to find region of a given pair of coordinates, e.g. which_region(lat,lon) == "Norðurland"
 * Add function to parse Icelandic address strings in a robust, forgiving way (see Greynir geo.py impl.)
-* Add automation where package can report the last time its data was updated (store in SQLite DB on generation)
 * Add preposition functions from Greynir (e.g. "í Reykjavík", "á Dalvík", etc.)
 * Dative case for placenames?
 * Add MANNVIRKI gpkg data from LMÍ?
