@@ -258,7 +258,7 @@ Get information about the database version, etc.:
 ```python
 >>> from iceaddr import iceaddr_metadata
 >>> meta = iceaddr_metadata()
->>> pprint(meta["date_created"])
+>>> pprint(meta["date_created"].date())
 '2025-11-22'
 ```
 

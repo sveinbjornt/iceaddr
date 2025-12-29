@@ -212,6 +212,9 @@ def main() -> None:
 
     dbconn.commit()
 
+    print("\tInserting: %d\r" % cnt)
+    sys.stdout.flush()
+
     print("\tPopulating R-Tree index...")
     dbconn.execute(
         """
@@ -226,16 +229,13 @@ def main() -> None:
     insert_metadata(dbconn)
     dbconn.commit()
 
-    print("\tInserting: %d\r" % cnt, end="")
-    sys.stdout.flush()
-
     bytesize: int = os.stat(db_path).st_size
     human_size = humanize.naturalsize(bytesize)
 
     # After data import, analyze the database to optimize index usage
     dbconn.execute("ANALYZE;")
 
-    print("\nCreated database with %d entries (%s)" % (cnt, human_size))
+    print("Created database with %d entries (%s)" % (cnt, human_size))
 
 
 if __name__ == "__main__":

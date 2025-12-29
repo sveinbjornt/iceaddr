@@ -71,7 +71,7 @@ def _precedence(pn: dict[str, Any]) -> int:
     fl = pn["flokkur"]
     if fl in _ORDER:
         return _ORDER.index(fl)
-    # Any number > len(ORDER) will do for sorting purposes
+    # Any number > len(_ORDER) will do for sorting purposes
     return 9999
 
 

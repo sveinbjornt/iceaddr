@@ -231,6 +231,7 @@ def add_placenames_from_is50v(dbc: sqlite3.Connection) -> None:
 
                 if not in_iceland(gps):
                     print(f"WARNING: Not in Iceland, skipping: {n} ({gps})")
+                    continue
 
                 # Insert
                 dbc.cursor().execute(
