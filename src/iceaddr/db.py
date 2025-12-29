@@ -27,8 +27,8 @@ class SharedDB:
             db_path = resources.files("iceaddr").joinpath(_DB_REL_PATH)
 
             # Open database file in read-only mode via URI
-            db_uri = f"file:{db_path}?mode=ro"
             # As long as we're read-only, thread safety is not an issue
+            db_uri = f"file:{db_path}?mode=ro"
             self.db_conn = sqlite3.connect(db_uri, uri=True, check_same_thread=False)
 
             # Return rows as key-value dicts
