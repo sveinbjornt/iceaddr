@@ -401,9 +401,7 @@ def test_metadata():
     """Test database metadata function."""
     metadata = iceaddr_metadata()
 
-    assert isinstance(metadata, dict)
-    if "date_created" not in metadata:
-        return
+    assert isinstance(metadata, dict) and "date_created" in metadata
     date_created = metadata["date_created"]
 
     # Should be a datetime object with timezone info
