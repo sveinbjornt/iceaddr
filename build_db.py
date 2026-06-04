@@ -42,6 +42,7 @@ COLS = [
     "svfnr",
     "byggd",
     "landnr",
+    "heinum",
     "postnr",
     "heiti_nf",
     "heiti_tgf",
@@ -64,6 +65,7 @@ def create_db(path: str) -> sqlite3.Connection:
         svfnr INTEGER,
         byggd INTEGER,
         landnr INTEGER,
+        heinum INTEGER,
         postnr INTEGER,
         heiti_nf TEXT,
         heiti_tgf TEXT,
@@ -172,7 +174,7 @@ def insert_address_entry(e: dict[Any, Any], conn: sqlite3.Connection) -> None:
         qargs = [e[c.upper()] for c in COLS]
         # print(qargs)
         c = conn.cursor()
-        c.execute("INSERT INTO stadfong VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", qargs)
+        c.execute("INSERT INTO stadfong VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", qargs)
     except Exception as exc:
         print(exc)
 
