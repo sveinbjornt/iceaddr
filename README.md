@@ -27,8 +27,9 @@ No external dependencies are required.
 
 For joining address results with other Icelandic public datasets, prefer
 the `heinum` field when the other dataset identifies the address itself.
-`heinum` is the address number (`staðfanganúmer`, also called `HEINUM` in
-Staðfangaskrá). The `hnitnum` field identifies the address point coordinate.
+`heinum` is the address number (Icelandic: `staðfanganúmer` or
+`heitinúmer`; upstream field name: `HEINUM`). The `hnitnum` field identifies
+the address point coordinate.
 
 ## Installation
 
@@ -149,13 +150,13 @@ a list of the nearest addresses in the database:
 | Key           | Value description                                       |
 | ------------- |---------------------------------------------------------|
 | bokst         | House letter, e.g. "A", "b"                             |
-| byggd         | Byggðarnúmer in municipality                            |
-| heinum        | Staðfanganúmer/heitinúmer, unique ID for the address    |
+| byggd         | Settlement number within municipality                   |
+| heinum        | Address number, unique ID for the address itself        |
 | heiti_nf      | Street name (nominative case, nf.), e.g. 'Öldugata'     |
 | heiti_tgf     | Street name (dative case, þgf.), e.g. 'Öldugötu'        |
 | hnitnum       | Unique address point coordinate ID                      |
 | husnr         | House number                                            |
-| landnr        | Hlaupandi sex stafa auðkennisnúmer í landeignaskrá HMS  |
+| landnr        | Land registry number                                    |
 | lat_wgs84     | Latitude (WGS84), for geospatial lookup/display         |
 | long_wgs84    | Longitude (WGS84), for geospatial lookup/display        |
 | postnr        | Postcode (e.g. 101)                                     |
