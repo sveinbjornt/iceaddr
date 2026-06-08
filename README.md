@@ -25,6 +25,12 @@ offline. The package is useful for geocoding and reverse geocoding of Icelandic
 addresses and placenames, as well as validating addresses and postcodes.
 No external dependencies are required.
 
+For joining address results with other Icelandic public datasets, prefer
+the `heinum` field when the other dataset identifies the address itself.
+`heinum` is the address number (Icelandic: `staðfanganúmer` or
+`heitinúmer`; upstream field name: `HEINUM`). The `hnitnum` field identifies
+the address point coordinate.
+
 ## Installation
 
 The latest version of `iceaddr` is available via [PyPI](https://pypi.org/project/iceaddr/).
@@ -43,13 +49,15 @@ pip install iceaddr
 >>> pprint(a)
 [{'bokst': '',
   'byggd': 1,
+  'heinum': 1001754,
   'heiti_nf': 'Austurstræti',
   'heiti_tgf': 'Austurstræti',
   'hnitnum': 10083839,
   'husnr': 14,
   'landnr': 100852,
-  'lat_wgs84': 64.147529217656,
-  'long_wgs84': -21.9389394651385,
+  'lat_wgs84': 64.14752922,
+  'long_wgs84': -21.93893947,
+  'lysing': 'Miðborg',
   'postnr': 101,
   'serheiti': '',
   'stadur_nf': 'Reykjavík',
@@ -58,8 +66,10 @@ pip install iceaddr
   'svaedi_tgf': 'Höfuðborgarsvæðinu',
   'svfheiti': 'Reykjavíkurborg',
   'svfnr': 0,
-  'tegund': 'Þéttbýli',
+  'tegund': 'Stærra dreifbýli',
   'vidsk': ''}]
+>>> a[0]["heinum"]
+1001754
 ```
 
 ### Look up address with placename
@@ -70,13 +80,15 @@ pip install iceaddr
 >>> pprint(a)
 [{'bokst': '',
   'byggd': 1,
+  'heinum': 1020228,
   'heiti_nf': 'Öldugata',
   'heiti_tgf': 'Öldugötu',
   'hnitnum': 10017023,
   'husnr': 4,
   'landnr': 100570,
-  'lat_wgs84': 64.1484874806941,
-  'long_wgs84': -21.9452072913341,
+  'lat_wgs84': 64.14848748,
+  'long_wgs84': -21.94520729,
+  'lysing': 'Miðborg',
   'postnr': 101,
   'serheiti': '',
   'stadur_nf': 'Reykjavík',
@@ -85,8 +97,10 @@ pip install iceaddr
   'svaedi_tgf': 'Höfuðborgarsvæðinu',
   'svfheiti': 'Reykjavíkurborg',
   'svfnr': 0,
-  'tegund': 'Þéttbýli',
+  'tegund': 'Stærra dreifbýli',
   'vidsk': ''}]
+>>> a[0]["heinum"]
+1020228
 ```
 
 Street and place names can be provided in either nominative (nf.) or
@@ -136,14 +150,15 @@ a list of the nearest addresses in the database:
 | Key           | Value description                                       |
 | ------------- |---------------------------------------------------------|
 | bokst         | House letter, e.g. "A", "b"                             |
-| byggd         | Byggðarnúmer in municipality                            |
+| byggd         | Settlement number within municipality                   |
+| heinum        | Address number, unique ID for the address itself        |
 | heiti_nf      | Street name (nominative case, nf.), e.g. 'Öldugata'     |
 | heiti_tgf     | Street name (dative case, þgf.), e.g. 'Öldugötu'        |
-| hnitnum       | Hnitnúmer staðfangahnits                                |
+| hnitnum       | Unique address point coordinate ID                      |
 | husnr         | House number                                            |
-| landnr        | Hlaupandi sex stafa auðkennisnúmer í landeignaskrá HMS  |
-| lat_wgs84     | Latitude (WGS84 coordinates)                            |
-| long_wgs84    | Longitude (WGS84 coordinates)                           |
+| landnr        | Land registry number                                    |
+| lat_wgs84     | Latitude (WGS84), for geospatial lookup/display         |
+| long_wgs84    | Longitude (WGS84), for geospatial lookup/display        |
 | postnr        | Postcode (e.g. 101)                                     |
 | serheiti      | Special name                                            |
 | stadur_nf     | Placename (nominative case), e.g. 'Selfoss'             |

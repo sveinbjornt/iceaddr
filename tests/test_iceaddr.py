@@ -50,6 +50,7 @@ def test_address_lookup():
     for a in ADDR_TO_POSTCODE:
         res = iceaddr_lookup(a[0], number=a[1], placename=a[2])
         assert res[0]["postnr"] == a[3]
+        assert isinstance(res[0]["heinum"], int)
 
     res = iceaddr_lookup("Brattagata", number=4, letter="b")
     assert res[0]["postnr"] == 310
@@ -102,6 +103,7 @@ def test_address_suggestions():
     """Test address suggestions for natural language search strings."""
     res = iceaddr_suggest("Öldugötu 4, 101")
     assert res[0]["heiti_nf"] == "Öldugata"
+    assert res[0]["heinum"] == 1020228
     assert res[0]["husnr"] == 4
     assert res[0]["stadur_nf"] == "Reykjavík"
     assert res[0]["postnr"] == 101
@@ -241,6 +243,7 @@ def test_nearest_addr():
     addr = nearest_addr(FISKISLOD_31_COORDS[0], FISKISLOD_31_COORDS[1])
     assert len(addr) == 1
     assert addr[0]["heiti_nf"] == "Fiskislóð"
+    assert isinstance(addr[0]["heinum"], int)
     assert addr[0]["postnr"] == POSTCODE_101
     assert addr[0]["svaedi_nf"] == "Höfuðborgarsvæðið"
 
