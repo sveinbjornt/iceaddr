@@ -75,7 +75,7 @@ def create_db(path: str) -> sqlite3.Connection:
         vidsk TEXT,
         lat_wgs84 REAL,
         long_wgs84 REAL
-    );
+    ) STRICT;
     """
 
     dbconn.cursor().execute(create_table_sql)
@@ -112,7 +112,7 @@ def create_db(path: str) -> sqlite3.Connection:
     CREATE TABLE metadata (
         key TEXT UNIQUE PRIMARY KEY NOT NULL,
         value TEXT NOT NULL
-    );
+    ) STRICT;
     """
     dbconn.cursor().execute(metadata_table_sql)
 
