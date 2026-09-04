@@ -145,6 +145,9 @@ a list of the nearest addresses in the database:
 Öldugata 4
 ```
 
+A corresponding function, `nearest_addr_with_dist()`, returns the same results
+but also includes the distance in kilometers to each address.
+
 ### Address Keys
 
 | Key           | Value description                                       |
@@ -264,6 +267,35 @@ returns a list of the nearest placenames in the database:
 >>> pn = nearest_placenames(64.148446, -21.944933, limit=1)[0]
 >>> print(pn["nafn"])
 Landakotsvöllur
+```
+
+A corresponding function, `nearest_placenames_with_dist()`, returns the same results
+but also includes the distance in kilometers to each placename.
+
+### Municipalities
+
+Municipality names and corresponding codes are available in the `MUNICIPALITIES` dict:
+
+```python
+>>> from iceaddr import MUNICIPALITIES
+>>> MUNICIPALITIES[3609]
+Borgarbyggð
+```
+
+### Utility functions
+
+```python
+>>> from iceaddr import distance
+>>> distance((64.1466, -21.9426), (48.8566, 2.3522)) # Between Reykjavík and Paris
+2233.1554832351285 # km
+```
+
+```python
+>>> from iceaddr import in_iceland
+>>> in_iceland((64.1466, -21.9426)) # Reykjavík
+True
+>>> in_iceland((48.8566, 2.3522)) # Paris
+False
 ```
 
 ### Metadata

@@ -32,9 +32,7 @@ class SharedDB:
             self.db_conn = sqlite3.connect(db_uri, uri=True, check_same_thread=False)
 
             # Return rows as key-value dicts
-            self.db_conn.row_factory = lambda c, r: dict(  # type: ignore noqa: PGH003
-                zip([col[0] for col in c.description], r)  # type: ignore noqa: PGH003
-            )
+            self.db_conn.row_factory = lambda c, r: dict(zip([col[0] for col in c.description], r))
 
         return self.db_conn
 
