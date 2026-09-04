@@ -219,6 +219,20 @@ def test_placename_hardcoded_priority():
         assert d <= _PRIORITY_MATCH_RADIUS_KM, f"{name} resolved to a place {d:.2f} km away"
 
 
+def test_distance():
+    """Test Haversine distance calculation."""
+    # Reykjavík to Paris
+    assert round(distance((64.1466, -21.9426), (48.8566, 2.3522))) == 2233
+
+    # Zero is a valid coordinate, not a missing one
+    assert round(distance((0.0, 0.0), (0.0, 1.0)), 2) == 111.2
+    assert round(distance((0.0, -18.0), (64.0, -18.0)), 2) == 7116.49
+
+    # Missing coordinates sort last
+    assert distance((None, None), (64.1466, -21.9426)) == float("inf")
+    assert distance((64.1466, -21.9426), (None, -21.9426)) == float("inf")
+
+
 def test_in_iceland():
     """Test if coordinates are within Iceland."""
     assert in_iceland(ICELAND_COORDS)

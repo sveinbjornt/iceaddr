@@ -7,12 +7,18 @@ This file contains code related to distance calculation.
 
 """
 
+from typing import Optional
+
 import math
 
 EARTH_RADIUS_KM = 6371.0088
 
+# A WGS84 (latitude, longitude) pair. Either component may be None, since some
+# rows in the placename data carry no coordinates.
+CoordType = tuple[Optional[float], Optional[float]]
 
-def distance(loc1: tuple[float, float], loc2: tuple[float, float]) -> float:
+
+def distance(loc1: CoordType, loc2: CoordType) -> float:
     """
     Calculate the Haversine distance.
     Parameters
@@ -36,8 +42,9 @@ def distance(loc1: tuple[float, float], loc2: tuple[float, float]) -> float:
     (lat1, lon1) = loc1
     (lat2, lon2) = loc2
 
-    # Bad params, or missing coordinates, return infinity for distance-sorting purposes
-    if not lat1 or not lon1 or not lat2 or not lon2:
+    # Missing coordinates, return infinity so they sort last. Note that this must
+    # be an explicit None check: 0.0 is a perfectly valid latitude or longitude.
+    if lat1 is None or lon1 is None or lat2 is None or lon2 is None:
         return float("inf")
 
     dlat = math.radians(lat2 - lat1)
