@@ -3,14 +3,14 @@
 iceaddr: Look up information about Icelandic streets, addresses,
          placenames, landmarks, locations and postcodes.
 
-Copyright (c) 2018-2025 Sveinbjorn Thordarson.
+Copyright (c) 2018-2026 Sveinbjorn Thordarson.
 
 """
 
 import importlib.metadata
 
 __author__ = "Sveinbjorn Thordarson"
-__copyright__ = "(C) 2018-2025 Sveinbjorn Thordarson"
+__copyright__ = "(C) 2018-2026 Sveinbjorn Thordarson"
 __version__ = importlib.metadata.version("iceaddr")
 
 from .addresses import iceaddr_lookup, iceaddr_suggest, nearest_addr, nearest_addr_with_dist

@@ -306,7 +306,7 @@ Get information about the database version, etc.:
 >>> from iceaddr import iceaddr_metadata
 >>> meta = iceaddr_metadata()
 >>> pprint(meta["date_created"].date())
-'2025-11-22'
+'2026-09-04'
 ```
 
 ## Build process
@@ -317,7 +317,7 @@ environment, run the following command from the repository root to
 install dependencies:
 
 ```bash
-pip install ".[dev,build]"
+pip install ".[dev]"
 ```
 
 Then run the following command to build the database:
@@ -360,7 +360,7 @@ pip install .
 
 ## BSD License
 
-Copyright (C) 2018-2025 [Sveinbjorn Thordarson](mailto:sveinbjorn@sveinbjorn.org)
+Copyright (C) 2018-2026 [Sveinbjorn Thordarson](mailto:sveinbjorn@sveinbjorn.org)
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
