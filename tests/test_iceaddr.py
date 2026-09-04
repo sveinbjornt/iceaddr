@@ -35,7 +35,8 @@ from iceaddr import (
     postcodes_for_region,
     region_for_postcode,
 )
-from iceaddr.geo import ICELAND_COORDS, in_iceland, valid_wgs84_coord
+from iceaddr.geo import ICELAND_COORDS, distance, in_iceland, valid_wgs84_coord
+from iceaddr.placenames import _HARDCODED_PRIORITY, _PRIORITY_MATCH_RADIUS_KM
 
 
 def test_address_lookup():
@@ -196,6 +197,26 @@ def test_placename_lookup():
     assert len(placename_lookup("Meðalfellsvatn")) != 0
     assert len(placename_lookup("Meðalfell", partial=True)) != 0
     assert len(placename_lookup("Hellisheiði")) > 1
+
+
+def test_placename_hardcoded_priority():
+    """Names in _HARDCODED_PRIORITY must resolve to the place they point at.
+
+    Coordinates are matched with a tolerance, since the source data nudges them
+    slightly on every regeneration. With an exact match these silently fall back
+    to category ordering and return the wrong place entirely.
+    """
+    # Gullfoss the tourist attraction, one of 8, and the lowest category of the lot
+    assert placename_lookup("Gullfoss")[0]["id"] == 198697
+    # Arnarhóll in central Reykjavík, one of 50
+    assert placename_lookup("Arnarhóll")[0]["id"] == 174064
+    # Bakki by Húsavík, one of 67
+    assert placename_lookup("Bakki")[0]["id"] == 189922
+
+    for name, coords in _HARDCODED_PRIORITY.items():
+        first = placename_lookup(name)[0]
+        d = distance(coords, (first["lat_wgs84"], first["long_wgs84"]))
+        assert d <= _PRIORITY_MATCH_RADIUS_KM, f"{name} resolved to a place {d:.2f} km away"
 
 
 def test_in_iceland():
