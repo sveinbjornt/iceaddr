@@ -12,12 +12,12 @@ from __future__ import annotations
 import datetime
 from typing import Any
 
-from .db import SharedDB
+from .db import shared_db
 
 
 def iceaddr_metadata() -> dict[str, Any]:
     """Return all database metadata as a dictionary."""
-    db = SharedDB()
+    db = shared_db
     c = db.connection().cursor()
 
     try:
