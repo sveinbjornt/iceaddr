@@ -51,7 +51,7 @@ Changelog = "https://github.com/sveinbjornt/iceaddr#version-history"
 # Dev dependencies
 dev = [
     # Linting, testing
-    "pytest==8.4.2",
+    "pytest==9.0.3",
     "types-setuptools>=68.2.0",
     "ruff==0.15.16",
     "pyright==1.1.411",
