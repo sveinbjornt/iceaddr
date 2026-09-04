@@ -1,6 +1,6 @@
 [project]
 name = "iceaddr"
-version = "0.6.1"
+version = "0.6.2"
 description = "Look up information about Icelandic street addresses, postcodes, landmarks, locations and placenames"
 authors = [
     { name = "Sveinbjorn Thordarson", email = "sveinbjorn@sveinbjorn.org" },
@@ -18,7 +18,6 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -39,7 +38,7 @@ keywords = [
     "geocoding",
     "geopositioning",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = []
 
 [project.urls]
@@ -54,7 +53,7 @@ dev = [
     # Linting, testing
     "pytest>=8.4.2",
     "types-setuptools>=68.2.0",
-    "ruff>=0.12.17",
+    "ruff==0.15.16",
     "pyright>=1.1.0",
     "coverage[toml]>=7.3.1",
     "requests>=2.26.0",

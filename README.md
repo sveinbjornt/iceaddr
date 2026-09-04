@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
+[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![Release](https://shields.io/github/v/release/sveinbjornt/iceaddr?display_name=tag)](https://github.com/sveinbjornt/iceaddr/releases)
 [![PyPI](https://img.shields.io/pypi/v/iceaddr)](https://pypi.org/project/iceaddr/)
 [![Build](https://github.com/sveinbjornt/iceaddr/actions/workflows/python-package.yml/badge.svg)](https://github.com/sveinbjornt/iceaddr/actions)
@@ -10,7 +10,7 @@
 
 ### Look up Icelandic street addresses, postcodes and placenames
 
-`iceaddr` is a pure Python >= 3.9 package to look up information about
+`iceaddr` is a pure Python >= 3.10 package to look up information about
 Icelandic streets, addresses, placenames, landmarks, locations and postcodes.
 The underlying data is contained in a local SQLite database assembled
 from the following sources:
@@ -280,7 +280,7 @@ Get information about the database version, etc.:
 ## Build process
 
 To build your own version of the package, you need to have
-Python >=3.9 installed. Then, after (optionally) creating a virtual
+Python >=3.10 installed. Then, after (optionally) creating a virtual
 environment, run the following command from the repository root to
 install dependencies:
 
@@ -304,6 +304,7 @@ pip install .
 
 ## Version History
 
+* 0.6.2: Updated address and placename data. Address lookups now include unique `heinum` identifier. Now requires Python 3.10+ (04/09/2026)
 * 0.6.1: Updated address and placename data. Added `iceaddr_metadata` function. Better package metadata. (29/12/2025)
 * 0.6.0: `nearest_*` functions now use R-Trees for much faster lookups. Added `nearest_*_with_dist` functions. Updated address and placename data. (22/11/2025)
 * 0.5.10: Updated address and placename data. Added `region_for_postcode` function. Minor optimizations (07/11/2025)

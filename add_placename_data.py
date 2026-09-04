@@ -83,7 +83,7 @@ def create_table(dbpath: str) -> sqlite3.Connection:
         flokkur TEXT,
         lat_wgs84 REAL,
         long_wgs84 REAL
-    );
+    ) STRICT;
     """
 
     try:
